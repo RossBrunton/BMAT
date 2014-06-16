@@ -4,7 +4,6 @@ lib-python
 local
 bin
 db.sqlite3
-manage.py
 *.pyc
 __pycache__
 *~
