@@ -14,10 +14,4 @@ from django.views.decorators.cache import cache_page
 
 from collections import OrderedDict
 
-@login_required
-def home(request):
-    ctx = {}
-    
-    ctx["area"] = "bookmarks"
-    
-    return TemplateResponse(request, "bookmarks/index.html", ctx)
+

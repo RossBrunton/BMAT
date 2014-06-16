@@ -35,6 +35,7 @@ def login(request):
 
     context = {
         'form': form,
+        'can_register': settings.BMAT_ALLOW_REGISTER
     }
     
     return TemplateResponse(request, "users/login.html", context)

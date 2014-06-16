@@ -1,13 +1,24 @@
-<html>
-    <head>
-        <title>Login</title>
-    </head>
-    
-    <body>
-        <form method='POST'>
+{% extends "base.html" %}
+
+{% load form_errors %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+
+{% form_errors form %}
+
+<div class='box'>
+    <form method='POST'>
         {% csrf_token %}
-        {{ form }}
-        <input type='submit'/>
-        </form>
-    </body>
-</html>
+        Here you can login.
+        {% if can_register %}
+            If you don't have an account, register <a href='{% url "users:register" %}'>here</a>
+        {% endif %}<br/>
+        <label>Username: {{ form.username }}</label><br/>
+        <label>Password: {{ form.password }}</label><br/>
+        <input type='submit' value='Log In'/>
+    </form>
+</div>
+
+{% endblock %}

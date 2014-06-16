@@ -7,11 +7,11 @@ from django.db.models import Q
 from django.template import defaultfilters
 from django.contrib.auth.models import User
 
-from tags.models import Tag
+colours = [
+    ("white", "Boring White"),
+]
 
-class Bookmark(models.Model):
+class Tag(models.Model):
     owner = models.ForeignKey(User)
-    title = models.TextField(max_length = 50)
-    url = models.TextField(max_length = 500)
-    tags = models.ManyToManyField(Tag)
-
+    name = models.TextField(max_length=100)
+    implies = models.ManyToManyField("self", related_name="implicators")
