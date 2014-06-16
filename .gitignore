@@ -1,0 +1,14 @@
+include
+lib_pypy
+lib-python
+local
+bin
+db.sqlite3
+manage.py
+*.pyc
+__pycache__
+*~
+site-packages
+#*#
+db.cnf
+/bmat/settings.py
