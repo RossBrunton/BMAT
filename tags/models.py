@@ -15,3 +15,6 @@ class Tag(models.Model):
     owner = models.ForeignKey(User)
     name = models.TextField(max_length=100)
     implies = models.ManyToManyField("self", related_name="implicators")
+
+    def __str__(self):
+        return "Tag '"+self.name+"' for "+self.owner.username

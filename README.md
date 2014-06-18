@@ -17,7 +17,7 @@ Activate the virtualenv:
 > source ./bin/activate
 
 Install Django and MySQL:
-> pip install Django MySQL-python
+> pip install Django MySQL-python requests
 
 After this, rename settings.py.sample, to settings.py, and give it a random secret key. Then (if you want to, otherwise
 it will use Django's default database) rename db.cnf.sample to db.cnf and fill in database details.

@@ -7,3 +7,17 @@ from django.core.urlresolvers import reverse
 from django.template import defaultfilters
 
 from bmat import settings
+
+class Settings(models.Model):
+    user = models.OneToOneField(User, unique=True)
+    
+    def __str__(self):
+        return "Settings for "+self.user.username
+
+
+@receiver(post_save, sender=User)
+def _add_settings(sender, instance, **kwargs):
+    try:
+        instance.settings
+    except ObjectDoesNotExist:
+        instance.settings = Settings.objects.create(user=instance)
