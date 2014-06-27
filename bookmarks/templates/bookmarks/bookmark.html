@@ -1,0 +1,10 @@
+{% load tag %}
+<div class='bookmark' data-id='{{ bm.pk }}'>
+    <div class='title'><a href='{{ bm.url }}'>{{ bm.title }}</a></div>
+    <div class='tags'>{% for t in bm.tags.all %}
+        {% tag t %}
+    {% endfor %}</div>
+    <div class='buttons'>
+        <a class='delete button'>X</a>
+    </div>
+</div>

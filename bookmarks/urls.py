@@ -4,4 +4,8 @@ import bookmarks.views as views
 
 urlpatterns = patterns("",
     url(r'^$', "bookmarks.views.home", name="home"),
+    url(r'^add$', "bookmarks.views.add", name="add"),
+    url(r'^delete$', "bookmarks.views.delete", name="delete"),
+    
+    url(r'^(?P<bookmark>[0-9]+)/html$', "bookmarks.views.html", name="html")
 )

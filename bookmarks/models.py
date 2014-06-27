@@ -11,13 +11,18 @@ from django.contrib.auth.models import User
 from tags.models import Tag
 
 import requests
+import json
 from HTMLParser import HTMLParser
 
 class Bookmark(models.Model):
+    class Meta:
+        ordering = ["-added"]
+    
     owner = models.ForeignKey(User)
     title = models.TextField(max_length = 50)
     url = models.TextField(max_length = 500)
-    tags = models.ManyToManyField(Tag)
+    tags = models.ManyToManyField(Tag, related_name="bookmarks")
+    added = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
         return "Bookmark '"+self.title+"' for "+self.owner.username
@@ -55,9 +60,10 @@ class Bookmark(models.Model):
         self.tags.remove(tag)
     
     def download_title(self):
-        r = requests.get(self.url, timeout=3.0)
-
+        self.title = "Unknown Title"
+        
         try:
+            r = requests.get(self.url, timeout=3.0)
             r.raise_for_status()
             
             p = HTMLTitleReader()
@@ -68,6 +74,25 @@ class Bookmark(models.Model):
             
         except:
             return
+    
+    def to_dir(self):
+        out = {}
+        out["title"] = self.title
+        out["url"] = self.url
+        out["id"] = self.pk
+        out["tags"] = []
+        
+        for t in self.tags.all():
+            out["tags"].append(t.to_dir())
+        
+        return out
+    
+    def to_json(self):
+        return json.dumps(self.to_dir())
+
+
+def bookmarks_by_user(user):
+    return Bookmark.objects.all().filter(owner=user)
 
 
 class HTMLTitleReader(HTMLParser):

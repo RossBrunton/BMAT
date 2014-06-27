@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% load form_errors %}
+{% load form_errors bookmark %}
 
 {% block title %}Login{% endblock %}
 
@@ -9,7 +9,16 @@
 {% form_errors form %}
 
 <div class='box'>
-    Document content.
+    <form id='add-bookmark' method="POST">
+        {% csrf_token %}
+        <input type='text' name='url'/> <input type='submit'/>
+    </form>
+</div>
+
+<div id='bookmark-list'>
+    {% for bm in bookmarks %}
+        {% bookmark bm %}
+    {% endfor %}
 </div>
 
 {% endblock %}

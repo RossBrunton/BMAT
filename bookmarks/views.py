@@ -11,13 +11,69 @@ from django.core.exceptions import SuspiciousOperation, PermissionDenied
 from django.template.response import TemplateResponse
 from django.template import defaultfilters
 from django.views.decorators.cache import cache_page
+from django.core.validators import URLValidator
+from django.core.exceptions import ValidationError
+from django.template.loader import render_to_string
 
 from collections import OrderedDict
+
+from bookmarks.models import bookmarks_by_user, Bookmark
 
 @login_required
 def home(request):
     ctx = {}
     
     ctx["area"] = "bookmarks"
+    ctx["bookmarks"] = bookmarks_by_user(request.user)
     
     return TemplateResponse(request, "bookmarks/index.html", ctx)
+
+
+@login_required
+@require_POST
+def add(request):
+    if "url" not in request.POST:
+        raise SuspiciousOperation
+    
+    url = request.POST["url"]
+    val = URLValidator()
+    
+    try:
+        val(url)
+    except ValidationError:
+        try:
+            val("http://"+url)
+            url = "http://"+url
+        except ValidationError:
+            return HttpResponse('{"error":"Invalid Url"}', content_type="application/json")
+    
+    bm = Bookmark(owner=request.user, url=url)
+    bm.download_title()
+    bm.save()
+    
+    return HttpResponse(bm.to_json(), content_type="application/json")
+
+
+@login_required
+@require_POST
+def delete(request):
+    if "bookmark" not in request.POST:
+        raise SuspiciousOperation
+    
+    try:
+        bm = Bookmark.objects.get(owner=request.user, pk=request.POST["bookmark"])
+    except Bookmark.DoesNotExist:
+        return HttpResponse('{"deleted":null, "alreadyDeleted":true}', content_type="application/json")
+    
+    id = bm.pk
+    json = bm.to_json()
+    bm.delete()
+    
+    return HttpResponse('{"deleted":'+str(id)+', "bookmark":'+json+'}', content_type="application/json")
+
+
+@login_required
+def html(request, bookmark):
+    bm = get_object_or_404(Bookmark, pk=bookmark, owner=request.user)
+    
+    return TemplateResponse(request, "bookmarks/bookmark.html", {"bm":bm})
