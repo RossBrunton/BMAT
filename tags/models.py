@@ -9,16 +9,16 @@ from django.contrib.auth.models import User
 
 import json
 
-colours = [
+colours_enum = [
     ("white", "Boring White"),
 ]
 
 class Tag(models.Model):
     owner = models.ForeignKey(User)
     name = models.TextField(max_length=100)
-    implies = models.ManyToManyField("self", related_name="implicators")
-    colour = models.TextField(max_length=20, choices=colours)
+    colour = models.CharField(max_length=20, choices=colours_enum, default='white')
     slug = models.SlugField()
+    implies = models.ManyToManyField("self", related_name="implicators")
 
     def __str__(self):
         return "Tag '"+self.name+"' for "+self.owner.username

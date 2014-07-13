@@ -28,6 +28,8 @@ class Bookmark(models.Model):
         return "Bookmark '"+self.title+"' for "+self.owner.username
     
     def tag(self, tag):
+        print type(tag)
+        
         if isinstance(tag, (int, long)):
             try:
                 tag = Tag.objects.get(pk=tag, owner=self.owner)
@@ -35,13 +37,15 @@ class Bookmark(models.Model):
                 #Handle this better?
                 return
         
-        if type(tag) == str:
+        if isinstance(tag, (str, unicode)):
             try:
                 tag = Tag.objects.get(name__iexact=tag, owner=self.owner)
             except ObjectDoesNotExist:
                 tag = Tag(owner=self.owner, name=tag)
                 tag.save()
         
+        tag.owner = self.owner
+        tag.save()
         self.tags.add(tag)
     
     def untag(self, tag):

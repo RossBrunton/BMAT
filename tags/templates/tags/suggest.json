@@ -1,0 +1,7 @@
+{"yours":"{{ value|escapejs }}", "tags":[
+    {% for t in tags %}
+        "{{ t.name|escapejs }}"
+        {% if not forloop.last %},{% endif %}
+    {% endfor %}
+]
+}

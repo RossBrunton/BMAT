@@ -13,5 +13,10 @@ from django.template import defaultfilters
 from django.views.decorators.cache import cache_page
 
 from collections import OrderedDict
+from tags.models import Tag
 
-
+@login_required
+def suggest(request, value):
+    tags = Tag.objects.filter(owner=request.user, slug__startswith=defaultfilters.slugify(value))[:10]
+    
+    return TemplateResponse(request, "tags/suggest.json", {"tags":tags, "value":value}, "application/json")

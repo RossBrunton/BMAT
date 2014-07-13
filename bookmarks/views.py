@@ -18,6 +18,7 @@ from django.template.loader import render_to_string
 from collections import OrderedDict
 
 from bookmarks.models import bookmarks_by_user, Bookmark
+from bookmarks.forms import AddTagForm
 
 @login_required
 def home(request):
@@ -25,6 +26,7 @@ def home(request):
     
     ctx["area"] = "bookmarks"
     ctx["bookmarks"] = bookmarks_by_user(request.user)
+    ctx["atf"] = AddTagForm(auto_id=False)
     
     return TemplateResponse(request, "bookmarks/index.html", ctx)
 
@@ -76,4 +78,39 @@ def delete(request):
 def html(request, bookmark):
     bm = get_object_or_404(Bookmark, pk=bookmark, owner=request.user)
     
-    return TemplateResponse(request, "bookmarks/bookmark.html", {"bm":bm})
+    return TemplateResponse(request, "bookmarks/bookmark.html", {"bm":bm, "atf":AddTagForm(auto_id=False)})
+
+@login_required
+@require_POST
+def tag(request, bookmark):
+    f = AddTagForm(request.POST)
+    
+    try:
+        bm = get_object_or_404(Bookmark, owner=request.user, pk=bookmark)
+    except Bookmark.DoesNotExist:
+        return HttpResponse('{"error":"Bookmark not found"}', content_type="application/json")
+    
+    if not f.is_valid():
+        return HttpResponse('{"error":"Form invalid"}', content_type="application/json")
+    
+    f.instance.owner = request.user
+    bm.tag(f.save())
+    
+    return HttpResponse('{"bookmark":'+bm.to_json()+'}', content_type="application/json")
+
+
+@login_required
+@require_POST
+def rename(request, bookmark):
+    if "name" not in request.POST:
+        raise SuspiciousOperation
+    
+    try:
+        bm = get_object_or_404(Bookmark, owner=request.user, pk=bookmark)
+    except Bookmark.DoesNotExist:
+        return HttpResponse('{"error":"Bookmark not found"}', content_type="application/json")
+    
+    bm.title = request.POST["name"]
+    bm.save()
+    
+    return HttpResponse('{"bookmark":'+bm.to_json()+'}', content_type="application/json")

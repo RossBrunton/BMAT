@@ -4,6 +4,19 @@ body {
     color:#222222;
 }
 
+form {
+    display:inline;
+}
+
+a {
+    text-decoration:none;
+    color:#5555bb;
+}
+
+a:visited {
+    color:#9999cc;
+}
+
 nav {
     display:flex;
     justify-content:center;
@@ -52,18 +65,50 @@ nav a:hover {
     margin-top:5px;
 }
 
-.bookmark {
+.bookmarkHead {
     display:flex;
     
 }
 
-.bookmark .title {
-    
+.bookmarkHead .title {
+    padding:2px;
 }
 
-.bookmark .tags {
+.bookmarkHead .title.edit {
+    display:none;
+}
+
+.bookmarkHead .tags {
     margin-left:auto;
     display:flex;
+}
+
+.bookmarkBody {
+    display:flex;
+}
+
+.bookmarkBody .right {
+    display:flex;
+    margin-left:auto;
+}
+
+.url {
+    color:#999999;
+    font-style:italic;
+}
+
+.tag {
+    display:inline-block;
+    padding:2px;
+    border: 1px solid;
+    margin-right:2px;
+    border-radius:5px;
+}
+
+.tag.white {
+    background-color:#ffffff;
+    border-color:#cccccc;
+    color:#999999;
 }
 
 .hidden {
