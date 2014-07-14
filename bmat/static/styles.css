@@ -17,6 +17,22 @@ a:visited {
     color:#999999;
 }
 
+#error {
+    display:flex;
+    padding:5px;
+    background-color:#994444;
+    border-bottom:1px solid #330000;
+    color:#eeaaaa;
+}
+
+.errorButtons {
+    margin-left:auto;
+}
+
+.errorText {
+    padding:2px;
+}
+
 nav {
     display:flex;
     justify-content:center;
@@ -218,12 +234,17 @@ nav a:hover {
     margin-right:16px;
 }
 
+.untag.button {
+    background-image:url('/static/icons/removeTag.png');
+}
+
 .rename.button {
     background-image:url('/static/icons/save.png');
 }
 
 
-.black .delete.button, .darkblue .delete.button, .darkgreen .delete.button, .darkred .delete.button {
+#error .delete.button, .black .delete.button, .darkblue .delete.button, .darkgreen .delete.button,
+    .darkred .delete.button {
     background-image:url('/static/icons/deleteLight.png');
 }
 
@@ -238,6 +259,10 @@ nav a:hover {
 .black .addTag.button, .darkblue .addTag.button, .darkgreen .addTag.button, .darkred .addTag.button {
     background-image:url('/static/icons/addTagLight.png');
     margin-right:16px;
+}
+
+.black .untag.button, .darkblue .untag.button, .darkgreen .untag.button, .darkred .untag.button {
+    background-image:url('/static/icons/removeTagLight.png');
 }
 
 .black .rename.button, .darkblue .rename.button, .darkgreen .rename.button, .darkred .rename.button {

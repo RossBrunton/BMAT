@@ -3,12 +3,29 @@
 window.bmat = (function() {
     var bmat = {};
     
+    var _error = function(message) {
+        $("#error .errorText").html(message);
+        $("#error").slideDown();
+    }
+    
+    window.addEventListener("error", function(e) {
+        _error(e.message);
+    });
+    
+    $(document).ajaxError(function(e, xhr, settings, error) {
+        if("responseJSON" in xhr && "error" in xhr.responseJSON) {
+            _error(xhr.responseJSON.error);
+        }else{
+            _error("ERROR: "+error);
+        }
+    });
+    
     var _update = function() {
         // Clean first
         _clean();
         
         // Delete button
-        $(".delete.button").on("click", function() {
+        $(".bookmark .delete.button, .tagBlock .delete.button").on("click", function() {
             var post = {};
             post.csrfmiddlewaretoken = $("#csrf").html();
             
@@ -31,6 +48,21 @@ window.bmat = (function() {
                     }
                 }, "json");
             }
+        });
+        
+        // Untag button
+        $(".untag.button").on("click", function() {
+            var elem = this;
+            
+            var post = {};
+            post.csrfmiddlewaretoken = $("#csrf").html();
+            
+            post.bookmark = $(this).parents(".bookmark").data("id");
+            post.tag = $(this).data("slug");
+            
+            $.post("/bookmarks/"+post.bookmark+"/untag", post, function(e) {
+                $(elem).parents(".bookmark").remove();
+            }, "json");
         });
         
         // Open/close button
@@ -100,7 +132,8 @@ window.bmat = (function() {
     };
     
     var _clean = function() {
-        $(".delete.button").off();
+        $(".bookmark .delete.button, .tagBlock .delete.button").off();
+        $(".untag.button").off();
         $(".expand.button").off();
         $(".tagEntry").off();
         
@@ -146,6 +179,11 @@ window.bmat = (function() {
                 _prependBookmark(e.id);
                 $("#add-bookmark > input[name=url]")[0].value = "";
             }, "json");
+        });
+        
+        // Error closing
+        $("#error .delete.button").on("click", function(e) {
+            $(this).parents("#error").slideUp();
         });
     };
     

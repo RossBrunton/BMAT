@@ -29,7 +29,7 @@ def home(request):
 
 @login_required
 def filter(request, tag):
-    tag = get_object_or_404(Tag, owner=request.user, slug=tag)
+    tag = get_object_or_404(Tag, owner=request.user, slug=defaultfilters.slugify(tag))
     
     ctx = {}
     
@@ -81,12 +81,12 @@ def rename(request, tag):
     form = AddTagForm(request.POST, instance=tagObj)
     
     if not form.is_valid():
-        return HttpResponse('{"error":"Form invalid"}', content_type="application/json")
+        return HttpResponse('{"error":"Form invalid"}', content_type="application/json", status=422)
     
     try:
         existing = Tag.objects.get(owner=request.user, slug=defaultfilters.slugify(form.data["name"]))
         if existing.pk != form.instance.pk:
-            return HttpResponse('{"error":"Tag already exists!"}', content_type="application/json")
+            return HttpResponse('{"error":"Tag already exists"}', content_type="application/json", status=422)
     except Tag.DoesNotExist:
         pass
     
@@ -103,10 +103,10 @@ def implies(request, tag):
     try:
         implicator = get_object_or_404(Tag, owner=request.user, slug=tag)
     except Tag.DoesNotExist:
-        return HttpResponse('{"error":"Tag not found"}', content_type="application/json")
+        return HttpResponse('{"error":"Tag not found"}', content_type="application/json", status=422)
     
     if not f.is_valid():
-        return HttpResponse('{"error":"Form invalid"}', content_type="application/json")
+        return HttpResponse('{"error":"Form invalid"}', content_type="application/json", status=422)
     
     implicatee = Tag.get_if_exists(request.user, f.instance)
     implicatee.owner = request.user

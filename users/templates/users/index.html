@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}{{ user.username }}{% endblock %}
+
+{% block content %}
+
+<div class='box'>
+    <form action='{% url "user:logout" %}' method='POST'>
+        {% csrf_token %}
+        <input type='submit' value='Log Out'/>
+        | <a href='{% url "bookmarks:export"}'>Export Bookmarks</a>
+    </form>
+</div>
+
+<div class='box'>
+    
+    <form enctype='multipart/form-data' action='{% url "user:import" %}' method='POST'>
+        {% csrf_token %}
+        {{ importForm.file }}
+        <label>{{ importForm.use_tags }} Include Tags</label>
+        <input type='submit' value='Import Bookmarks From file'/> (Exporting and importing bookmarks will not preserve
+         relationships between tags)
+    </form>
+</div>
+
+{% endblock %}

@@ -9,7 +9,7 @@ urlpatterns = patterns('',
     url(r'^$', bmat.views.home, name="home"),
     url(r'^admin/', include(admin.site.urls)),
     
-    url(r'^users/', include(users.urls, namespace="users")),
+    url(r'^user/', include(users.urls, namespace="user")),
     url(r'^bookmarks/', include(bookmarks.urls, namespace="bookmarks")),
     url(r'^tags/', include(tags.urls, namespace="tags")),
 )

@@ -1,0 +1,16 @@
+{% if pages|length > 1 %}
+    <div class='box'>
+        {% for p in pages %}
+            {% if not forloop.first %} - {% endif %}
+            {% if p.no == ".." %} .. 
+            {% elif p.no == cpage %} {{ p.no }} 
+            {% else %}
+                {% if rawurl %}
+                    <a href='{{ url }}?{{ dchar }}={{ p.start }}:{{ p.end }}'>{{p.no}}</a>
+                {% else %}
+                    <a href='{% url url %}?{{ dchar }}={{ p.start }}:{{ p.end }}'>{{p.no}}</a>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endif %}

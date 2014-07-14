@@ -39,7 +39,7 @@ class Bookmark(models.Model):
         
         if isinstance(tag, (str, unicode)):
             try:
-                tag = Tag.objects.get(name__iexact=tag, owner=self.owner)
+                tag = Tag.objects.get(slug=defaultfilters.slugify(tag), owner=self.owner)
             except ObjectDoesNotExist:
                 tag = Tag(owner=self.owner, name=tag)
                 tag.save()

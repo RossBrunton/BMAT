@@ -21,7 +21,7 @@
     </div>
     
     <div class='bookmarkBody' style='display:none'>
-        <div class='url'>{{ bm.url }}</div>
+        <div class='url'>{{ bm.url }} | Added {{ bm.added|date:"D j/n/y H:i" }}</div>
         
         <div class='right'>
             <form class='tagForm' method='POST' action='{% url "bookmarks:tag" bookmark=bm.id %}'>
@@ -38,7 +38,12 @@
         <div class='buttons'>
             <a class='addTag button'>&nbsp;</a>
             <a class='editTitle button'>&nbsp;</a>
-            <a class='delete button'>&nbsp;</a>
+            
+            {% if untag %}
+                <a class='untag button' data-slug='{{ untag.slug }}'>&nbsp;</a>
+            {% else %}
+                <a class='delete button'>&nbsp;</a>
+            {% endif %}
         </div>
     </div>
 </div>

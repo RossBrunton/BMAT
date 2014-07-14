@@ -1,0 +1,14 @@
+<!DOCTYPE NETSCAPE-Bookmark-file-1>
+<!--This is an automatically generated file.
+    It will be read and overwritten.
+    Do Not Edit! -->
+{% load bookmark %}
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
+<TITLE>Exported Bookmarks at {% now "D j/n/y H:i" %}</TITLE>
+<H1>Bookmarks</H1>
+
+<DL>
+    {% for bm in bookmarks %}
+        <DT><A HREF="{{ bm.url }}" TAGS="{{ bm|cstag }}" ADD_DATE="{{ bm.added|epoch }}" LAST_MODIFIED="{{ bm.added|epoch }}">{{ bm.title }}</A>
+    {% endfor %}
+</DL>
