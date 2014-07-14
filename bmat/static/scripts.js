@@ -11,22 +11,37 @@ window.bmat = (function() {
         $(".delete.button").on("click", function() {
             var post = {};
             post.csrfmiddlewaretoken = $("#csrf").html();
-            post.bookmark = $(this).parents(".bookmark").data("id");
             
-            $.post("/bookmarks/delete", post, function(e) {
-                if(e.deleted !== null) {
-                    $("[data-id="+e.deleted+"]").remove();
-                }
-            }, "json");
+            if($(this).parents(".bookmark").length) {
+                // Deleting a bookmark
+                post.bookmark = $(this).parents(".bookmark").data("id");
+                
+                $.post("/bookmarks/delete", post, function(e) {
+                    if(e.deleted !== null) {
+                        $(".bookmark[data-id="+e.deleted+"]").slideUp().remove();
+                    }
+                }, "json");
+            }else{
+                // Deleting a tag
+                post.tag = $(this).parents(".tagBlock").data("id");
+                
+                $.post("/tags/delete", post, function(e) {
+                    if(e.deleted !== null) {
+                        $(".tagBlock[data-id="+e.deleted+"]").slideUp().remove();
+                    }
+                }, "json");
+            }
         });
         
         // Open/close button
         $(".expand.button").on("click", function() {
             if($(this).hasClass("open")) {
-                $(this).parents(".bookmark").children(".bookmarkBody").slideUp();
+                $(this).parents(".bookmark").children(".bookmarkBody").slideUp("fast");
+                $(this).parents(".tagBlock").children(".tagBlockBody").slideUp("fast");
                 $(this).removeClass("open");
             }else{
-                $(this).parents(".bookmark").children(".bookmarkBody").slideDown();
+                $(this).parents(".bookmark").children(".bookmarkBody").slideDown("fast");
+                $(this).parents(".tagBlock").children(".tagBlockBody").slideDown("fast");
                 $(this).addClass("open");
             }
         });
@@ -50,15 +65,15 @@ window.bmat = (function() {
         // Title editing
         $(".editTitle").on("click", function(e) {
             if(!$(this).hasClass("open")) {
-                $(this).parents(".bookmark").find(".title.noedit").hide();
-                $(this).parents(".bookmark").find(".title.edit").show();
-                $(this).parents(".bookmark").find(".title.edit input[name=name]").val(
-                    $(this).parents(".bookmark").find(".title.noedit a").text()
+                $(this).parents(".bookmark, .tagBlock").find(".title.noedit").hide();
+                $(this).parents(".bookmark, .tagBlock").find(".title.edit").show();
+                $(this).parents(".bookmark, .tagBlock").find(".title.edit input[name=name]").val(
+                    $(this).parents(".bookmark, .tagBlock").find(".title.noedit a, .title.noedit").first().text()
                 );
                 $(this).addClass("open");
             }else{
-                $(this).parents(".bookmark").find(".title.noedit").show();
-                $(this).parents(".bookmark").find(".title.edit").hide();
+                $(this).parents(".bookmark, .tagBlock").find(".title.noedit").show();
+                $(this).parents(".bookmark, .tagBlock").find(".title.edit").hide();
                 $(this).removeClass("open");
             }
         });
@@ -69,17 +84,19 @@ window.bmat = (function() {
             var elem = this;
             
             $.post(this.getAttribute("action"), $(this).serialize(), function(data) {
-                _replaceBookmark($(elem).parents(".bookmark").data("id"), true);
-                
+                if("bookmark" in data) _replaceBookmark($(elem).parents(".bookmark").data("id"), true);
+                if("tag" in data) _replaceTagBlock($(elem).parents(".tagBlock").data("slug"), true);
             }, "json");
         });
         
         // Form submit buttons
-        $(".add.button, .rename.button").on("click", function(e) {
+        $(".rename.button").on("click", function(e) {
             $(this).parents("form").submit();
         });
         
-        
+        $(".addTag.button").on("click", function(e) {
+            $(this).parents(".tagBlock, .bookmark").find(".tagForm").submit();
+        });
     };
     
     var _clean = function() {
@@ -87,7 +104,7 @@ window.bmat = (function() {
         $(".expand.button").off();
         $(".tagEntry").off();
         
-        $(".add.button").off();
+        $(".addTag.button").off();
         $("form.tagForm").off();
         
         $(".rename.button").off();
@@ -103,13 +120,23 @@ window.bmat = (function() {
         }, "text");
     };
     
+    
     var _replaceBookmark = function(id, expand) {
         $.get("/bookmarks/"+id+"/html", function(e) {
-            $("[data-id="+id+"]").replaceWith(e);
-            $("[data-id="+id+"] > .bookmarkBody").show();
+            $(".bookmark[data-id="+id+"]").replaceWith(e);
+            if(expand) $(".bookmark[data-id="+id+"] > .bookmarkBody").show();
             _update();
         }, "text");
     };
+    
+    var _replaceTagBlock = function(slug, expand) {
+        $.get("/tags/htmlBlock/"+slug, function(e) {
+            $(".tagBlock[data-slug="+slug+"]").replaceWith(e);
+            if(expand) $(".tagBlock[data-slug="+slug+"] > .tagBlockBody").show();
+            _update();
+        }, "text");
+    };
+    
     
     var _ready = function() {
         // Bookmark adding
@@ -117,7 +144,7 @@ window.bmat = (function() {
             e.preventDefault();
             $.post("/bookmarks/add", $(this).serialize(), function(e) {
                 _prependBookmark(e.id);
-                $(".addBookmark > input")[0].value = "";
+                $("#add-bookmark > input[name=url]")[0].value = "";
             }, "json");
         });
     };

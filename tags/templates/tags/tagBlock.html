@@ -1,0 +1,46 @@
+{% load tag %}
+<div class='tagBlock {{ tag.colour }}' data-id='{{ tag.pk }}' data-slug='{{ tag.slug }}'>
+    <div class='tagBlockHead'>
+        <div class='title noedit'><a href='{% url "tags:filter" tag=tag.slug %}'>{{ tag.name }}</a></div>
+        
+        <div class='title edit'>
+            <form class='renameForm' method='POST' action='{% url "tags:rename" tag=tag.slug %}'>
+                {% csrf_token %}
+                <input class='renameEntry' name='name' type='text'/>
+                {{ atf.colour }}
+                <a class='rename button'>&nbsp;</a>
+            </form>
+        </div>
+        
+        <div class='tags'>{% for t in tag.implies.all %}
+            {% tag t %}
+        {% endfor %}</div>
+        
+        <div class='buttons'>
+            <a class='expand button'>&nbsp;</a>
+        </div>
+    </div>
+    
+    <div class='tagBlockBody' style='display:none'>
+        <div class=''>{% for t in tag.implied_by.all %}
+            {% tag t %}
+        {% endfor %}</div>
+        
+        <div class='right'>
+            <form class='tagForm' method='POST' action='{% url "tags:implies" tag=tag.slug %}'>
+                {% csrf_token %}
+                <input class='tagEntry' type='text' placeholder='Implies' name='name' list='tslist-{{ tag.pk }}'/>
+                <datalist id='tslist-{{ tag.pk }}'>
+                    
+                </datalist>
+                {{ atf.colour }}
+            </form>
+        </div>
+        
+        <div class='buttons'>
+            <a class='addTag button'>&nbsp;</a>
+            <a class='editTitle button'>&nbsp;</a>
+            <a class='delete button'>&nbsp;</a>
+        </div>
+    </div>
+</div>

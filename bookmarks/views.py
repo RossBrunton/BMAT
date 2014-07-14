@@ -19,6 +19,7 @@ from collections import OrderedDict
 
 from bookmarks.models import bookmarks_by_user, Bookmark
 from bookmarks.forms import AddTagForm
+from tags.models import Tag
 
 @login_required
 def home(request):
@@ -80,6 +81,7 @@ def html(request, bookmark):
     
     return TemplateResponse(request, "bookmarks/bookmark.html", {"bm":bm, "atf":AddTagForm(auto_id=False)})
 
+
 @login_required
 @require_POST
 def tag(request, bookmark):
@@ -93,8 +95,14 @@ def tag(request, bookmark):
     if not f.is_valid():
         return HttpResponse('{"error":"Form invalid"}', content_type="application/json")
     
+    tag = f.instance
+    try:
+        tag = Tag.objects.get(owner=request.user, slug=defaultfilters.slugify(f.instance.name))
+    except Tag.DoesNotExist:
+       pass
+    
     f.instance.owner = request.user
-    bm.tag(f.save())
+    bm.tag(tag)
     
     return HttpResponse('{"bookmark":'+bm.to_json()+'}', content_type="application/json")
 

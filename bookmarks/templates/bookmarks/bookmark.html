@@ -7,21 +7,22 @@
             <form class='renameForm' method='POST' action='{% url "bookmarks:rename" bookmark=bm.id %}'>
                 {% csrf_token %}
                 <input class='renameEntry' name='name' type='text'/>
-                <a class='rename button'>+</a>
+                <a class='rename button'>&nbsp;</a>
             </form>
         </div>
         
-        <div class='tags'>{% for t in bm.tags.all %}
+        <div class='tags'>{% for t in tags %}
             {% tag t %}
         {% endfor %}</div>
+        
         <div class='buttons'>
-            <a class='delete button'>X</a>
-            <a class='expand button'>V</a>
+            <a class='expand button'>&nbsp;</a>
         </div>
     </div>
     
     <div class='bookmarkBody' style='display:none'>
         <div class='url'>{{ bm.url }}</div>
+        
         <div class='right'>
             <form class='tagForm' method='POST' action='{% url "bookmarks:tag" bookmark=bm.id %}'>
                 {% csrf_token %}
@@ -30,9 +31,14 @@
                     
                 </datalist>
                 {{ atf.colour }}
-                <a class='add button'>+</a>
-                | <a class='editTitle button'>Edit Name</a>
+                
             </form>
+        </div>
+        
+        <div class='buttons'>
+            <a class='addTag button'>&nbsp;</a>
+            <a class='editTitle button'>&nbsp;</a>
+            <a class='delete button'>&nbsp;</a>
         </div>
     </div>
 </div>

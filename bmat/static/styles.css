@@ -10,11 +10,11 @@ form {
 
 a {
     text-decoration:none;
-    color:#5555bb;
+    color:#333333;
 }
 
 a:visited {
-    color:#9999cc;
+    color:#999999;
 }
 
 nav {
@@ -41,53 +41,54 @@ nav a {
     padding:5px;
     font-size:120%;
     text-decoration:none;
-    color:#999999;
+    color:#999999 !important;
     border-bottom:2px solid transparent;
 }
 
 nav a.active.active {
     border-bottom:3px solid #9999cc;
-    color:#9999cc;
+    color:#9999cc !important;
 }
 
 nav a:hover {
     border-bottom:2px solid #E9C229;
-    color:#E9C229;
+    color:#E9C229 !important;
 }
 
-.box, .bookmark {
+.box, .bookmark, .tagBlock {
     margin-left:10px;
     margin-right:10px;
     background:#fafafa;
-    border:1px solid #9999cc;
+    background-image:linear-gradient(180deg, #eeeeee, #cccccc);
+    border:1px solid #cccccc;
     border-radius:5px;
     padding:5px;
     margin-top:5px;
 }
 
-.bookmarkHead {
+.bookmarkHead, .tagBlockHead {
     display:flex;
     
 }
 
-.bookmarkHead .title {
+.bookmarkHead .title, .tagBlockHead .title {
     padding:2px;
 }
 
-.bookmarkHead .title.edit {
+.bookmarkHead .title.edit, .tagBlockHead .title.edit {
     display:none;
 }
 
-.bookmarkHead .tags {
+.bookmarkHead .tags, .tagBlockHead .tags {
     margin-left:auto;
     display:flex;
 }
 
-.bookmarkBody {
+.bookmarkBody, .tagBlockBody {
     display:flex;
 }
 
-.bookmarkBody .right {
+.bookmarkBody .right, .tagBlockBody .right {
     display:flex;
     margin-left:auto;
 }
@@ -100,17 +101,145 @@ nav a:hover {
 .tag {
     display:inline-block;
     padding:2px;
+    padding-left:4px;
+    padding-right:4px;
     border: 1px solid;
-    margin-right:2px;
+    margin-right:4px;
     border-radius:5px;
 }
 
-.tag.white {
-    background-color:#ffffff;
+.tag a, .tagBlock a {
+    color:inherit;
+}
+
+.white {
+    background-color:#f8f8f8;
+    background-image: linear-gradient(180deg, #f8f8f8, #cccccc);
     border-color:#cccccc;
+    color:#777777;
+}
+
+.black {
+    background-color:#333333;
+    background-image: linear-gradient(180deg, #333333, #000000);
+    border-color:#000000;
     color:#999999;
+}
+
+.darkblue {
+    background-color:#222255;
+    background-image: linear-gradient(180deg, #222255, #000033);
+    border-color:#000033;
+    color:#8899cc;
+}
+
+.darkgreen {
+    background-color:#225522;
+    background-image: linear-gradient(180deg, #225522, #003300);
+    border-color:#003300;
+    color:#77aa77;
+}
+
+.darkred {
+    background-color:#552222;
+    background-image: linear-gradient(180deg, #552222, #330000);
+    border-color:#330000;
+    color:#aa7777;
+}
+
+.blue {
+    background-color:#9999cc;
+    background-image: linear-gradient(180deg, #9999cc, #6666aa);
+    border-color:#6666aa;
+    color:#222244;
+}
+
+.green {
+    background-color:#99cc99;
+    background-image: linear-gradient(180deg, #99cc99, #66aa66);
+    border-color:#66aa66;
+    color:#224422;
+}
+
+.red {
+    background-color:#cc9999;
+    background-image: linear-gradient(180deg, #cc9999, #aa6666);
+    border-color:#aa6666;
+    color:#442222;
+}
+
+.yellow {
+    background-color:#cccc99;
+    background-image: linear-gradient(180deg, #cccc99, #aaaa66);
+    border-color:#aaaa66;
+    color:#444422;
+}
+
+.magenta {
+    background-color:#cc99cc;
+    background-image: linear-gradient(180deg, #cc99cc, #aa66aa);
+    border-color:#aa66aa;
+    color:#442244;
+}
+
+.cyan {
+    background-color:#99cccc;
+    background-image: linear-gradient(180deg, #99cccc, #66aaaa);
+    border-color:#66aaaa;
+    color:#224444;
 }
 
 .hidden {
     display:none;
+}
+
+.button {
+    width:16px;
+    height:16px;
+    display:inline-block;
+    margin-top:4px;
+    cursor:pointer;
+}
+
+.delete.button {
+    background-image:url('/static/icons/delete.png');
+}
+
+.expand.button {
+    background-image:url('/static/icons/editExpand.png');
+}
+
+.editTitle.button {
+    background-image:url('/static/icons/rename.png');
+}
+
+.addTag.button {
+    background-image:url('/static/icons/addTag.png');
+    margin-right:16px;
+}
+
+.rename.button {
+    background-image:url('/static/icons/save.png');
+}
+
+
+.black .delete.button, .darkblue .delete.button, .darkgreen .delete.button, .darkred .delete.button {
+    background-image:url('/static/icons/deleteLight.png');
+}
+
+.black .expand.button, .darkblue .expand.button, .darkgreen .expand.button, .darkred .expand.button {
+    background-image:url('/static/icons/editExpandLight.png');
+}
+
+.black .editTitle.button, .darkblue .editTitle.button, .darkgreen .editTitle.button, .darkred .editTitle.button {
+    background-image:url('/static/icons/renameLight.png');
+}
+
+.black .addTag.button, .darkblue .addTag.button, .darkgreen .addTag.button, .darkred .addTag.button {
+    background-image:url('/static/icons/addTagLight.png');
+    margin-right:16px;
+}
+
+.black .rename.button, .darkblue .rename.button, .darkgreen .rename.button, .darkred .rename.button {
+    background-image:url('/static/icons/saveLight.png');
 }
