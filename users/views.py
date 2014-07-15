@@ -1,23 +1,18 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from django.http import Http404
-from django.views.decorators.http import require_POST
 from django.contrib.auth import logout as alogout, login as alogin, authenticate
-from django.contrib.auth.models import User
-from django.http import HttpResponse, HttpResponseRedirect
-from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
-from django.template import RequestContext, loader
-from django.core.exceptions import SuspiciousOperation, PermissionDenied
-from django.template.response import TemplateResponse
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render, redirect
+from django.template.response import TemplateResponse
+from django.views.decorators.http import require_POST
 
-from users.forms import ImportForm
+from bmat import settings
 from bookmarks.models import Bookmark
+from users.forms import ImportForm
 
 import random
 import string
-import re, json, datetime
-from bmat import settings
+import re, datetime
 
 @login_required
 def home(request):

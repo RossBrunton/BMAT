@@ -1,18 +1,13 @@
-from django.db import models
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-from django.template import defaultfilters
-from django.core.exceptions import SuspiciousOperation
-from django.db.models import Q
-from django.template import defaultfilters
-from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
+from django.db import models
+from django.template import defaultfilters
 
 from tags.models import Tag
 
-import requests
-import json
 from HTMLParser import HTMLParser
+import json
+import requests
 
 class Bookmark(models.Model):
     class Meta:

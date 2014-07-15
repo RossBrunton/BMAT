@@ -1,6 +1,4 @@
-from django.conf.urls import patterns, include, url
-
-import tags.views as views
+from django.conf.urls import patterns, url
 
 urlpatterns = patterns("",
      url(r'^$', "tags.views.home", name="home"),

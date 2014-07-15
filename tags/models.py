@@ -1,11 +1,8 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.template import defaultfilters
-from django.core.exceptions import SuspiciousOperation
-from django.db.models import Q
-from django.template import defaultfilters
-from django.contrib.auth.models import User
 
 # from bookmarks.models import Bookmark
 
@@ -55,8 +52,6 @@ class Tag(models.Model):
         out = []
         
         tags = Tag.expand_implied_by([self])
-        
-        print tags
         
         for t in tags:
             bms = Bookmark.objects.filter(owner=self.owner, tags=t)

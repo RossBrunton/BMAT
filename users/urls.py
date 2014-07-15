@@ -1,6 +1,4 @@
-from django.conf.urls import patterns, include, url
-from django.contrib.auth.views import\
-    password_reset, password_reset_done, password_reset_confirm, password_reset_complete
+from django.conf.urls import patterns, url
 
 urlpatterns = patterns("",
     url(r"^$", "users.views.home", name="home"),

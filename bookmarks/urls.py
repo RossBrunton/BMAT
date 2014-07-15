@@ -1,6 +1,4 @@
-from django.conf.urls import patterns, include, url
-
-import bookmarks.views as views
+from django.conf.urls import patterns, url
 
 urlpatterns = patterns("",
     url(r'^$', "bookmarks.views.home", name="home"),
