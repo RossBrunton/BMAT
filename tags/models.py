@@ -20,6 +20,7 @@ colours_enum = [
     ("yellow", "Yellow"),
     ("magenta", "Magenta"),
     ("cyan", "Cyan"),
+    ("orange", "Orange"),
 ]
 
 class Tag(models.Model):

@@ -164,9 +164,9 @@ nav a:hover {
 }
 
 .blue {
-    background-color:#9999cc;
-    background-image: linear-gradient(180deg, #9999cc, #6666aa);
-    border-color:#6666aa;
+    background-color:#aaaaee;
+    background-image: linear-gradient(180deg, #aaaaee, #7777cc);
+    border-color:#7777cc;
     color:#222244;
 }
 
@@ -185,10 +185,10 @@ nav a:hover {
 }
 
 .yellow {
-    background-color:#cccc99;
-    background-image: linear-gradient(180deg, #cccc99, #aaaa66);
-    border-color:#aaaa66;
-    color:#444422;
+    background-color:#eeee99;
+    background-image: linear-gradient(180deg, #eeee99, #cccc66);
+    border-color:#cccc66;
+    color:#666622;
 }
 
 .magenta {
@@ -199,10 +199,17 @@ nav a:hover {
 }
 
 .cyan {
-    background-color:#99cccc;
-    background-image: linear-gradient(180deg, #99cccc, #66aaaa);
-    border-color:#66aaaa;
-    color:#224444;
+    background-color:#99dddd;
+    background-image: linear-gradient(180deg, #99dddd, #66bbbb);
+    border-color:#66bbbb;
+    color:#225555;
+}
+
+.orange {
+    background-color:#ddbb88;
+    background-image: linear-gradient(180deg, #ddbb88, #bb9955);
+    border-color:#bb9955;
+    color:#665533;
 }
 
 .hidden {

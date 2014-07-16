@@ -23,8 +23,6 @@ class Bookmark(models.Model):
         return "Bookmark '"+self.title+"' for "+self.owner.username
     
     def tag(self, tag):
-        print type(tag)
-        
         if isinstance(tag, (int, long)):
             try:
                 tag = Tag.objects.get(pk=tag, owner=self.owner)

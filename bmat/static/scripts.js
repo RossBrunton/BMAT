@@ -29,6 +29,8 @@ window.bmat = (function() {
             var post = {};
             post.csrfmiddlewaretoken = $("#csrf").html();
             
+            if(!confirm("WHOA! Are you sure!")) return;
+            
             if($(this).parents(".bookmark").length) {
                 // Deleting a bookmark
                 post.bookmark = $(this).parents(".bookmark").data("id");
@@ -117,7 +119,7 @@ window.bmat = (function() {
             
             $.post(this.getAttribute("action"), $(this).serialize(), function(data) {
                 if("bookmark" in data) _replaceBookmark($(elem).parents(".bookmark").data("id"), true);
-                if("tag" in data) _replaceTagBlock($(elem).parents(".tagBlock").data("slug"), true);
+                if("tag" in data) _replaceTagBlock($(elem).parents(".tagBlock").data("slug"), data.tag.slug, true);
             }, "json");
         });
         
@@ -157,15 +159,21 @@ window.bmat = (function() {
     var _replaceBookmark = function(id, expand) {
         $.get("/bookmarks/"+id+"/html", function(e) {
             $(".bookmark[data-id="+id+"]").replaceWith(e);
-            if(expand) $(".bookmark[data-id="+id+"] > .bookmarkBody").show();
+            if(expand) {
+                $(".bookmark[data-id="+id+"] > .bookmarkBody").show();
+                $(".bookmark[data-id="+id+"] .expand.button").addClass("open");
+            }
             _update();
         }, "text");
     };
     
-    var _replaceTagBlock = function(slug, expand) {
-        $.get("/tags/htmlBlock/"+slug, function(e) {
-            $(".tagBlock[data-slug="+slug+"]").replaceWith(e);
-            if(expand) $(".tagBlock[data-slug="+slug+"] > .tagBlockBody").show();
+    var _replaceTagBlock = function(oldSlug, newSlug, expand) {
+        $.get("/tags/htmlBlock/"+newSlug, function(e) {
+            $(".tagBlock[data-slug="+oldSlug+"]").replaceWith(e);
+            if(expand) {
+                $(".tagBlock[data-slug="+newSlug+"] > .tagBlockBody").show();
+                $(".tagBlock[data-slug="+newSlug+"] .expand.button").addClass("open");
+            }
             _update();
         }, "text");
     };

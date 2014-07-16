@@ -147,7 +147,7 @@ def rename(request, bookmark):
         raise SuspiciousOperation
     
     try:
-        bm = Bookmark.get(owner=request.user, pk=bookmark)
+        bm = Bookmark.objects.get(owner=request.user, pk=bookmark)
     except Bookmark.DoesNotExist:
         return HttpResponse('{"error":"Bookmark not found"}', content_type="application/json", status=422)
     

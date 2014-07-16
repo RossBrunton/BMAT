@@ -6,7 +6,7 @@
         <div class='title edit'>
             <form class='renameForm' method='POST' action='{% url "bookmarks:rename" bookmark=bm.id %}'>
                 {% csrf_token %}
-                <input class='renameEntry' name='name' type='text'/>
+                <input class='renameEntry' name='name' type='text' style='width:500px'/>
                 <a class='rename button'>&nbsp;</a>
             </form>
         </div>
