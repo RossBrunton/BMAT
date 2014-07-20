@@ -56,7 +56,7 @@ def pages(url="", count=0, start=0, end=0, dchar="r", division=10, **kwargs):
         
         p.append({"no":mpage, "start":division*(mpage-1), "end":division*(mpage-0)})'''
     
-    for i in range(1, mpage+1):
+    for i in range(1, mpage+2):
         p.append({"no":i, "start":division*(i-1), "end":division*i})
     
     kwargs["pages"] = p
