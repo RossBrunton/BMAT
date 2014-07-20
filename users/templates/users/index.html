@@ -8,7 +8,7 @@
     <form action='{% url "user:logout" %}' method='POST'>
         {% csrf_token %}
         <input type='submit' value='Log Out'/>
-        | <a href='{% url "bookmarks:export"}'>Export Bookmarks</a>
+        | <a href='{% url "bookmarks:export" %}'>Export Bookmarks</a>
     </form>
 </div>
 
