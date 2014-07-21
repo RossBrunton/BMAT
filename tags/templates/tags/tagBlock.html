@@ -12,11 +12,16 @@
             </form>
         </div>
         
+        <div class='flexStretch'></div>
+        
+        <span class='count'>{{ tag.bookmarks.all.count }}</span>
+        
         <div class='tags'>{% for t in tag.implies.all %}
             {% tag t %}
         {% endfor %}</div>
         
         <div class='buttons'>
+            
             <a class='expand button'>&nbsp;</a>
         </div>
     </div>
