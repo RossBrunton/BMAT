@@ -207,7 +207,7 @@ window.bmat = (function() {
                 $(".tagBlock[data-slug="+newSlug+"] > .body").show();
                 $(".tagBlock[data-slug="+newSlug+"] .expand.button").addClass("open");
                 $(".tagBlock[data-slug="+newSlug+"] .inlineUntag").css("width", "16px").css("display", "inline-block");
-                $(".bookmark[data-id="+id+"] input")[0].focus();
+                $(".bookmark[data-id="+newSlug+"] input")[0].focus();
             }
             _update();
         }, "text");
