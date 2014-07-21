@@ -19,7 +19,7 @@ def tag(context, tag, bookmark=None, **kwargs):
 @register.inclusion_tag('tags/tagBlock.html', takes_context=True)
 def tagBlock(context, tag, atf, **kwargs):
     kwargs["tag"] = tag
-    kwargs["implies"] = tag.implies.all()
+    kwargs["implies"] = Tag.expand_implies_check(tag.implies.all())
     kwargs["atf"] = atf
     
     return kwargs

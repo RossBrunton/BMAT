@@ -67,8 +67,8 @@ window.bmat = (function() {
             }, "json");
         });
         
-        // Inline untag button
-        $(".inlineUntag.button").on("click", function() {
+        // Inline untag button on bookmarks
+        $(".bookmark .inlineUntag.button").on("click", function() {
             var elem = this;
             
             var post = {};
@@ -82,17 +82,32 @@ window.bmat = (function() {
             }, "json");
         });
         
+        // Inline untag button on tagBlocks
+        $(".tagBlock .inlineUntag.button").on("click", function() {
+            var elem = this;
+            
+            var post = {};
+            post.csrfmiddlewaretoken = $("#csrf").html();
+            
+            var tag = $(this).parents(".tagBlock").data("slug");
+            post.tag = $(this).parents(".tag").data("slug");
+            
+            $.post("/tags/unimply/"+tag, post, function(e) {
+                _replaceTagBlock(tag, tag, true);
+            }, "json");
+        });
+        
         // Open/close button
         $(".expand.button").on("click", function() {
             if($(this).hasClass("open")) {
                 $(this).parents(".bookmark").children(".bookmarkBody").slideUp("fast");
                 $(this).parents(".tagBlock").children(".tagBlockBody").slideUp("fast");
-                $(this).parents(".bookmark").find(".inlineUntag").animate({"width":"0px"}, "fast");
+                $(this).parents(".bookmark, .tagBlock").find(".inlineUntag").animate({"width":"0px"}, "fast");
                 $(this).removeClass("open");
             }else{
                 $(this).parents(".bookmark").children(".bookmarkBody").slideDown("fast");
                 $(this).parents(".tagBlock").children(".tagBlockBody").slideDown("fast");
-                $(this).parents(".bookmark").find(".inlineUntag").animate({"width":"16px"}, "fast");
+                $(this).parents(".bookmark, .tagBlock").find(".inlineUntag").animate({"width":"16px"}, "fast");
                 $(this).addClass("open");
             }
         });
@@ -180,6 +195,7 @@ window.bmat = (function() {
             if(expand) {
                 $(".bookmark[data-id="+id+"] > .bookmarkBody").show();
                 $(".bookmark[data-id="+id+"] .expand.button").addClass("open");
+                $(".bookmark[data-id="+id+"] .inlineUntag").css("width", "16px").css("display", "inline-block");
                 $(".bookmark[data-id="+id+"] input")[0].focus();
             }
             _update();
@@ -192,6 +208,8 @@ window.bmat = (function() {
             if(expand) {
                 $(".tagBlock[data-slug="+newSlug+"] > .tagBlockBody").show();
                 $(".tagBlock[data-slug="+newSlug+"] .expand.button").addClass("open");
+                $(".tagBlock[data-slug="+newSlug+"] .inlineUntag").css("width", "16px").css("display", "inline-block");
+                $(".bookmark[data-id="+id+"] input")[0].focus();
             }
             _update();
         }, "text");

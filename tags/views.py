@@ -8,6 +8,7 @@ from django.views.decorators.http import require_POST
 
 from tags.models import tags_by_user, Tag
 from bookmarks.forms import AddTagForm
+from .templatetags.tag import tagBlock
 
 @login_required
 def home(request):
@@ -62,7 +63,7 @@ def delete(request):
 def htmlBlock(request, tag):
     tag = get_object_or_404(Tag, slug=tag, owner=request.user)
     
-    return TemplateResponse(request, "tags/tagBlock.html", {"tag":tag, "atf":AddTagForm(auto_id=False)})
+    return TemplateResponse(request, "tags/tagBlock.html", tagBlock({}, tag, AddTagForm(auto_id=False)))
 
 
 @login_required
@@ -107,3 +108,21 @@ def implies(request, tag):
     implicator.implies.add(implicatee)
     
     return HttpResponse('{"tag":'+implicator.to_json()+'}', content_type="application/json")
+
+
+@login_required
+@require_POST
+def unimply(request, tag):
+    if "tag" not in request.POST:
+        raise SuspiciousOperation
+    
+    parent = get_object_or_404(Tag, owner=request.user, slug=tag)
+    
+    try:
+        child = Tag.objects.get(owner=request.user, slug=request.POST["tag"])
+    except Tag.DoesNotExist:
+        return HttpResponse('{"error":"Tag not found"}', content_type="application/json", status=422)
+    
+    parent.implies.remove(child)
+    
+    return HttpResponse('{"tag":'+parent.to_json()+'}', content_type="application/json")

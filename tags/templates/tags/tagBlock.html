@@ -16,7 +16,7 @@
         
         <span class='count'>{{ tag.bookmarks.all.count }}</span>
         
-        <div class='tags'>{% for t in tag.implies.all %}
+        <div class='tags'>{% for t in implies %}
             {% tag t %}
         {% endfor %}</div>
         

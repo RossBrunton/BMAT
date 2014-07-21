@@ -11,6 +11,7 @@ from bmat.utils import parse_split
 from bookmarks.forms import AddTagForm
 from bookmarks.models import bookmarks_by_user, Bookmark
 from tags.models import Tag
+from .templatetags.bookmark import bookmark as bookmarkTag
 
 @login_required
 def home(request):
@@ -85,13 +86,7 @@ def delete(request):
 def html(request, bookmark):
     bm = get_object_or_404(Bookmark, pk=bookmark, owner=request.user)
     
-    ctx = {}
-    
-    ctx["bm"] = bm
-    ctx["tags"] = Tag.expand_implies(bm.tags.all())
-    ctx["atf"] = AddTagForm(auto_id=False)
-    
-    return TemplateResponse(request, "bookmarks/bookmark.html", ctx)
+    return TemplateResponse(request, "bookmarks/bookmark.html", bookmarkTag({}, bm, AddTagForm(auto_id=False)))
 
 
 @login_required

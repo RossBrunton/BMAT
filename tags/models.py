@@ -120,6 +120,25 @@ class Tag(models.Model):
         
         out.sort(lambda a, b: cmp(a.slug, b.slug))
         return out
+    
+    @staticmethod
+    def expand_implied_by_check(tags):
+        """ Same as expand_implied_by, but as a pair, second element is whether the given tag is attached directly
+        rather than implied. """
+        out = map(lambda x : (x, True), list(tags))
+        tlist = list(tags)
+        
+        i = 0
+        while i < len(tlist):
+            for implies in tlist[i].implied_by.all():
+                if implies not in out:
+                    out.append((implies, False))
+                    tlist.append(implies)
+            
+            i += 1
+        
+        out.sort(lambda a, b: cmp(a[0].slug, b[0].slug))
+        return out
 
 
 def tags_by_user(user):
