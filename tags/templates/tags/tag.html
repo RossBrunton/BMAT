@@ -1,3 +1,5 @@
-<div class='tag {{ tag.colour }}' data-id='{{ tag.pk }}'>
+<div class='tag {{ tag.colour }}' data-id='{{ tag.pk }}' data-slug='{{ tag.slug }}'
+{% if bookmark %}data-bookmark='{{ bookmark.pk }}'{% endif %}>
     <a href='{% url "tags:filter" tag=tag.slug %}'>{{ tag.name }}</a>
+    {% if explicit %}<a class='inlineUntag button'>&nbsp;</a>{% endif %}
 </div>

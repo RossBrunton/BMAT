@@ -67,15 +67,32 @@ window.bmat = (function() {
             }, "json");
         });
         
+        // Inline untag button
+        $(".inlineUntag.button").on("click", function() {
+            var elem = this;
+            
+            var post = {};
+            post.csrfmiddlewaretoken = $("#csrf").html();
+            
+            post.bookmark = $(this).parents(".tag").data("bookmark");
+            post.tag = $(this).parents(".tag").data("slug");
+            
+            $.post("/bookmarks/"+post.bookmark+"/untag", post, function(e) {
+                _replaceBookmark(post.bookmark, true);
+            }, "json");
+        });
+        
         // Open/close button
         $(".expand.button").on("click", function() {
             if($(this).hasClass("open")) {
                 $(this).parents(".bookmark").children(".bookmarkBody").slideUp("fast");
                 $(this).parents(".tagBlock").children(".tagBlockBody").slideUp("fast");
+                $(this).parents(".bookmark").find(".inlineUntag").animate({"width":"0px"}, "fast");
                 $(this).removeClass("open");
             }else{
                 $(this).parents(".bookmark").children(".bookmarkBody").slideDown("fast");
                 $(this).parents(".tagBlock").children(".tagBlockBody").slideDown("fast");
+                $(this).parents(".bookmark").find(".inlineUntag").animate({"width":"16px"}, "fast");
                 $(this).addClass("open");
             }
         });
@@ -136,6 +153,7 @@ window.bmat = (function() {
     var _clean = function() {
         $(".bookmark .delete.button, .tagBlock .delete.button").off();
         $(".untag.button").off();
+        $(".inlineUntag.button").off();
         $(".expand.button").off();
         $(".tagEntry").off();
         
@@ -162,6 +180,7 @@ window.bmat = (function() {
             if(expand) {
                 $(".bookmark[data-id="+id+"] > .bookmarkBody").show();
                 $(".bookmark[data-id="+id+"] .expand.button").addClass("open");
+                $(".bookmark[data-id="+id+"] input")[0].focus();
             }
             _update();
         }, "text");

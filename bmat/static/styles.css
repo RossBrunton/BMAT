@@ -136,6 +136,7 @@ nav a:hover {
     border: 1px solid;
     margin-right:4px;
     border-radius:5px;
+    overflow:hidden;
 }
 
 .tag a, .tagBlock a {
@@ -240,6 +241,7 @@ nav a:hover {
     display:inline-block;
     margin-top:4px;
     cursor:pointer;
+    overflow:hidden;
 }
 
 .delete.button {
@@ -261,6 +263,13 @@ nav a:hover {
 
 .untag.button {
     background-image:url('/static/icons/removeTag.png');
+}
+
+.inlineUntag.button {
+    background-image:url('/static/icons/removeTag.png');
+    margin-top:0px;
+    display:none;
+    width:0px;
 }
 
 .rename.button {
@@ -287,6 +296,10 @@ nav a:hover {
 }
 
 .black .untag.button, .darkblue .untag.button, .darkgreen .untag.button, .darkred .untag.button {
+    background-image:url('/static/icons/removeTagLight.png');
+}
+
+.black .inlineUntag.button, .darkblue .inlineUntag.button, .darkgreen .inlineUntag.button, .darkred .inlineUntag.button {
     background-image:url('/static/icons/removeTagLight.png');
 }
 

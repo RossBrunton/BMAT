@@ -88,6 +88,25 @@ class Tag(models.Model):
         return out
     
     @staticmethod
+    def expand_implies_check(tags):
+        """ Same as expand_implies, but as a pair, second element is whether the given tag is attached directly rather
+        than implied. """
+        out = map(lambda x : (x, True), list(tags))
+        tlist = list(tags)
+        
+        i = 0
+        while i < len(tlist):
+            for implied in tlist[i].implies.all():
+                if implied not in tlist:
+                    out.append((implied, False))
+                    tlist.append(implied)
+            
+            i += 1
+        
+        out.sort(lambda a, b: cmp(a[0].slug, b[0].slug))
+        return out
+    
+    @staticmethod
     def expand_implied_by(tags):
         out = list(tags)
         

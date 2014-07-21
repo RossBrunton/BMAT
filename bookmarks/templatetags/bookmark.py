@@ -14,7 +14,7 @@ register = template.Library()
 @register.inclusion_tag('bookmarks/bookmark.html', takes_context=True)
 def bookmark(context, bookmark, atf, untag=None, **kwargs):
     kwargs["bm"] = bookmark
-    kwargs["tags"] = Tag.expand_implies(bookmark.tags.all())
+    kwargs["tags"] = Tag.expand_implies_check(bookmark.tags.all())
     kwargs["atf"] = atf
     kwargs["untag"] = untag
     
