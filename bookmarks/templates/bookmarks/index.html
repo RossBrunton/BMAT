@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% load form_errors bookmark pages %}
+{% load form_errors bookmark pages url_add %}
 
 {% block title %}Bookmarks{% endblock %}
 
@@ -8,12 +8,7 @@
 
 {% form_errors form %}
 
-<div class='box'>
-    <form id='add-bookmark' method="POST">
-        {% csrf_token %}
-        <input type='text' name='url'/> <input type='submit'/>
-    </form>
-</div>
+{% url_add %}
 
 <div id='bookmark-list'>
     {% for bm in bookmarks %}

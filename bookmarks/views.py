@@ -58,8 +58,12 @@ def add(request):
             return HttpResponse('{"error":"Invalid URL"}', content_type="application/json", status=422)
     
     bm = Bookmark(owner=request.user, url=url)
+    
     bm.download_title()
     bm.save()
+    
+    if "tag" in request.POST:
+        bm.tag(request.POST["tag"])
     
     return HttpResponse(bm.to_json(), content_type="application/json")
 

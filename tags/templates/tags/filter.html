@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
-{% load tag bookmark %}
+{% load tag bookmark url_add %}
 
 {% block title %}{{ tag.name }}{% endblock %}
 
 {% block content %}
-
+{% url_add tag %}
 {% tagBlock tag atf %}
 
 <div id='bookmark-list'>
