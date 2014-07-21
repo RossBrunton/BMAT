@@ -8,18 +8,24 @@
     <form action='{% url "user:logout" %}' method='POST'>
         {% csrf_token %}
         <input type='submit' value='Log Out'/>
-        | <a href='{% url "bookmarks:export" %}'>Export Bookmarks</a>
     </form>
 </div>
 
 <div class='box'>
-    
+    Please note that if you export your bookmarks and then import them again, "implies" relationships between tags
+    won't be preserved.
+</div>
+
+<div class='box'>
+    <button><a href='{% url "bookmarks:export" %}' style='color:inherit'>Export Bookmarks To HTML</a></button>
+</div>
+
+<div class='box'>
     <form enctype='multipart/form-data' action='{% url "user:import" %}' method='POST'>
         {% csrf_token %}
-        {{ importForm.file }}
-        <label>{{ importForm.use_tags }} Include Tags</label>
-        <input type='submit' value='Import Bookmarks From file'/> (Exporting and importing bookmarks will not preserve
-         relationships between tags)
+        <label>{{ importForm.use_tags }} Include Tags (If available)</label><br/>
+        {{ importForm.file }}<br/>
+        <input type='submit' value='Import Bookmarks From HTML'/>
     </form>
 </div>
 
