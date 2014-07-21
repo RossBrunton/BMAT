@@ -95,15 +95,26 @@ nav a:hover {
     display:inline-block;
     width:32px;
     padding:2px;
+    padding-top:3px;
     text-align:center;
 }
 
 .head .title {
     padding:2px;
+    padding-top:3px;
 }
 
 .head .title.edit {
     display:none;
+    padding:0px;
+}
+
+.head .title.edit input {
+    margin:0px;
+}
+
+.head .title.edit .done {
+    margin-top:0px;
 }
 
 .head .tags {
@@ -125,7 +136,8 @@ nav a:hover {
 }
 
 .tag {
-    display:inline-block;
+    display:flex;
+    align-items:center;
     padding:2px;
     padding-left:4px;
     padding-right:4px;
@@ -269,7 +281,13 @@ nav a:hover {
 }
 
 .rename.button {
+    margin-top:0px;
     background-image:url('/static/icons/save.png');
+}
+
+form.renameForm {
+    display:flex;
+    align-items:center;
 }
 
 
