@@ -1,6 +1,6 @@
 {% load tag %}
-<div class='tagBlock {{ tag.colour }}' data-id='{{ tag.pk }}' data-slug='{{ tag.slug }}'>
-    <div class='tagBlockHead'>
+<div class='tagBlock box block {{ tag.colour }}' data-id='{{ tag.pk }}' data-slug='{{ tag.slug }}'>
+    <div class='head'>
         <div class='title noedit'><a href='{% url "tags:filter" tag=tag.slug %}'>{{ tag.name }}</a></div>
         
         <div class='title edit'>
@@ -26,7 +26,7 @@
         </div>
     </div>
     
-    <div class='tagBlockBody' style='display:none'>
+    <div class='body' style='display:none'>
         <div class=''>{% for t in tag.implied_by.all %}
             {% tag t %}
         {% endfor %}</div>

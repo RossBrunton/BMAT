@@ -25,7 +25,7 @@ window.bmat = (function() {
         _clean();
         
         // Delete button
-        $(".bookmark .delete.button, .tagBlock .delete.button").on("click", function() {
+        $(".block .delete.button").on("click", function() {
             var post = {};
             post.csrfmiddlewaretoken = $("#csrf").html();
             
@@ -100,14 +100,12 @@ window.bmat = (function() {
         // Open/close button
         $(".expand.button").on("click", function() {
             if($(this).hasClass("open")) {
-                $(this).parents(".bookmark").children(".bookmarkBody").slideUp("fast");
-                $(this).parents(".tagBlock").children(".tagBlockBody").slideUp("fast");
-                $(this).parents(".bookmark, .tagBlock").find(".inlineUntag").animate({"width":"0px"}, "fast");
+                $(this).parents(".block").children(".body").slideUp("fast");
+                $(this).parents(".block").find(".inlineUntag").animate({"width":"0px"}, "fast");
                 $(this).removeClass("open");
             }else{
-                $(this).parents(".bookmark").children(".bookmarkBody").slideDown("fast");
-                $(this).parents(".tagBlock").children(".tagBlockBody").slideDown("fast");
-                $(this).parents(".bookmark, .tagBlock").find(".inlineUntag").animate({"width":"16px"}, "fast");
+                $(this).parents(".block").children(".body").slideDown("fast");
+                $(this).parents(".block").find(".inlineUntag").animate({"width":"16px"}, "fast");
                 $(this).addClass("open");
             }
         });
@@ -131,15 +129,15 @@ window.bmat = (function() {
         // Title editing
         $(".editTitle").on("click", function(e) {
             if(!$(this).hasClass("open")) {
-                $(this).parents(".bookmark, .tagBlock").find(".title.noedit").hide();
-                $(this).parents(".bookmark, .tagBlock").find(".title.edit").show();
-                $(this).parents(".bookmark, .tagBlock").find(".title.edit input[name=name]").val(
+                $(this).parents(".block").find(".title.noedit").hide();
+                $(this).parents(".block").find(".title.edit").show();
+                $(this).parents(".block").find(".title.edit input[name=name]").val(
                     $(this).parents(".bookmark, .tagBlock").find(".title.noedit a, .title.noedit").first().text()
                 );
                 $(this).addClass("open");
             }else{
-                $(this).parents(".bookmark, .tagBlock").find(".title.noedit").show();
-                $(this).parents(".bookmark, .tagBlock").find(".title.edit").hide();
+                $(this).parents(".block").find(".title.noedit").show();
+                $(this).parents(".block").find(".title.edit").hide();
                 $(this).removeClass("open");
             }
         });
@@ -161,12 +159,12 @@ window.bmat = (function() {
         });
         
         $(".addTag.button").on("click", function(e) {
-            $(this).parents(".tagBlock, .bookmark").find(".tagForm").submit();
+            $(this).parents(".block").find(".tagForm").submit();
         });
     };
     
     var _clean = function() {
-        $(".bookmark .delete.button, .tagBlock .delete.button").off();
+        $(".delete.button").off();
         $(".untag.button").off();
         $(".inlineUntag.button").off();
         $(".expand.button").off();
@@ -193,7 +191,7 @@ window.bmat = (function() {
         $.get("/bookmarks/"+id+"/html", function(e) {
             $(".bookmark[data-id="+id+"]").replaceWith(e);
             if(expand) {
-                $(".bookmark[data-id="+id+"] > .bookmarkBody").show();
+                $(".bookmark[data-id="+id+"] > .body").show();
                 $(".bookmark[data-id="+id+"] .expand.button").addClass("open");
                 $(".bookmark[data-id="+id+"] .inlineUntag").css("width", "16px").css("display", "inline-block");
                 $(".bookmark[data-id="+id+"] input")[0].focus();
@@ -206,7 +204,7 @@ window.bmat = (function() {
         $.get("/tags/htmlBlock/"+newSlug, function(e) {
             $(".tagBlock[data-slug="+oldSlug+"]").replaceWith(e);
             if(expand) {
-                $(".tagBlock[data-slug="+newSlug+"] > .tagBlockBody").show();
+                $(".tagBlock[data-slug="+newSlug+"] > .body").show();
                 $(".tagBlock[data-slug="+newSlug+"] .expand.button").addClass("open");
                 $(".tagBlock[data-slug="+newSlug+"] .inlineUntag").css("width", "16px").css("display", "inline-block");
                 $(".bookmark[data-id="+id+"] input")[0].focus();

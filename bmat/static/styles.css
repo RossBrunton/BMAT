@@ -72,7 +72,7 @@ nav a:hover {
     color:#E9C229 !important;
 }
 
-.box, .bookmark, .tagBlock {
+.box {
     margin-left:10px;
     margin-right:10px;
     background:#fafafa;
@@ -83,42 +83,38 @@ nav a:hover {
     margin-top:5px;
 }
 
-.bookmarkHead, .tagBlockHead {
+.head {
     display:flex;
-}
-
-.tagBlockHead .countContainer {
-    margin-left:auto;
 }
 
 .flexStretch {
     flex:1 1 auto;
 }
 
-.tagBlockHead .count {
+.head .count {
     display:inline-block;
     width:32px;
     padding:2px;
     text-align:center;
 }
 
-.bookmarkHead .title, .tagBlockHead .title {
+.head .title {
     padding:2px;
 }
 
-.bookmarkHead .title.edit, .tagBlockHead .title.edit {
+.head .title.edit {
     display:none;
 }
 
-.bookmarkHead .tags, .tagBlockHead .tags {
+.head .tags {
     display:flex;
 }
 
-.bookmarkBody, .tagBlockBody {
+.body {
     display:flex;
 }
 
-.bookmarkBody .right, .tagBlockBody .right {
+.body .right {
     display:flex;
     margin-left:auto;
 }

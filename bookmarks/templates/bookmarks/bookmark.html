@@ -1,6 +1,6 @@
 {% load tag %}
-<div class='bookmark' data-id='{{ bm.pk }}'>
-    <div class='bookmarkHead'>
+<div class='bookmark box block' data-id='{{ bm.pk }}'>
+    <div class='head'>
         <div class='title noedit'><a href='{{ bm.url }}'>{{ bm.title }}</a></div>
         
         <div class='title edit'>
@@ -22,7 +22,7 @@
         </div>
     </div>
     
-    <div class='bookmarkBody' style='display:none'>
+    <div class='body' style='display:none'>
         <div class='url'>{{ bm.url }} | Added {{ bm.added|date:"D j/n/y H:i" }}</div>
         
         <div class='right'>
