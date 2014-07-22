@@ -16,7 +16,7 @@ def bookmark(context, bookmark, atf, untag=None, **kwargs):
     kwargs["bm"] = bookmark
     kwargs["tags"] = Tag.expand_implies_check(bookmark.tags.all())
     kwargs["atf"] = atf
-    kwargs["untag"] = untag
+    # kwargs["untag"] = untag
     
     return kwargs
 
