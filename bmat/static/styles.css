@@ -11,11 +11,11 @@ form {
 
 a {
     text-decoration:none;
-    color:#222222;
+    color:#333333;
 }
 
 a:visited {
-    color:#666666;
+    color:#888888;
 }
 
 #error {
@@ -155,7 +155,7 @@ nav a:hover {
     background-color:#f8f8f8;
     background-image: linear-gradient(180deg, #f8f8f8, #cccccc);
     border-color:#cccccc;
-    color:#666666;
+    color:#777777;
 }
 
 .black {
