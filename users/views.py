@@ -1,6 +1,6 @@
 from django.contrib.auth import logout as alogout, login as alogin, authenticate
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.template.response import TemplateResponse
@@ -8,7 +8,7 @@ from django.views.decorators.http import require_POST
 
 from bmat import settings
 from bookmarks.models import Bookmark
-from users.forms import ImportForm
+from users.forms import ImportForm, CustomUserCreationForm
 
 import random
 import string
@@ -74,15 +74,18 @@ def register(request):
         return render(request, "users/no_register.html", {})
     
     if request.method == "GET":
-        return render(request, "users/register.html", {"form":UserCreationForm()})
+        return render(request, "users/register.html", {"form":CustomUserCreationForm()})
     
     elif request.method == "POST":
-        f = UserCreationForm(data=request.POST)
+        f = CustomUserCreationForm(data=request.POST)
         
         if not f.is_valid():
             return render(request, "users/register.html", {"form":f})
         
         u = f.save()
+        
+        u.email = f.cleaned_data.get("email", "")
+        u.save()
     
     return redirect("/")
 

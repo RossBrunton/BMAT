@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-
 {% load form_errors %}
 
 {% block title %}Login{% endblock %}
@@ -11,13 +10,13 @@
 <div class='box'>
     <form method='POST'>
         {% csrf_token %}
-        Here you can login.
+        <strong>Log In</strong>
         {% if can_register %}
-            If you don't have an account, register <a href='{% url "user:register" %}'>here</a>
+            <br/>If you don't have an account, register <a href='{% url "user:register" %}'>here</a>
         {% endif %}<br/>
         <label>Username: {{ form.username }}</label><br/>
         <label>Password: {{ form.password }}</label><br/>
-        <input type='submit' value='Log In'/>
+        <input type='submit' value='Log In'/> - <a href='{% url "user:reset" %}'>Forgot Password?</a>
     </form>
 </div>
 

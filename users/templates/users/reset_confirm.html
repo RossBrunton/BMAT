@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load form_errors %}
+
+{% block title %}Password Reset{% endblock %}
+
+{% block content %}
+
+{% form_errors form %}
+
+<div class='box'>
+    {% if validlink %}
+        Just enter a new password twice, and then you can log in.
+        <form method="post">
+            {% csrf_token %}
+            <br/>{{ form.new_password1 }}
+            <br/>{{ form.new_password2 }}
+            <br/><input type="submit" value="Set Password" />
+        </form>
+    {% else %}
+        That code is invalid; maybe it expired
+    {% endif %}
+</div>
+{% endblock %}

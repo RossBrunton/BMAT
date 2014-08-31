@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load form_errors %}
+
+{% block title %}Reset Your Password{% endblock %}
+
+{% block content %}
+
+{% form_errors form %}
+
+<div class='box'>
+    <form method='POST'>
+        {% csrf_token %}
+        <strong>Forgot Password</strong><br/>
+        Enter your email here to be sent a reset token<br/>
+        {{ form.email }}<br/>
+        <input type="submit" value="Reset Password" placeholder="email"/>
+    </form>
+</div>
+{% endblock %}

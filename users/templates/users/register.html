@@ -11,8 +11,9 @@
 <div class='box'>
     <form method='POST'>
         {% csrf_token %}
-        Here you can register an account.<br/>
+        <strong>Register Account</strong><br/>
         <label>Username: {{ form.username }}</label><br/>
+        <label>Optional Email: {{ form.email }}</label><br/>
         <label>Password: {{ form.password1 }}</label><br/>
         <label>Repeat Password: {{ form.password2 }}</label><br/>
         <input type='submit' value='Register'/>
