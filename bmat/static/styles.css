@@ -3,7 +3,6 @@
  */
 body {
     margin:0px;
-    background:#eeeeee;
     color:#222222;
     padding-bottom:20px;
 }
@@ -100,12 +99,6 @@ nav a:hover {
 .box {
     margin-left:10px;
     margin-right:10px;
-    background:#fafafa;
-    background-image:linear-gradient(180deg, #eeeeee, #cccccc);
-    border:1px solid #cccccc;
-    border-radius:5px;
-    padding:5px;
-    margin-top:5px;
 }
 
 
@@ -116,7 +109,7 @@ nav a:hover {
     display:flex;
 }
 
-.head div {
+.head > div {
     padding:2px;
     padding-top:3px;
 }
@@ -125,6 +118,8 @@ nav a:hover {
     display:inline-block;
     width:32px;
     text-align:center;
+    padding:2px;
+    padding-top:3px;
 }
 
 .head .title {
@@ -202,94 +197,6 @@ nav a:hover {
 
 .tags.tags.tags {
     padding:0px;
-}
-
-
-/*
- * Colours
- */
-.white {
-    background-color:#f8f8f8;
-    background-image: linear-gradient(180deg, #f8f8f8, #cccccc);
-    border-color:#cccccc;
-    color:#777777;
-}
-
-.black {
-    background-color:#333333;
-    background-image: linear-gradient(180deg, #333333, #000000);
-    border-color:#000000;
-    color:#999999;
-}
-
-.darkblue {
-    background-color:#222255;
-    background-image: linear-gradient(180deg, #222255, #000033);
-    border-color:#000033;
-    color:#8899cc;
-}
-
-.darkgreen {
-    background-color:#225522;
-    background-image: linear-gradient(180deg, #225522, #003300);
-    border-color:#003300;
-    color:#77aa77;
-}
-
-.darkred {
-    background-color:#552222;
-    background-image: linear-gradient(180deg, #552222, #330000);
-    border-color:#330000;
-    color:#aa7777;
-}
-
-.blue {
-    background-color:#aaaaee;
-    background-image: linear-gradient(180deg, #aaaaee, #7777cc);
-    border-color:#7777cc;
-    color:#222244;
-}
-
-.green {
-    background-color:#99cc99;
-    background-image: linear-gradient(180deg, #99cc99, #66aa66);
-    border-color:#66aa66;
-    color:#224422;
-}
-
-.red {
-    background-color:#cc9999;
-    background-image: linear-gradient(180deg, #cc9999, #aa6666);
-    border-color:#aa6666;
-    color:#442222;
-}
-
-.yellow {
-    background-color:#eeee99;
-    background-image: linear-gradient(180deg, #eeee99, #cccc66);
-    border-color:#cccc66;
-    color:#666622;
-}
-
-.magenta {
-    background-color:#cc99cc;
-    background-image: linear-gradient(180deg, #cc99cc, #aa66aa);
-    border-color:#aa66aa;
-    color:#442244;
-}
-
-.cyan {
-    background-color:#99dddd;
-    background-image: linear-gradient(180deg, #99dddd, #66bbbb);
-    border-color:#66bbbb;
-    color:#225555;
-}
-
-.orange {
-    background-color:#ddbb88;
-    background-image: linear-gradient(180deg, #ddbb88, #bb9955);
-    border-color:#bb9955;
-    color:#665533;
 }
 
 

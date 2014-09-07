@@ -1,1 +1,190 @@
-/* Grey boxes is the default theme that other themes modify, so this is empty */
+/*
+ *  Basic Elements
+ */
+body {
+    background:#eeeeee;
+}
+
+
+/*
+ * Boxes
+ */
+.box {
+    background:#fafafa;
+    background-image:linear-gradient(180deg, #eeeeee, #cccccc);
+    border:1px solid #cccccc;
+    border-radius:5px;
+    padding:5px;
+    margin-top:5px;
+}
+
+
+/*
+ * Colours
+ */
+.white {
+    background-color:#f8f8f8;
+    background-image: linear-gradient(180deg, #f8f8f8, #cccccc);
+    border-color:#cccccc;
+    color:#777777;
+}
+
+.black {
+    background-color:#333333;
+    background-image: linear-gradient(180deg, #333333, #000000);
+    border-color:#000000;
+    color:#bbbbbb;
+}
+
+.darkblue {
+    background-color:#222255;
+    background-image: linear-gradient(180deg, #222255, #000033);
+    border-color:#000033;
+    color:#99aadd;
+}
+
+.darkgreen {
+    background-color:#225522;
+    background-image: linear-gradient(180deg, #225522, #003300);
+    border-color:#003300;
+    color:#88bb88;
+}
+
+.darkred {
+    background-color:#552222;
+    background-image: linear-gradient(180deg, #552222, #330000);
+    border-color:#330000;
+    color:#cc9999;
+}
+
+.blue {
+    background-color:#aaaaee;
+    background-image: linear-gradient(180deg, #aaaaee, #7777cc);
+    border-color:#7777cc;
+    color:#222244;
+}
+
+.green {
+    background-color:#99cc99;
+    background-image: linear-gradient(180deg, #99cc99, #66aa66);
+    border-color:#66aa66;
+    color:#224422;
+}
+
+.red {
+    background-color:#cc9999;
+    background-image: linear-gradient(180deg, #cc9999, #aa6666);
+    border-color:#aa6666;
+    color:#442222;
+}
+
+.yellow {
+    background-color:#eeee99;
+    background-image: linear-gradient(180deg, #eeee99, #cccc66);
+    border-color:#cccc66;
+    color:#666622;
+}
+
+.magenta {
+    background-color:#cc99cc;
+    background-image: linear-gradient(180deg, #cc99cc, #aa66aa);
+    border-color:#aa66aa;
+    color:#442244;
+}
+
+.cyan {
+    background-color:#99dddd;
+    background-image: linear-gradient(180deg, #99dddd, #66bbbb);
+    border-color:#66bbbb;
+    color:#225555;
+}
+
+.orange {
+    background-color:#ddbb88;
+    background-image: linear-gradient(180deg, #ddbb88, #bb9955);
+    border-color:#bb9955;
+    color:#665533;
+}
+
+
+/* 
+ * Buttons
+ */
+.button {
+    width:16px;
+    height:16px;
+    display:inline-block;
+    margin-top:4px;
+    cursor:pointer;
+    overflow:hidden;
+}
+
+.buttons.buttons.buttons {
+    padding:0px;
+}
+
+.delete.button {
+    background-image:url('/static/icons/delete.png');
+}
+
+.expand.button {
+    background-image:url('/static/icons/editExpand.png');
+}
+
+.editTitle.button {
+    background-image:url('/static/icons/rename.png');
+}
+
+.addTag.button {
+    background-image:url('/static/icons/addTag.png');
+    margin-right:16px;
+}
+
+.untag.button {
+    background-image:url('/static/icons/removeTag.png');
+}
+
+.inlineUntag.button {
+    background-image:url('/static/icons/removeTag.png');
+    margin-top:0px;
+    display:none;
+    width:0px;
+}
+
+.rename.button {
+    margin-top:0px;
+    background-image:url('/static/icons/save.png');
+}
+
+
+/*
+ * Buttons on dark backgrounds
+ */
+#error .delete.button, .black .delete.button, .darkblue .delete.button, .darkgreen .delete.button,
+    .darkred .delete.button {
+    background-image:url('/static/icons/deleteLight.png');
+}
+
+.black .expand.button, .darkblue .expand.button, .darkgreen .expand.button, .darkred .expand.button {
+    background-image:url('/static/icons/editExpandLight.png');
+}
+
+.black .editTitle.button, .darkblue .editTitle.button, .darkgreen .editTitle.button, .darkred .editTitle.button {
+    background-image:url('/static/icons/renameLight.png');
+}
+
+.black .addTag.button, .darkblue .addTag.button, .darkgreen .addTag.button, .darkred .addTag.button {
+    background-image:url('/static/icons/addTagLight.png');
+}
+
+.black .untag.button, .darkblue .untag.button, .darkgreen .untag.button, .darkred .untag.button {
+    background-image:url('/static/icons/removeTagLight.png');
+}
+
+.black > .inlineUntag.button, .darkblue > .inlineUntag.button, .darkgreen > .inlineUntag.button, .darkred > .inlineUntag.button {
+    background-image:url('/static/icons/removeTagLight.png');
+}
+
+.black .rename.button, .darkblue .rename.button, .darkgreen .rename.button, .darkred .rename.button {
+    background-image:url('/static/icons/saveLight.png');
+}

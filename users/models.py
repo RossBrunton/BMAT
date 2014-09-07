@@ -6,9 +6,11 @@ from django.dispatch import receiver
 
 class Settings(models.Model):
     THEME_GREY_BOXES = "grey_boxes"
+    THEME_LIGHT = "light"
     
     THEME_OPTIONS = (
-        ("grey_boxes", "Grey Boxes"),
+        (THEME_GREY_BOXES, "Grey Boxes"),
+        (THEME_LIGHT, "Light")
     )
     
     user = models.OneToOneField(User, unique=True)
