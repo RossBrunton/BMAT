@@ -1,0 +1,117 @@
+/*
+ *  Basic Elements
+ */
+body {
+    background:#f8f8f8;
+    color:#222222;
+}
+
+
+/*
+ * Boxes
+ */
+.box {
+    background:inherit;
+    border:0px;
+    border-bottom:2px solid #eeeeee;
+    padding-bottom:7px;
+    padding-top:7px;
+    padding-left:5px;
+    padding-right:5px;
+    margin-top:0px;
+    margin-bottom:0px;
+    border-radius:0px;
+}
+
+/*
+ * Tags
+ */
+.tag {
+    border:0px;
+    padding-left:6px;
+    padding-right:6px;
+}
+
+.tagBlock {
+    border:1px;
+    margin-top:2px;
+    margin-bottom:2px;
+    padding-top:5px;
+    padding-bottom:5px;
+    border-radius:3px;
+}
+
+/*
+ * Colours
+ */
+.white {
+    background-color:#e8e8e8;
+    border-color:#cccccc;
+    color:#777777;
+}
+
+.black {
+    background-color:#333333;
+    border-color:#000000;
+    color:#bbbbbb;
+}
+
+.darkblue {
+    background-color:#222255;
+    border-color:#000033;
+    color:#99aadd;
+}
+
+.darkgreen {
+    background-color:#225522;
+    border-color:#003300;
+    color:#88bb88;
+}
+
+.darkred {
+    background-color:#552222;
+    border-color:#330000;
+    color:#cc9999;
+}
+
+.blue {
+    background-color:#aaaaee;
+    border-color:#7777cc;
+    color:#222244;
+}
+
+.green {
+    background-color:#99cc99;
+    border-color:#66aa66;
+    color:#224422;
+}
+
+.red {
+    background-color:#cc9999;
+    border-color:#aa6666;
+    color:#442222;
+}
+
+.yellow {
+    background-color:#eeee99;
+    border-color:#cccc66;
+    color:#666622;
+}
+
+.magenta {
+    background-color:#cc99cc;
+    border-color:#aa66aa;
+    color:#442244;
+}
+
+.cyan {
+    background-color:#99dddd;
+    border-color:#66bbbb;
+    color:#225555;
+}
+
+.orange {
+    background-color:#ddbb88;
+    border-color:#bb9955;
+    color:#665533;
+}

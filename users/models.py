@@ -5,7 +5,16 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 class Settings(models.Model):
+    THEME_GREY_BOXES = "grey_boxes"
+    THEME_LIGHT = "light"
+    
+    THEME_OPTIONS = (
+        (THEME_GREY_BOXES, "Grey Boxes"),
+        (THEME_LIGHT, "Light")
+    )
+    
     user = models.OneToOneField(User, unique=True)
+    theme = models.CharField(max_length=10, default=THEME_GREY_BOXES, choices=THEME_OPTIONS)
     
     def __str__(self):
         return "Settings for "+self.user.username

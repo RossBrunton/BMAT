@@ -1,37 +1,14 @@
+/*
+ *  Basic Elements
+ */
 body {
     margin:0px;
-    background:#eeeeee;
     color:#222222;
     padding-bottom:20px;
 }
 
 form {
     display:inline;
-}
-
-a {
-    text-decoration:none;
-    color:#333333;
-}
-
-a:visited {
-    color:#888888;
-}
-
-#error {
-    display:flex;
-    padding:5px;
-    background-color:#994444;
-    border-bottom:1px solid #330000;
-    color:#eeaaaa;
-}
-
-.errorButtons {
-    margin-left:auto;
-}
-
-.errorText {
-    padding:2px;
 }
 
 nav {
@@ -49,6 +26,19 @@ footer {
     display:block;
 }
 
+
+/*
+ * Links
+ */
+a {
+    text-decoration:none;
+    color:#333333;
+}
+
+a:visited {
+    color:#888888;
+}
+
 nav a {
     display:block;
     margin-left: 5px;
@@ -57,7 +47,6 @@ nav a {
     margin-bottom: -1px;
     padding:5px;
     font-size:120%;
-    text-decoration:none;
     color:#999999 !important;
     border-bottom:2px solid transparent;
 }
@@ -72,15 +61,28 @@ nav a:hover {
     color:#E9C229 !important;
 }
 
-.box {
-    margin-left:10px;
-    margin-right:10px;
-    background:#fafafa;
-    background-image:linear-gradient(180deg, #eeeeee, #cccccc);
-    border:1px solid #cccccc;
-    border-radius:5px;
+.tag a, .tagBlock a {
+    color:inherit;
+}
+
+
+/*
+ * Errors
+ */
+#error {
+    display:flex;
     padding:5px;
-    margin-top:5px;
+    background-color:#994444;
+    border-bottom:1px solid #330000;
+    color:#eeaaaa;
+}
+
+.errorButtons {
+    margin-left:auto;
+}
+
+.errorText {
+    padding:2px;
 }
 
 .form-errors {
@@ -90,28 +92,42 @@ nav a:hover {
     color:#442222;
 }
 
+
+/*
+ * Boxes
+ */
+.box {
+    margin-left:10px;
+    margin-right:10px;
+}
+
+
+/*
+ * Top part of a block
+ */
 .head {
     display:flex;
 }
 
-.flexStretch {
-    flex:1 1 auto;
+.head > div {
+    padding:2px;
+    padding-top:3px;
 }
 
 .head .count {
     display:inline-block;
     width:32px;
+    text-align:center;
     padding:2px;
     padding-top:3px;
-    text-align:center;
 }
 
 .head .title {
-    padding:2px;
-    padding-top:3px;
+    flex:1 1 auto;
 }
 
 .head .title.edit {
+    /* Editing name box on titles page */
     display:none;
     padding:0px;
 }
@@ -128,8 +144,18 @@ nav a:hover {
     display:flex;
 }
 
+.head form {
+    display:flex;
+    align-items:center;
+}
+
+
+/* 
+ * Contents of a box, hidden until displayed with a button
+ */
 .body {
     display:flex;
+    visibility:none;
 }
 
 .body .right {
@@ -142,6 +168,21 @@ nav a:hover {
     font-style:italic;
 }
 
+/*
+ * Misc
+ */
+.hidden {
+    display:none;
+}
+
+.currentPage {
+    text-decoration:underline;
+}
+
+
+/*
+ * Tags
+ */
 .tag {
     display:flex;
     align-items:center;
@@ -154,102 +195,14 @@ nav a:hover {
     overflow:hidden;
 }
 
-.tag a, .tagBlock a {
-    color:inherit;
+.tags.tags.tags {
+    padding:0px;
 }
 
-.white {
-    background-color:#f8f8f8;
-    background-image: linear-gradient(180deg, #f8f8f8, #cccccc);
-    border-color:#cccccc;
-    color:#777777;
-}
 
-.black {
-    background-color:#333333;
-    background-image: linear-gradient(180deg, #333333, #000000);
-    border-color:#000000;
-    color:#999999;
-}
-
-.darkblue {
-    background-color:#222255;
-    background-image: linear-gradient(180deg, #222255, #000033);
-    border-color:#000033;
-    color:#8899cc;
-}
-
-.darkgreen {
-    background-color:#225522;
-    background-image: linear-gradient(180deg, #225522, #003300);
-    border-color:#003300;
-    color:#77aa77;
-}
-
-.darkred {
-    background-color:#552222;
-    background-image: linear-gradient(180deg, #552222, #330000);
-    border-color:#330000;
-    color:#aa7777;
-}
-
-.blue {
-    background-color:#aaaaee;
-    background-image: linear-gradient(180deg, #aaaaee, #7777cc);
-    border-color:#7777cc;
-    color:#222244;
-}
-
-.green {
-    background-color:#99cc99;
-    background-image: linear-gradient(180deg, #99cc99, #66aa66);
-    border-color:#66aa66;
-    color:#224422;
-}
-
-.red {
-    background-color:#cc9999;
-    background-image: linear-gradient(180deg, #cc9999, #aa6666);
-    border-color:#aa6666;
-    color:#442222;
-}
-
-.yellow {
-    background-color:#eeee99;
-    background-image: linear-gradient(180deg, #eeee99, #cccc66);
-    border-color:#cccc66;
-    color:#666622;
-}
-
-.magenta {
-    background-color:#cc99cc;
-    background-image: linear-gradient(180deg, #cc99cc, #aa66aa);
-    border-color:#aa66aa;
-    color:#442244;
-}
-
-.cyan {
-    background-color:#99dddd;
-    background-image: linear-gradient(180deg, #99dddd, #66bbbb);
-    border-color:#66bbbb;
-    color:#225555;
-}
-
-.orange {
-    background-color:#ddbb88;
-    background-image: linear-gradient(180deg, #ddbb88, #bb9955);
-    border-color:#bb9955;
-    color:#665533;
-}
-
-.hidden {
-    display:none;
-}
-
-.currentPage {
-    text-decoration:underline;
-}
-
+/* 
+ * Buttons
+ */
 .button {
     width:16px;
     height:16px;
@@ -257,6 +210,10 @@ nav a:hover {
     margin-top:4px;
     cursor:pointer;
     overflow:hidden;
+}
+
+.buttons.buttons.buttons {
+    padding:0px;
 }
 
 .delete.button {
@@ -292,12 +249,10 @@ nav a:hover {
     background-image:url('/static/icons/save.png');
 }
 
-form.renameForm {
-    display:flex;
-    align-items:center;
-}
 
-
+/*
+ * Buttons on dark backgrounds
+ */
 .black .delete.button, .darkblue .delete.button, .darkgreen .delete.button, .darkred .delete.button {
     background-image:url('/static/icons/deleteLight.png');
 }
@@ -316,7 +271,6 @@ form.renameForm {
 
 .black .addTag.button, .darkblue .addTag.button, .darkgreen .addTag.button, .darkred .addTag.button {
     background-image:url('/static/icons/addTagLight.png');
-    margin-right:16px;
 }
 
 .black .untag.button, .darkblue .untag.button, .darkgreen .untag.button, .darkred .untag.button {
