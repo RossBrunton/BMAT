@@ -8,7 +8,7 @@ from django.views.decorators.http import require_POST
 
 from bmat import settings
 from bookmarks.models import Bookmark
-from users.forms import ImportForm, CustomUserCreationForm
+from users.forms import ImportForm, CustomUserCreationForm, SettingsForm
 
 import random
 import string
@@ -16,10 +16,19 @@ import re, datetime
 
 @login_required
 def home(request):
+    if request.method == "POST":
+        form = SettingsForm(request.POST, instance=request.user.settings)
+        if form.is_valid():
+            form.save()
+        
+    else:
+        form = SettingsForm(instance=request.user.settings)
+    
     ctx = {}
     
     ctx["area"] = "user"
     ctx["importForm"] = ImportForm()
+    ctx["settings_form"] = form
     
     return TemplateResponse(request, "users/index.html", ctx)
 
@@ -36,7 +45,7 @@ def importFile(request):
         return HttpResponse('{"error":"File too large"}', content_type="application/json", status=422)
     
     try:
-        __handle_import(request.FILES["file"].read(), form.data.get("use_tags", False), request.user)
+        _handle_import(request.FILES["file"].read(), form.data.get("use_tags", False), request.user)
     except:
         return HttpResponse('{"error":"Invalid file"}', content_type="application/json", status=422)
     
@@ -90,7 +99,7 @@ def register(request):
     return redirect("/")
 
 
-def __handle_import(contents, use_tags, owner):
+def _handle_import(contents, use_tags, owner):
     lines = contents.split("\n")
     
     title = re.compile(r"<a.*?>(.+?)</a>", re.I)

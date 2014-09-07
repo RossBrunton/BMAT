@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load form_errors %}
 
 {% block title %}{{ user.username }}{% endblock %}
 
@@ -8,6 +9,16 @@
     <form action='{% url "user:logout" %}' method='POST'>
         {% csrf_token %}
         <input type='submit' value='Log Out'/>
+    </form>
+</div>
+
+{% form_errors settings_form %}
+
+<div class='box'>
+    <form method='POST'>
+        {% csrf_token %}
+        <label>Theme: {{ settings_form.theme }}</label><br/>
+        <input type='submit' value='Update Settings'/>
     </form>
 </div>
 
