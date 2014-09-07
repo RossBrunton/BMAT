@@ -225,7 +225,7 @@ window.bmat = (function() {
         });
         
         // Error closing
-        $("#error .delete.button").on("click", function(e) {
+        $("#error .close.button").on("click", function(e) {
             $(this).parents("#error").slideUp();
         });
     };

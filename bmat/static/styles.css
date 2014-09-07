@@ -298,9 +298,12 @@ form.renameForm {
 }
 
 
-#error .delete.button, .black .delete.button, .darkblue .delete.button, .darkgreen .delete.button,
-    .darkred .delete.button {
+.black .delete.button, .darkblue .delete.button, .darkgreen .delete.button, .darkred .delete.button {
     background-image:url('/static/icons/deleteLight.png');
+}
+
+#error .close.button {
+    background-image:url('/static/icons/close.png');
 }
 
 .black .expand.button, .darkblue .expand.button, .darkgreen .expand.button, .darkred .expand.button {
