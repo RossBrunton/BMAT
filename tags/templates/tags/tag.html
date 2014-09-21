@@ -1,5 +1,14 @@
 <div class='tag {{ tag.colour }}' data-id='{{ tag.pk }}' data-slug='{{ tag.slug }}'
 {% if bookmark %}data-bookmark='{{ bookmark.pk }}'{% endif %}>
     <a href='{% url "tags:filter" tag=tag.slug %}'>{{ tag.name }}</a>
-    {% if explicit %}<a class='inlineUntag button'>&nbsp;</a>{% endif %}
+    {% if explicit %}
+    <form action='{% url "tags:untag" %}' method='POST' class='inlineUntagForm'>
+        {% csrf_token %}
+        <input type='hidden' name='type' value='{{ rtf.set_type }}' />
+        <input type='hidden' name='tag_pk' value='{{ tag.pk }}' />
+        <input type='hidden' name='target_pk' value='{{ pk_target }}' />
+        <a class='inlineUntag button'>&nbsp;</a>
+    </form>
+    
+    {% endif %}
 </div>

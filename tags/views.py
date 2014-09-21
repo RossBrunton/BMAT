@@ -7,7 +7,8 @@ from django.template.response import TemplateResponse
 from django.views.decorators.http import require_POST
 
 from tags.models import Tag
-from bookmarks.forms import AddTagForm
+from tags.forms import AddTagForm, RemoveTagForm, RenameTagForm
+import tags
 from bookmarks.models import Bookmark
 from .templatetags.tag import tagBlock
 
@@ -17,7 +18,8 @@ def home(request):
     
     ctx["area"] = "tags"
     ctx["tags"] = Tag.by_user(request.user)
-    ctx["atf"] = AddTagForm(auto_id=False)
+    ctx["atf"] = AddTagForm(taggable_type="tag")
+    ctx["rtf"] = RemoveTagForm(taggable_type="tag")
     
     return TemplateResponse(request, "tags/index.html", ctx)
 
@@ -31,7 +33,8 @@ def filter(request, tag):
     ctx["area"] = "tags"
     ctx["bookmarks"] = Bookmark.get_by_tag(tag)
     ctx["tag"] = tag
-    ctx["atf"] = AddTagForm(auto_id=False)
+    ctx["atf"] = AddTagForm(taggable_type="tag")
+    ctx["rtf"] = RemoveTagForm(taggable_type="tag")
     
     return TemplateResponse(request, "tags/filter.html", ctx)
 
@@ -40,6 +43,68 @@ def suggest(request, value):
     tags = Tag.objects.filter(owner=request.user, slug__startswith=defaultfilters.slugify(value))[:10]
     
     return TemplateResponse(request, "tags/suggest.json", {"tags":tags, "value":value}, "application/json")
+
+
+@login_required
+@require_POST
+def tag(request):
+    f = AddTagForm(request.POST)
+    
+    if not f.is_valid():
+        return HttpResponse('{"error":"Form invalid"}', content_type="application/json", status=422)
+    
+    taggable = tags.lookup_taggable(f.cleaned_data["type"])
+    
+    if taggable is None:
+        return HttpResponse('{"error":"Taggable type invalid"}', content_type="application/json", status=422)
+    
+    try:
+        obj = get_object_or_404(taggable, owner=request.user, pk=f.cleaned_data["pk"])
+    except taggable.DoesNotExist:
+        return HttpResponse('{"error":"Taggable not found"}', content_type="application/json", status=422)
+    
+    tag = f.instance
+    try:
+        tag = Tag.objects.get(owner=request.user, slug=defaultfilters.slugify(f.instance.name))
+    except Tag.DoesNotExist:
+        pass
+    
+    f.instance.owner = request.user
+    obj.tag(tag)
+    
+    return HttpResponse(
+        '{{"obj":{}, "type":"{}"}}'.format(obj.to_json(), f.cleaned_data["type"]),
+        content_type="application/json"
+    )
+
+
+@login_required
+@require_POST
+def untag(request):
+    f = RemoveTagForm(request.POST)
+    
+    if not f.is_valid():
+        return HttpResponse('{"error":"Form invalid"}', content_type="application/json", status=422)
+    
+    taggable = tags.lookup_taggable(f.cleaned_data["type"])
+    if taggable is None:
+        return HttpResponse('{"error":"Taggable type invalid"}', content_type="application/json", status=422)
+    
+    try:
+        obj = get_object_or_404(taggable, owner=request.user, pk=f.cleaned_data["target_pk"])
+    except taggable.DoesNotExist:
+        return HttpResponse('{"error":"Taggable not found"}', content_type="application/json", status=422)
+    
+    try:
+        tag = Tag.objects.get(owner=request.user, pk=f.cleaned_data["tag_pk"])
+    except Tag.DoesNotExist:
+        return HttpResponse('{"error":"Tag to remove not found"}', content_type="application/json", status=422)
+    
+    obj.tags.remove(tag)
+    
+    return HttpResponse(
+        '{{"deleted":{}, "type":"{}"}}'.format(obj.pk, f.cleaned_data["type"]), content_type="application/json"
+    )
 
 
 @login_required
@@ -64,7 +129,10 @@ def delete(request):
 def htmlBlock(request, tag):
     tag = get_object_or_404(Tag, slug=tag, owner=request.user)
     
-    return TemplateResponse(request, "tags/tagBlock.html", tagBlock({}, tag, AddTagForm(auto_id=False)))
+    return TemplateResponse(
+        request, "tags/tagBlock.html",
+        tagBlock({}, tag, AddTagForm(taggable_type="tag"), RemoveTagForm(taggable_type="tag"))
+    )
 
 
 @login_required
@@ -73,7 +141,7 @@ def rename(request, tag):
     
     tagObj = get_object_or_404(Tag, owner=request.user, slug=tag)
     
-    form = AddTagForm(request.POST, instance=tagObj)
+    form = RenameTagForm(request.POST, instance=tagObj)
     
     if not form.is_valid():
         return HttpResponse('{"error":"Form invalid"}', content_type="application/json", status=422)
@@ -87,43 +155,4 @@ def rename(request, tag):
     
     form.save()
     
-    return HttpResponse('{"tag":'+tagObj.to_json()+'}', content_type="application/json")
-
-
-@login_required
-@require_POST
-def implies(request, tag):
-    f = AddTagForm(request.POST)
-    
-    try:
-        implicator = get_object_or_404(Tag, owner=request.user, slug=tag)
-    except Tag.DoesNotExist:
-        return HttpResponse('{"error":"Tag not found"}', content_type="application/json", status=422)
-    
-    if not f.is_valid():
-        return HttpResponse('{"error":"Form invalid"}', content_type="application/json", status=422)
-    
-    implicatee = Tag.get_or_create_with_slug(request.user, f.instance)
-    implicatee.owner = request.user
-    
-    implicator.tags.add(implicatee)
-    
-    return HttpResponse('{"tag":'+implicator.to_json()+'}', content_type="application/json")
-
-
-@login_required
-@require_POST
-def unimply(request, tag):
-    if "tag" not in request.POST:
-        raise SuspiciousOperation
-    
-    parent = get_object_or_404(Tag, owner=request.user, slug=tag)
-    
-    try:
-        child = Tag.objects.get(owner=request.user, slug=request.POST["tag"])
-    except Tag.DoesNotExist:
-        return HttpResponse('{"error":"Tag not found"}', content_type="application/json", status=422)
-    
-    parent.tags.remove(child)
-    
-    return HttpResponse('{"tag":'+parent.to_json()+'}', content_type="application/json")
+    return HttpResponse('{"obj":'+tagObj.to_json()+', "type":"tag"}', content_type="application/json")

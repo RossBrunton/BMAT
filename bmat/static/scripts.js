@@ -67,8 +67,11 @@ window.bmat = (function() {
             }, "json");
         });
         
-        // Inline untag button on bookmarks
-        $(".bookmark .inlineUntag.button").on("click", function() {
+        $(".inlineUntag.button").on("click", function() {
+            $(this).parents("form").submit();
+            return;
+            
+            
             var elem = this;
             
             var post = {};
@@ -82,20 +85,30 @@ window.bmat = (function() {
             }, "json");
         });
         
-        // Inline untag button on tagBlocks
-        $(".tagBlock .inlineUntag.button").on("click", function() {
+        // Inline untag button on bookmarks
+        $(".bookmark .inlineUntagForm").on("submit", function(e) {
+            e.preventDefault();
             var elem = this;
             
-            var post = {};
-            post.csrfmiddlewaretoken = $("#csrf").html();
+            var bookmark = $(this).parents(".tag").data("bookmark");
+            
+            $.post(this.getAttribute("action"), $(this).serialize(), function(data) {
+                _replaceBookmark(bookmark, true);
+            }, "json");
+        });
+        
+        // Inline untag button on tagBlocks
+        $(".tagBlock .inlineUntagForm").on("submit", function(e) {
+            e.preventDefault();
+            var elem = this;
             
             var tag = $(this).parents(".tagBlock").data("slug");
-            post.tag = $(this).parents(".tag").data("slug");
             
-            $.post("/tags/unimply/"+tag, post, function(e) {
+            $.post(this.getAttribute("action"), $(this).serialize(), function(data) {
                 _replaceTagBlock(tag, tag, true);
             }, "json");
         });
+        
         
         // Open/close button
         $(".expand.button").on("click", function() {
@@ -148,8 +161,8 @@ window.bmat = (function() {
             var elem = this;
             
             $.post(this.getAttribute("action"), $(this).serialize(), function(data) {
-                if("bookmark" in data) _replaceBookmark($(elem).parents(".bookmark").data("id"), true);
-                if("tag" in data) _replaceTagBlock($(elem).parents(".tagBlock").data("slug"), data.tag.slug, true);
+                if(data.type == "bookmark") _replaceBookmark($(elem).parents(".bookmark").data("id"), true);
+                if(data.type == "tag") _replaceTagBlock($(elem).parents(".tagBlock").data("slug"), data.obj.slug, true);
             }, "json");
         });
         
@@ -167,6 +180,7 @@ window.bmat = (function() {
         $(".delete.button").off();
         $(".untag.button").off();
         $(".inlineUntag.button").off();
+        $(".inlineUntagForm").off();
         $(".expand.button").off();
         $(".tagEntry").off();
         

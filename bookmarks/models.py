@@ -4,7 +4,7 @@ from django.db import models
 from django.template import defaultfilters
 
 from tags.models import Tag
-from tags import taggable, add_taggable
+from tags import taggable
 
 from HTMLParser import HTMLParser
 import json

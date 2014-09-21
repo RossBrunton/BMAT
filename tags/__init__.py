@@ -1,7 +1,6 @@
-_taggable = {}
+from django.template import defaultfilters
 
-def add_taggable(name, model):
-    _taggable[name] = model
+_taggable = {}
 
 def lookup_taggable(name):
     return _taggable.get(name, None)
@@ -15,16 +14,16 @@ def taggable(name):
         def tag(self, tag):
             if isinstance(tag, (int, long)):
                 try:
-                    tag = Tag.objects.get(pk=tag, owner=self.owner)
-                except ObjectDoesNotExist:
+                    tag = models.Tag.objects.get(pk=tag, owner=self.owner)
+                except models.Tag.DoesNotExist:
                     #Handle this better?
                     return
             
             if isinstance(tag, (str, unicode)):
                 try:
-                    tag = Tag.objects.get(slug=defaultfilters.slugify(tag), owner=self.owner)
-                except ObjectDoesNotExist:
-                    tag = Tag(owner=self.owner, name=tag)
+                    tag = models.Tag.objects.get(slug=defaultfilters.slugify(tag), owner=self.owner)
+                except models.Tag.DoesNotExist:
+                    tag = models.Tag(owner=self.owner, name=tag)
                     tag.save()
             
             tag.owner = self.owner
@@ -35,14 +34,14 @@ def taggable(name):
         def untag(self, tag):
             if isinstance(tag, (int, long)):
                 try:
-                    tag = Tag.objects.get(pk=tag, owner=self.owner)
-                except ObjectDoesNotExist:
+                    tag = models.Tag.objects.get(pk=tag, owner=self.owner)
+                except models.Tag.DoesNotExist:
                     return
             
             if type(tag) == str:
                 try:
-                    tag = Tag.objects.get(name__iexact=tag, owner=self.owner)
-                except ObjectDoesNotExist:
+                    tag = models.Tag.objects.get(name__iexact=tag, owner=self.owner)
+                except models.Tag.DoesNotExist:
                     return
             
             self.tags.remove(tag)
@@ -64,7 +63,7 @@ def taggable(name):
             return out
         c.get_by_tag = get_by_tag
         
-        add_taggable(name, c)
+        _taggable[name] = c
         
         return c
     return decorator

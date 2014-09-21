@@ -15,7 +15,7 @@
         <span class='count'>{{ tag.bookmarks.all.count }}</span>
         
         <div class='tags'>{% for t in implies %}
-            {% tag t %}
+            {% tag t tag rtf %}
         {% endfor %}</div>
         
         <div class='buttons'>
@@ -26,12 +26,14 @@
     
     <div class='body' style='display:none'>
         <div class=''>{% for t in tag.tags_to.all %}
-            {% tag t %}
+            {% tag t tag rtf %}
         {% endfor %}</div>
         
         <div class='right'>
-            <form class='tagForm' method='POST' action='{% url "tags:implies" tag=tag.slug %}'>
+            <form class='tagForm' method='POST' action='{% url "tags:tag" %}'>
                 {% csrf_token %}
+                <input type='hidden' name='type' value='{{ atf.set_type }}' />
+                <input type='hidden' name='pk' value='{{ tag.pk }}' />
                 <input class='tagEntry' type='text' placeholder='Implies' name='name' list='tslist-{{ tag.pk }}'/>
                 <datalist id='tslist-{{ tag.pk }}'>
                     

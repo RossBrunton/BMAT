@@ -8,7 +8,7 @@ from django.template import defaultfilters
 from django.template.response import TemplateResponse
 from django.views.decorators.http import require_POST
 
-from bookmarks.forms import AddTagForm
+from tags.forms import AddTagForm, RemoveTagForm
 from bookmarks.models import Bookmark
 from tags.models import Tag
 from .templatetags.bookmark import bookmark as bookmarkTag
@@ -28,7 +28,8 @@ def home(request):
     
     ctx["area"] = "bookmarks"
     ctx["bookmarks"] = bookmarks
-    ctx["atf"] = AddTagForm(auto_id=False)
+    ctx["atf"] = AddTagForm(taggable_type="bookmark")
+    ctx["rtf"] = RemoveTagForm(taggable_type="bookmark")
     
     return TemplateResponse(request, "bookmarks/index.html", ctx)
 
@@ -93,53 +94,10 @@ def delete(request):
 def html(request, bookmark):
     bm = get_object_or_404(Bookmark, pk=bookmark, owner=request.user)
     
-    return TemplateResponse(request, "bookmarks/bookmark.html", bookmarkTag({}, bm, AddTagForm(auto_id=False)))
-
-
-@login_required
-@require_POST
-def tag(request, bookmark):
-    f = AddTagForm(request.POST)
-    
-    try:
-        bm = get_object_or_404(Bookmark, owner=request.user, pk=bookmark)
-    except Bookmark.DoesNotExist:
-        return HttpResponse('{"error":"Bookmark not found"}', content_type="application/json", status=422)
-    
-    if not f.is_valid():
-        return HttpResponse('{"error":"Form invalid"}', content_type="application/json", status=422)
-    
-    tag = f.instance
-    try:
-        tag = Tag.objects.get(owner=request.user, slug=defaultfilters.slugify(f.instance.name))
-    except Tag.DoesNotExist:
-       pass
-    
-    f.instance.owner = request.user
-    bm.tag(tag)
-    
-    return HttpResponse('{"bookmark":'+bm.to_json()+'}', content_type="application/json")
-
-
-@login_required
-@require_POST
-def untag(request, bookmark):
-    if "tag" not in request.POST:
-        raise SuspiciousOperation
-    
-    bm = get_object_or_404(Bookmark, owner=request.user, pk=bookmark)
-    
-    try:
-        tag = Tag.objects.get(owner=request.user, slug=request.POST["tag"])
-    except Tag.DoesNotExist:
-        return HttpResponse(
-            '{"error":"Tag not found, maybe it\'s not on this bookmark, but implied from another one"}',
-            content_type="application/json", status=422
-        )
-    
-    bm.tags.remove(tag)
-    
-    return HttpResponse('{"bookmark":'+bm.to_json()+'}', content_type="application/json")
+    return TemplateResponse(
+        request, "bookmarks/bookmark.html", 
+        bookmarkTag({}, bm, AddTagForm(taggable_type="bookmark"),RemoveTagForm(taggable_type="bookmark"))
+    )
 
 
 @login_required
@@ -156,4 +114,4 @@ def rename(request, bookmark):
     bm.title = request.POST["name"]
     bm.save()
     
-    return HttpResponse('{"bookmark":'+bm.to_json()+'}', content_type="application/json")
+    return HttpResponse('{"obj":'+bm.to_json()+', "type":"bookmark"}', content_type="application/json")

@@ -6,11 +6,11 @@
 
 {% block content %}
 {% url_add tag %}
-{% tagBlock tag atf %}
+{% tagBlock tag atf rtf %}
 
 <div id='bookmark-list'>
     {% for bm in bookmarks %}
-        {% bookmark bm atf tag %}
+        {% bookmark bm atf rtf tag %}
     {% endfor %}
 </div>
 

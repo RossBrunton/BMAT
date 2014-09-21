@@ -12,7 +12,7 @@
         </div>
         
         <div class='tags'>{% for t in tags %}
-            {% tag t bm %}
+            {% tag t bm rtf %}
         {% endfor %}</div>
         
         <div class='buttons'>
@@ -24,8 +24,10 @@
         <div class='url'>{{ bm.url }} | Added {{ bm.added|date:"D j/n/y H:i" }}</div>
         
         <div class='right'>
-            <form class='tagForm' method='POST' action='{% url "bookmarks:tag" bookmark=bm.id %}'>
+            <form class='tagForm' method='POST' action='{% url "tags:tag" %}'>
                 {% csrf_token %}
+                <input type='hidden' name='type' value='{{ atf.set_type }}' />
+                <input type='hidden' name='pk' value='{{ bm.pk }}' />
                 <input class='tagEntry' type='text' placeholder='Add Tag' name='name' list='tslist-{{ bm.pk }}'/>
                 <datalist id='tslist-{{ bm.pk }}'>
                     
