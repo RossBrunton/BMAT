@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import SuspiciousOperation, ValidationError
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.validators import URLValidator
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
@@ -7,7 +8,6 @@ from django.template import defaultfilters
 from django.template.response import TemplateResponse
 from django.views.decorators.http import require_POST
 
-from bmat.utils import parse_split
 from bookmarks.forms import AddTagForm
 from bookmarks.models import bookmarks_by_user, Bookmark
 from tags.models import Tag
@@ -15,17 +15,20 @@ from .templatetags.bookmark import bookmark as bookmarkTag
 
 @login_required
 def home(request):
-    start, end = parse_split(request.GET, "r", 0, 30)
-    
     ctx = {}
     
-    bms = bookmarks_by_user(request.user)
+    paginator = Paginator(bookmarks_by_user(request.user), 30)
+    bookmarks = None
+    try:
+        bookmarks = paginator.page(request.GET.get("p", "1"))
+    except PageNotAnInteger:
+        bookmarks = paginator.page(1)
+    except EmptyPage:
+        bookmarks = paginator.page(paginator.num_pages)
+    
     ctx["area"] = "bookmarks"
-    ctx["bookmarks"] = bms[start:end]
+    ctx["bookmarks"] = bookmarks
     ctx["atf"] = AddTagForm(auto_id=False)
-    ctx["start"] = start
-    ctx["end"] = end
-    ctx["count"] = len(bms)
     
     return TemplateResponse(request, "bookmarks/index.html", ctx)
 
