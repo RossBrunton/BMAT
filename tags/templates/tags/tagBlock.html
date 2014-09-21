@@ -25,7 +25,7 @@
     </div>
     
     <div class='body' style='display:none'>
-        <div class=''>{% for t in tag.implied_by.all %}
+        <div class=''>{% for t in tag.tags_to.all %}
             {% tag t %}
         {% endfor %}</div>
         

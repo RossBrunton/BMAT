@@ -106,7 +106,7 @@ def implies(request, tag):
     implicatee = Tag.get_or_create_with_slug(request.user, f.instance)
     implicatee.owner = request.user
     
-    implicator.implies.add(implicatee)
+    implicator.tags.add(implicatee)
     
     return HttpResponse('{"tag":'+implicator.to_json()+'}', content_type="application/json")
 
@@ -124,6 +124,6 @@ def unimply(request, tag):
     except Tag.DoesNotExist:
         return HttpResponse('{"error":"Tag not found"}', content_type="application/json", status=422)
     
-    parent.implies.remove(child)
+    parent.tags.remove(child)
     
     return HttpResponse('{"tag":'+parent.to_json()+'}', content_type="application/json")

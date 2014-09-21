@@ -31,7 +31,7 @@ class Tag(models.Model):
     name = models.TextField(max_length=100)
     colour = models.CharField(max_length=20, choices=colours_enum, default='white')
     slug = models.SlugField()
-    implies = models.ManyToManyField("self", related_name="implied_by", symmetrical=False)
+    tags = models.ManyToManyField("self", related_name="tags_to", symmetrical=False, db_table="tags_tag_implies")
 
     def __str__(self):
         return "Tag '"+self.name+"' for "+self.owner.username
@@ -63,7 +63,7 @@ class Tag(models.Model):
         
         i = 0
         while i < len(out):
-            for implied in out[i].implies.all():
+            for implied in out[i].tags.all():
                 if implied not in out:
                     out.append(implied)
             
@@ -81,7 +81,7 @@ class Tag(models.Model):
         
         i = 0
         while i < len(tlist):
-            for implied in tlist[i].implies.all():
+            for implied in tlist[i].tags.all():
                 if implied not in tlist:
                     out.append((implied, False))
                     tlist.append(implied)
@@ -97,7 +97,7 @@ class Tag(models.Model):
         
         i = 0
         while i < len(out):
-            for implies in out[i].implied_by.all():
+            for implies in out[i].tags_to.all():
                 if implies not in out:
                     out.append(implies)
             
@@ -115,7 +115,7 @@ class Tag(models.Model):
         
         i = 0
         while i < len(tlist):
-            for implies in tlist[i].implied_by.all():
+            for implies in tlist[i].tags_to.all():
                 if implies not in out:
                     out.append((implies, False))
                     tlist.append(implies)
