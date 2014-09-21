@@ -48,23 +48,8 @@ class Tag(models.Model):
     def to_json(self):
         return json.dumps(self.to_dir())
     
-    def all_bookmarks(self):
-        from bookmarks.models import Bookmark
-        out = []
-        
-        tags = Tag.expand_implied_by([self])
-        
-        for t in tags:
-            bms = Bookmark.objects.filter(owner=self.owner, tags=t)
-            
-            for b in bms:
-                if b not in out:
-                    out.append(b)
-        
-        return out
-    
     @staticmethod
-    def get_if_exists(owner, instance):
+    def get_or_create_with_slug(owner, instance):
         try:
             return Tag.objects.get(owner=owner, slug=defaultfilters.slugify(instance.name))
         except Tag.DoesNotExist:
@@ -140,9 +125,10 @@ class Tag(models.Model):
         out.sort(lambda a, b: cmp(a[0].slug, b[0].slug))
         return out
 
+    @staticmethod
+    def by_user(user):
+        return Tag.objects.all().filter(owner=user)
 
-def tags_by_user(user):
-    return Tag.objects.all().filter(owner=user)
 
 @receiver(post_save, sender=Tag)
 def tag_save(sender, instance, created, **kwargs):    

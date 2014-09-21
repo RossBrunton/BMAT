@@ -6,8 +6,9 @@ from django.template import defaultfilters
 from django.template.response import TemplateResponse
 from django.views.decorators.http import require_POST
 
-from tags.models import tags_by_user, Tag
+from tags.models import Tag
 from bookmarks.forms import AddTagForm
+from bookmarks.models import Bookmark
 from .templatetags.tag import tagBlock
 
 @login_required
@@ -15,7 +16,7 @@ def home(request):
     ctx = {}
     
     ctx["area"] = "tags"
-    ctx["tags"] = tags_by_user(request.user)
+    ctx["tags"] = Tag.by_user(request.user)
     ctx["atf"] = AddTagForm(auto_id=False)
     
     return TemplateResponse(request, "tags/index.html", ctx)
@@ -28,7 +29,7 @@ def filter(request, tag):
     ctx = {}
     
     ctx["area"] = "tags"
-    ctx["bookmarks"] = tag.all_bookmarks()
+    ctx["bookmarks"] = Bookmark.get_by_tag(tag)
     ctx["tag"] = tag
     ctx["atf"] = AddTagForm(auto_id=False)
     
@@ -102,7 +103,7 @@ def implies(request, tag):
     if not f.is_valid():
         return HttpResponse('{"error":"Form invalid"}', content_type="application/json", status=422)
     
-    implicatee = Tag.get_if_exists(request.user, f.instance)
+    implicatee = Tag.get_or_create_with_slug(request.user, f.instance)
     implicatee.owner = request.user
     
     implicator.implies.add(implicatee)

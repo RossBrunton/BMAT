@@ -86,10 +86,25 @@ class Bookmark(models.Model):
     
     def to_json(self):
         return json.dumps(self.to_dir())
-
-
-def bookmarks_by_user(user):
-    return Bookmark.objects.all().filter(owner=user)
+    
+    @staticmethod
+    def get_by_tag(tag):
+        out = []
+        
+        tags = Tag.expand_implied_by([tag])
+        
+        for t in tags:
+            bms = Bookmark.objects.filter(owner=tag.owner, tags=t)
+            
+            for b in bms:
+                if b not in out:
+                    out.append(b)
+        
+        return out
+    
+    @staticmethod
+    def by_user(user):
+        return Bookmark.objects.all().filter(owner=user)
 
 
 class HTMLTitleReader(HTMLParser):

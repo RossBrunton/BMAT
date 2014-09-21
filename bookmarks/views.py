@@ -9,7 +9,7 @@ from django.template.response import TemplateResponse
 from django.views.decorators.http import require_POST
 
 from bookmarks.forms import AddTagForm
-from bookmarks.models import bookmarks_by_user, Bookmark
+from bookmarks.models import Bookmark
 from tags.models import Tag
 from .templatetags.bookmark import bookmark as bookmarkTag
 
@@ -17,7 +17,7 @@ from .templatetags.bookmark import bookmark as bookmarkTag
 def home(request):
     ctx = {}
     
-    paginator = Paginator(bookmarks_by_user(request.user), 30)
+    paginator = Paginator(Bookmark.by_user(request.user), 30)
     bookmarks = None
     try:
         bookmarks = paginator.page(request.GET.get("p", "1"))
@@ -37,7 +37,7 @@ def home(request):
 def export(request):
     ctx = {}
     
-    ctx["bookmarks"] = bookmarks_by_user(request.user)
+    ctx["bookmarks"] = Bookmark.by_user(request.user)
     
     return TemplateResponse(request, "bookmarks/export.html", ctx)
 
