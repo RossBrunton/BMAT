@@ -4,7 +4,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.template import defaultfilters
 
-# from bookmarks.models import Bookmark
+import tags
 
 import json
 
@@ -23,6 +23,7 @@ colours_enum = [
     ("orange", "Orange"),
 ]
 
+@tags.taggable("tag")
 class Tag(models.Model):
     class Meta:
         ordering = ["slug"]

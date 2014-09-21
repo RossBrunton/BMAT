@@ -1,5 +1,3 @@
-from tags.models import Tag
-
 _taggable = {}
 
 def add_taggable(name, model):
@@ -54,7 +52,7 @@ def taggable(name):
         def get_by_tag(tag):
             out = []
             
-            tags = Tag.expand_implied_by([tag])
+            tags = models.Tag.expand_implied_by([tag])
             
             for t in tags:
                 results = c.objects.filter(owner=tag.owner, tags=t)
