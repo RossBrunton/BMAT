@@ -4,11 +4,13 @@ from django.db import models
 from django.template import defaultfilters
 
 from tags.models import Tag
+from tags import taggable, add_taggable
 
 from HTMLParser import HTMLParser
 import json
 import requests
 
+@taggable("bookmark")
 class Bookmark(models.Model):
     class Meta:
         ordering = ["-added"]
@@ -21,40 +23,6 @@ class Bookmark(models.Model):
     
     def __str__(self):
         return "Bookmark '"+self.title+"' for "+self.owner.username
-    
-    def tag(self, tag):
-        if isinstance(tag, (int, long)):
-            try:
-                tag = Tag.objects.get(pk=tag, owner=self.owner)
-            except ObjectDoesNotExist:
-                #Handle this better?
-                return
-        
-        if isinstance(tag, (str, unicode)):
-            try:
-                tag = Tag.objects.get(slug=defaultfilters.slugify(tag), owner=self.owner)
-            except ObjectDoesNotExist:
-                tag = Tag(owner=self.owner, name=tag)
-                tag.save()
-        
-        tag.owner = self.owner
-        tag.save()
-        self.tags.add(tag)
-    
-    def untag(self, tag):
-        if isinstance(tag, (int, long)):
-            try:
-                tag = Tag.objects.get(pk=tag, owner=self.owner)
-            except ObjectDoesNotExist:
-                return
-        
-        if type(tag) == str:
-            try:
-                tag = Tag.objects.get(name__iexact=tag, owner=self.owner)
-            except ObjectDoesNotExist:
-                return
-        
-        self.tags.remove(tag)
     
     def download_title(self):
         self.title = "Unknown Title"
@@ -86,21 +54,6 @@ class Bookmark(models.Model):
     
     def to_json(self):
         return json.dumps(self.to_dir())
-    
-    @staticmethod
-    def get_by_tag(tag):
-        out = []
-        
-        tags = Tag.expand_implied_by([tag])
-        
-        for t in tags:
-            bms = Bookmark.objects.filter(owner=tag.owner, tags=t)
-            
-            for b in bms:
-                if b not in out:
-                    out.append(b)
-        
-        return out
     
     @staticmethod
     def by_user(user):
