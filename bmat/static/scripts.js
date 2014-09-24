@@ -26,86 +26,36 @@ window.bmat = (function() {
         
         // Delete button
         $(".block .delete.button").on("click", function() {
-            var post = {};
-            post.csrfmiddlewaretoken = $("#csrf").html();
+            $(this).parents("form").submit();
+        });
+        
+        $(".deleteForm").on("submit", function(e) {
+            e.preventDefault();
+            
+            var elem = $(this);
             
             if(!confirm("WHOA! Are you sure!")) return;
             
-            if($(this).parents(".bookmark").length) {
-                // Deleting a bookmark
-                post.bookmark = $(this).parents(".bookmark").data("id");
-                
-                $.post("/bookmarks/delete", post, function(e) {
-                    if(e.deleted !== null) {
-                        $(".bookmark[data-id="+e.deleted+"]").slideUp().remove();
-                    }
-                }, "json");
-            }else{
-                // Deleting a tag
-                post.tag = $(this).parents(".tagBlock").data("id");
-                
-                $.post("/tags/delete", post, function(e) {
-                    if(e.deleted !== null) {
-                        $(".tagBlock[data-id="+e.deleted+"]").slideUp().remove();
-                    }
-                }, "json");
-            }
-        });
-        
-        // Untag button
-        $(".untag.button").on("click", function() {
-            var elem = this;
-            
-            var post = {};
-            post.csrfmiddlewaretoken = $("#csrf").html();
-            
-            post.bookmark = $(this).parents(".bookmark").data("id");
-            post.tag = $(this).data("slug");
-            
-            $.post("/bookmarks/"+post.bookmark+"/untag", post, function(e) {
-                $(elem).parents(".bookmark").remove();
-            }, "json");
+            $.post(elem.attr("action"), elem.serialize(), function() {
+                if(e.deleted !== null) {
+                    elem.parents(".block").remove();
+                }
+            });
         });
         
         $(".inlineUntag.button").on("click", function() {
             $(this).parents("form").submit();
-            return;
-            
-            
-            var elem = this;
-            
-            var post = {};
-            post.csrfmiddlewaretoken = $("#csrf").html();
-            
-            post.bookmark = $(this).parents(".tag").data("bookmark");
-            post.tag = $(this).parents(".tag").data("slug");
-            
-            $.post("/bookmarks/"+post.bookmark+"/untag", post, function(e) {
-                _replaceBookmark(post.bookmark, true);
-            }, "json");
         });
         
-        // Inline untag button on bookmarks
-        $(".bookmark .inlineUntagForm").on("submit", function(e) {
+        // Inline untag button
+        $(".inlineUntagForm").on("submit", function(e) {
             e.preventDefault();
             var elem = this;
             
-            var bookmark = $(this).parents(".tag").data("bookmark");
+            var bookmark = $(this).parents(".block").data("id");
             
             $.post(this.getAttribute("action"), $(this).serialize(), function(data) {
-                _replaceBookmark(bookmark, true);
-            }, "json");
-        });
-        
-        // Inline untag button on tagBlocks
-        $(".tagBlock .inlineUntagForm").on("submit", function(e) {
-            e.preventDefault();
-            var elem = this;
-            
-            var tag = $(this).parents(".tagBlock").data("slug");
-            
-            $.post(this.getAttribute("action"), $(this).serialize(), function(data) {
-                _replaceTagBlock(tag, tag, true);
+                _replace(bookmark, $(elem).parents(".block").data("taggable-type"), true);
             }, "json");
         });
         
@@ -145,7 +95,7 @@ window.bmat = (function() {
                 $(this).parents(".block").find(".title.noedit").hide();
                 $(this).parents(".block").find(".title.edit").show();
                 $(this).parents(".block").find(".title.edit input[name=name]").val(
-                    $(this).parents(".bookmark, .tagBlock").find(".title.noedit a, .title.noedit").first().text()
+                    $(this).parents(".block").find(".title.noedit a, .title.noedit").first().text()
                 );
                 $(this).addClass("open");
             }else{
@@ -161,8 +111,7 @@ window.bmat = (function() {
             var elem = this;
             
             $.post(this.getAttribute("action"), $(this).serialize(), function(data) {
-                if(data.type == "bookmark") _replaceBookmark($(elem).parents(".bookmark").data("id"), true);
-                if(data.type == "tag") _replaceTagBlock($(elem).parents(".tagBlock").data("slug"), data.obj.slug, true);
+                _replace($(elem).parents(".block").data("id"), $(elem).parents(".block").data("taggable-type"), true);
             }, "json");
         });
         
@@ -201,27 +150,19 @@ window.bmat = (function() {
     };
     
     
-    var _replaceBookmark = function(id, expand) {
-        $.get("/bookmarks/"+id+"/html", function(e) {
-            $(".bookmark[data-id="+id+"]").replaceWith(e);
+    var _replace = function(id, type, expand) {
+        var url = "";
+        if(type == "tag") url = "/tags/htmlBlock/" + id;
+        if(type == "bookmark") url = "/bookmarks/" + id + "/html";
+        
+        $.get(url, function(e) {
+            $(".block[data-id="+id+"]").replaceWith(e);
             if(expand) {
-                $(".bookmark[data-id="+id+"] > .body").show();
-                $(".bookmark[data-id="+id+"] .expand.button").addClass("open");
-                $(".bookmark[data-id="+id+"] .inlineUntag").css("width", "16px").css("display", "inline-block");
-                $(".bookmark[data-id="+id+"] input")[0].focus();
-            }
-            _update();
-        }, "text");
-    };
-    
-    var _replaceTagBlock = function(oldSlug, newSlug, expand) {
-        $.get("/tags/htmlBlock/"+newSlug, function(e) {
-            $(".tagBlock[data-slug="+oldSlug+"]").replaceWith(e);
-            if(expand) {
-                $(".tagBlock[data-slug="+newSlug+"] > .body").show();
-                $(".tagBlock[data-slug="+newSlug+"] .expand.button").addClass("open");
-                $(".tagBlock[data-slug="+newSlug+"] .inlineUntag").css("width", "16px").css("display", "inline-block");
-                $(".tagBlock[data-slug="+newSlug+"] input")[0].focus();
+                $(".block[data-id="+id+"][data-taggable-type="+type+"] > .body").show();
+                $(".block[data-id="+id+"][data-taggable-type="+type+"] .expand.button").addClass("open");
+                $(".block[data-id="+id+"][data-taggable-type="+type+"] .inlineUntag")
+                    .css("width", "16px").css("display", "inline-block");
+                $(".block[data-id="+id+"][data-taggable-type="+type+"] input")[0].focus();
             }
             _update();
         }, "text");

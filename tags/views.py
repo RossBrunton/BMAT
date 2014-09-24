@@ -122,12 +122,12 @@ def delete(request):
     json = tag.to_json()
     tag.delete()
     
-    return HttpResponse('{"deleted":'+str(id)+', "tag":'+json+'}', content_type="application/json")
+    return HttpResponse('{"deleted":'+str(id)+', "obj":'+json+', "type":"tag"}', content_type="application/json")
 
 
 @login_required
 def htmlBlock(request, tag):
-    tag = get_object_or_404(Tag, slug=tag, owner=request.user)
+    tag = get_object_or_404(Tag, pk=tag, owner=request.user)
     
     return TemplateResponse(
         request, "tags/tagBlock.html",

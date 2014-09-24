@@ -1,15 +1,8 @@
 {% extends "base.html" %}
-
 {% load tag %}
 
 {% block title %}Tags{% endblock %}
 
 {% block content %}
-
-<div id='tag-list'>
-    {% for tag in tags %}
-        {% tagBlock tag atf rtf %}
-    {% endfor %}
-</div>
-
+<div id='tag-list'>{% for tag in tags %}{% tagBlock tag atf rtf %}{% endfor %}</div>
 {% endblock %}

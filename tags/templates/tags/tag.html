@@ -1,5 +1,4 @@
-<div class='tag {{ tag.colour }}' data-id='{{ tag.pk }}' data-slug='{{ tag.slug }}'
-{% if bookmark %}data-bookmark='{{ bookmark.pk }}'{% endif %}>
+<div class='tag {{ tag.colour }}' data-id='{{ tag.pk }}' data-slug='{{ tag.slug }}'>
     <a href='{% url "tags:filter" tag=tag.slug %}'>{{ tag.name }}</a>
     {% if explicit %}
     <form action='{% url "tags:untag" %}' method='POST' class='inlineUntagForm'>

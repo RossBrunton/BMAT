@@ -87,7 +87,7 @@ def delete(request):
     json = bm.to_json()
     bm.delete()
     
-    return HttpResponse('{"deleted":'+str(id)+', "bookmark":'+json+'}', content_type="application/json")
+    return HttpResponse('{"deleted":'+str(id)+', "obj":'+json+', "type":"bookmark"}', content_type="application/json")
 
 
 @login_required

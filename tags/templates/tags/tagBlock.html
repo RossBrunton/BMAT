@@ -1,5 +1,6 @@
 {% load tag %}
-<div class='tagBlock box block {{ tag.colour }}' data-id='{{ tag.pk }}' data-slug='{{ tag.slug }}'>
+<div class='tagBlock box block {{ tag.colour }}' data-id='{{ tag.pk }}' data-slug='{{ tag.slug }}'
+data-taggable-type='tag'>
     <div class='head'>
         <div class='title noedit'><a href='{% url "tags:filter" tag=tag.slug %}'>{{ tag.name }}</a></div>
         
@@ -14,38 +15,27 @@
         
         <span class='count'>{{ tag.bookmarks.all.count }}</span>
         
-        <div class='tags'>{% for t in implies %}
-            {% tag t tag rtf %}
-        {% endfor %}</div>
+        <div class='tags'>{% for t in implies %}{% tag t tag rtf %}{% endfor %}</div>
         
         <div class='buttons'>
-            
             <a class='expand button'>&nbsp;</a>
         </div>
     </div>
     
     <div class='body' style='display:none'>
-        <div class=''>{% for t in tag.tags_to.all %}
-            {% tag t tag rtf %}
-        {% endfor %}</div>
+        <div class=''>{% for t in tag.tags_to.all %}{% tag t tag rtf %}{% endfor %}</div>
         
-        <div class='right'>
-            <form class='tagForm' method='POST' action='{% url "tags:tag" %}'>
-                {% csrf_token %}
-                <input type='hidden' name='type' value='{{ atf.set_type }}' />
-                <input type='hidden' name='pk' value='{{ tag.pk }}' />
-                <input class='tagEntry' type='text' placeholder='Implies' name='name' list='tslist-{{ tag.pk }}'/>
-                <datalist id='tslist-{{ tag.pk }}'>
-                    
-                </datalist>
-                {{ atf.colour }}
-            </form>
-        </div>
+        <div class='right'>{% addTag atf tag.pk %}</div>
         
         <div class='buttons'>
             <a class='addTag button'>&nbsp;</a>
             <a class='editTitle button'>&nbsp;</a>
-            <a class='delete button'>&nbsp;</a>
+            
+            <form action='{% url "tags:delete" %}' method='POST' class='deleteForm'>
+                {% csrf_token %}
+                <input type='hidden' name='tag' value='{{ tag.pk }}'/>
+                <a class='delete button'>&nbsp;</a>
+            </form>
         </div>
     </div>
 </div>

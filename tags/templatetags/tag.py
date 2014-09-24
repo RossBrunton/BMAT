@@ -26,3 +26,11 @@ def tagBlock(context, tag, atf, rtf, **kwargs):
     kwargs["rtf"] = rtf
     
     return kwargs
+
+
+@register.inclusion_tag('tags/addTag.html', takes_context=True)
+def addTag(context, atf, pk, **kwargs):
+    kwargs["pk"] = pk
+    kwargs["atf"] = atf
+    
+    return kwargs

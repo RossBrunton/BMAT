@@ -5,6 +5,7 @@ from django.template import defaultfilters
 
 from tags.models import Tag
 from tags import taggable
+from bookmarks.templatetags.bookmark import bookmark
 
 from HTMLParser import HTMLParser
 import json

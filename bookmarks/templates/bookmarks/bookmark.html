@@ -1,5 +1,5 @@
 {% load tag %}
-<div class='bookmark box block' data-id='{{ bm.pk }}'>
+<div class='bookmark box block' data-id='{{ bm.pk }}' data-taggable-type='bookmark'>
     <div class='head'>
         <div class='title noedit'><a href='{{ bm.url }}'>{{ bm.title }}</a></div>
         
@@ -11,9 +11,7 @@
             </form>
         </div>
         
-        <div class='tags'>{% for t in tags %}
-            {% tag t bm rtf %}
-        {% endfor %}</div>
+        <div class='tags'>{% for t in tags %}{% tag t bm rtf %}{% endfor %}</div>
         
         <div class='buttons'>
             <a class='expand button'>&nbsp;</a>
@@ -24,28 +22,18 @@
         <div class='url'>{{ bm.url }} | Added {{ bm.added|date:"D j/n/y H:i" }}</div>
         
         <div class='right'>
-            <form class='tagForm' method='POST' action='{% url "tags:tag" %}'>
-                {% csrf_token %}
-                <input type='hidden' name='type' value='{{ atf.set_type }}' />
-                <input type='hidden' name='pk' value='{{ bm.pk }}' />
-                <input class='tagEntry' type='text' placeholder='Add Tag' name='name' list='tslist-{{ bm.pk }}'/>
-                <datalist id='tslist-{{ bm.pk }}'>
-                    
-                </datalist>
-                {{ atf.colour }}
-                
-            </form>
+            {% addTag atf bm.pk %}
         </div>
         
         <div class='buttons'>
             <a class='addTag button'>&nbsp;</a>
             <a class='editTitle button'>&nbsp;</a>
             
-            {% if untag %}
-                <a class='untag button' data-slug='{{ untag.slug }}'>&nbsp;</a>
-            {% else %}
+            <form action='{% url "bookmarks:delete" %}' method='POST' class='deleteForm'>
+                {% csrf_token %}
+                <input type='hidden' name='bookmark' value='{{ bm.pk }}'/>
                 <a class='delete button'>&nbsp;</a>
-            {% endif %}
+            </form>
         </div>
     </div>
 </div>

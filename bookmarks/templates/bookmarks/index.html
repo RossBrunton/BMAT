@@ -1,21 +1,15 @@
 {% extends "base.html" %}
-
 {% load form_errors bookmark pages url_add %}
 
 {% block title %}Bookmarks{% endblock %}
 
 {% block content %}
-
 {% form_errors form %}
-
 {% url_add %}
-
 <div id='bookmark-list'>
     {% for bm in bookmarks %}
         {% bookmark bm atf rtf %}
     {% endfor %}
 </div>
-
 {% pages bookmarks "bookmarks:home" %}
-
 {% endblock %}
