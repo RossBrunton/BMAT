@@ -3,7 +3,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.template import defaultfilters
 
-from tags.models import Tag
+from tags.models import Tag, Taggable
 from tags import taggable
 from bookmarks.templatetags.bookmark import bookmark
 
@@ -12,7 +12,7 @@ import json
 import requests
 
 @taggable("bookmark")
-class Bookmark(models.Model):
+class Bookmark(Taggable):
     class Meta:
         ordering = ["-added"]
     

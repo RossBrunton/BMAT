@@ -23,8 +23,62 @@ colours_enum = [
     ("orange", "Orange"),
 ]
 
+class Taggable(models.Model):
+    class Meta:
+        abstract = True
+    
+    def tag(self, tag):
+        if isinstance(tag, (int, long)):
+            try:
+                tag = Tag.objects.get(pk=tag, owner=self.owner)
+            except Tag.DoesNotExist:
+                #Handle this better?
+                return
+        
+        if isinstance(tag, (str, unicode)):
+            try:
+                tag = Tag.objects.get(slug=defaultfilters.slugify(tag), owner=self.owner)
+            except Tag.DoesNotExist:
+                tag = Tag(owner=self.owner, name=tag)
+                tag.save()
+        
+        tag.owner = self.owner
+        tag.save()
+        self.tags.add(tag)
+    
+    def untag(self, tag):
+        if isinstance(tag, (int, long)):
+            try:
+                tag = Tag.objects.get(pk=tag, owner=self.owner)
+            except Tag.DoesNotExist:
+                return
+        
+        if type(tag) == str:
+            try:
+                tag = Tag.objects.get(name__iexact=tag, owner=self.owner)
+            except Tag.DoesNotExist:
+                return
+        
+        self.tags.remove(tag)
+    
+    @classmethod
+    def get_by_tag(cls, tag):
+        out = []
+        
+        tags = Tag.expand_implied_by([tag])
+        
+        for t in tags:
+            results = cls.objects.filter(owner=tag.owner, tags=t)
+            
+            for b in results:
+                if b not in out:
+                    out.append(b)
+        
+        return out
+
+
 @tags.taggable("tag")
-class Tag(models.Model):
+class Tag(Taggable):
     class Meta:
         ordering = ["slug"]
     
