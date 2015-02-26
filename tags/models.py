@@ -53,9 +53,9 @@ class Taggable(models.Model):
             except Tag.DoesNotExist:
                 return
         
-        if type(tag) == str:
+        if isinstance(tag, (str, unicode)):
             try:
-                tag = Tag.objects.get(name__iexact=tag, owner=self.owner)
+                tag = Tag.objects.get(slug=defaultfilters.slugify(tag), owner=self.owner)
             except Tag.DoesNotExist:
                 return
         
