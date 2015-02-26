@@ -1,5 +1,4 @@
 from django.contrib.auth.models import User
-from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.template import defaultfilters
 
@@ -23,7 +22,7 @@ class Bookmark(Taggable):
     added = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
-        return "Bookmark '"+self.title+"' for "+self.owner.username
+        return ("Bookmark '"+self.title+"' for "+self.owner.username).encode("ascii", "ignore")
     
     def download_title(self):
         self.title = "Unknown Title"

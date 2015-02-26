@@ -17,7 +17,7 @@ class Settings(models.Model):
     theme = models.CharField(max_length=10, default=THEME_LIGHT, choices=THEME_OPTIONS)
     
     def __str__(self):
-        return "Settings for "+self.user.username
+        return ("Settings for "+self.user.username).encode("ascii", "ignore")
 
 
 @receiver(post_save, sender=User)

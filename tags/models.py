@@ -89,7 +89,7 @@ class Tag(Taggable):
     tags = models.ManyToManyField("self", related_name="tags_to", symmetrical=False, db_table="tags_tag_implies")
 
     def __str__(self):
-        return "Tag '"+self.name+"' for "+self.owner.username
+        return ("Tag '"+self.name+"' for "+self.owner.username).encode("ascii", "ignore")
     
     def to_dir(self):
         out = {}
