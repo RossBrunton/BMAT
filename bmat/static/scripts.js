@@ -8,10 +8,6 @@ window.bmat = (function() {
         $("#error").slideDown();
     }
     
-    window.addEventListener("error", function(e) {
-        _error(e.message);
-    });
-    
     $(document).ajaxError(function(e, xhr, settings, error) {
         if("responseJSON" in xhr && "error" in xhr.responseJSON) {
             _error(xhr.responseJSON.error);
@@ -20,21 +16,30 @@ window.bmat = (function() {
         }
     });
     
+    window.addEventListener("error", function(e) {
+        _error(e.message);
+    });
+    
+    
+    // Function that finds the form this element is in, and submits it
+    var _submitParent = function() {
+        $(this).parents("form").submit();
+    }
+    
+    
+    // Resets all the listeners, used when a document has been changed or initially loaded
     var _update = function() {
         // Clean first
         _clean();
         
         // Delete button
-        $(".block .delete.button").on("click", function() {
-            $(this).parents("form").submit();
-        });
-        
+        $(".block .delete.button").on("click", _submitParent);
         $(".deleteForm").on("submit", function(e) {
             e.preventDefault();
             
             var elem = $(this);
             
-            if(!confirm("WHOA! Are you sure!")) return;
+            if(!confirm("Are you sure you want to delete this?")) return;
             
             $.post(elem.attr("action"), elem.serialize(), function() {
                 if(e.deleted !== null) {
@@ -43,11 +48,9 @@ window.bmat = (function() {
             });
         });
         
-        $(".inlineUntag.button").on("click", function() {
-            $(this).parents("form").submit();
-        });
         
         // Inline untag button
+        $(".inlineUntag.button").on("click", _submitParent);
         $(".inlineUntagForm").on("submit", function(e) {
             e.preventDefault();
             var elem = this;
@@ -76,8 +79,11 @@ window.bmat = (function() {
         // Tag Entry
         $(".tagEntry").on("input", function(e) {
             var input = this;
-            if(e.target.value.length < 4) return;
             
+            // Don't bother with text less than 3 characters
+            if(e.target.value.length < 3) return;
+            
+            // Get the suggestion list, and set the option elemnt to contain it
             $.get("/tags/suggest/"+e.target.value, "", function(data) {
                 var html = "";
                 
@@ -105,7 +111,8 @@ window.bmat = (function() {
             }
         });
         
-        // Rename and tag forms
+        // Rename and tag forms, both do the same thing and both result in updating the block
+        $(".rename.button").on("click", _submitParent);
         $("form.tagForm, form.renameForm").on("submit", function(e) {
             e.preventDefault();
             var elem = this;
@@ -115,11 +122,7 @@ window.bmat = (function() {
             }, "json");
         });
         
-        // Form submit buttons
-        $(".rename.button").on("click", function(e) {
-            $(this).parents("form").submit();
-        });
-        
+        // And the submit button for the add tag button
         $(".addTag.button").on("click", function(e) {
             $(this).parents(".block").find(".tagForm").submit();
         });
