@@ -18,8 +18,8 @@ def home(request):
     
     ctx["area"] = "tags"
     ctx["tags"] = Tag.by_user(request.user)
-    ctx["atf"] = AddTagForm(taggable_type="tag")
-    ctx["rtf"] = RemoveTagForm(taggable_type="tag")
+    ctx["atf"] = AddTagForm({"type":"tag"})
+    ctx["rtf"] = RemoveTagForm({"type":"tag"})
     
     return TemplateResponse(request, "tags/index.html", ctx)
 
@@ -33,8 +33,8 @@ def filter(request, tag):
     ctx["area"] = "tags"
     ctx["bookmarks"] = Bookmark.get_by_tag(tag)
     ctx["tag"] = tag
-    ctx["atf"] = AddTagForm(taggable_type="tag")
-    ctx["rtf"] = RemoveTagForm(taggable_type="tag")
+    ctx["atf"] = AddTagForm({"type":"tag"})
+    ctx["rtf"] = RemoveTagForm({"type":"tag"})
     
     return TemplateResponse(request, "tags/filter.html", ctx)
 

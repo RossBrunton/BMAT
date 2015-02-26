@@ -28,8 +28,8 @@ def home(request):
     
     ctx["area"] = "bookmarks"
     ctx["bookmarks"] = bookmarks
-    ctx["atf"] = AddTagForm(taggable_type="bookmark")
-    ctx["rtf"] = RemoveTagForm(taggable_type="bookmark")
+    ctx["atf"] = AddTagForm({"type":"bookmark"})
+    ctx["rtf"] = RemoveTagForm({"type":"bookmark"})
     
     return TemplateResponse(request, "bookmarks/index.html", ctx)
 

@@ -3,7 +3,7 @@
     {% if explicit %}
     <form action='{% url "tags:untag" %}' method='POST' class='inlineUntagForm'>
         {% csrf_token %}
-        <input type='hidden' name='type' value='{{ rtf.set_type }}' />
+        {{ rtf.type.as_hidden }}
         <input type='hidden' name='tag_pk' value='{{ tag.pk }}' />
         <input type='hidden' name='target_pk' value='{{ pk_target }}' />
         <a class='inlineUntag button'>&nbsp;</a>

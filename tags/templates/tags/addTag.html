@@ -1,11 +1,11 @@
 {% load tag %}
 <form class='tagForm' method='POST' action='{% url "tags:tag" %}'>
     {% csrf_token %}
-    <input type='hidden' name='type' value='{{ atf.set_type }}' />
+    {{ atf.type.as_hidden }}
     <input type='hidden' name='pk' value='{{ pk }}' />
     <input class='tagEntry' type='text' placeholder='Add Tag' name='name'
-        list='tslist-{{ atf.set_type }}-{{ pk }}'/>
-    <datalist id='tslist-{{ atf.set_type }}-{{ pk }}'>
+        list='tslist-{{ atf.type }}-{{ pk }}'/>
+    <datalist id='tslist-{{ atf.type }}-{{ pk }}'>
         
     </datalist>
     {{ atf.colour }}
