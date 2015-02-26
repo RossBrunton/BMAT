@@ -2,20 +2,8 @@
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
-PRODUCTION = False
-BMAT_ALLOW_REGISTER = True # Should people be allowed to register
-SECRET_KEY = ''
-ALLOWED_HOSTS = []
-
-# For emails
-ADMINS = ()
-MANAGERS = ()
-SERVER_EMAIL = "" # "From" value in emails
-
-# Don't change anything past here!
-
-DEBUG = not PRODUCTION
-TEMPLATE_DEBUG = not PRODUCTION
+DEBUG = False
+TEMPLATE_DEBUG = False
 
 # Application definition
 
@@ -76,3 +64,5 @@ LOGIN_URL = "/user/login"
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR + "/static/"
+
+from settings_local import *

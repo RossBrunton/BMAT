@@ -1,0 +1,21 @@
+""" Local settings for BMAT
+
+If you want to configure your own settings for the site, please put them here rather than editing settings.py directly
+settings_local.py.sample contains an example. Note that all keys in the expample file, like the security key, must be
+specified here.
+
+See https://docs.djangoproject.com/en/1.7/ref/settings/ for details on settings.
+"""
+
+DEBUG = True
+TEMPLATE_DEBUG = True
+
+# Should new users be allowed to register?
+BMAT_ALLOW_REGISTER = True
+
+SECRET_KEY = ""
+ALLOWED_HOSTS = []
+
+ADMINS = ()
+MANAGERS = ()
+SERVER_EMAIL = "root@localhost"
