@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect
 from django.template.response import TemplateResponse
 from django.views.decorators.http import require_POST
 
-from bmat import settings
+from django.conf import settings
 from bookmarks.models import Bookmark
 from users.forms import ImportForm, CustomUserCreationForm, SettingsForm
 
