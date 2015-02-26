@@ -16,19 +16,19 @@ Enter this directory:
 Activate the virtualenv:
 > source ./bin/activate
 
-Install Django and MySQL:
+Install Django, MySQL and requests:
 > pip install Django MySQL-python requests
 
-After this, rename settings.py.sample, to settings.py, and give it a random secret key. Then (if you want to, otherwise
-it will use Django's default database) rename db.cnf.sample to db.cnf and fill in database details.
+After this, rename settings_local.py.sample, to settings_locas.py, and give it a random secret key. Then (if you want
+to, otherwise it will use Django's default database) rename db.cnf.sample to db.cnf and fill in database details.
 
 Sync the database:
-> manage.py syncdb
+> manage.py migrate
 
 Run the server (development only):
 > manage.py runserver
 
-For production, set up as you normall would a Django project.
+For production, set up as you normally would a Django project.
 
 ## Super Interesting Legal Stuff ##
 This is licensed under the MIT License, see COPYING.txt for details.
