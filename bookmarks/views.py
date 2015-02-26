@@ -96,7 +96,7 @@ def html(request, bookmark):
     
     return TemplateResponse(
         request, "bookmarks/bookmark.html", 
-        bookmarkTag({}, bm, AddTagForm(taggable_type="bookmark"),RemoveTagForm(taggable_type="bookmark"))
+        bookmarkTag(bm, AddTagForm({"type":"bookmark"}), RemoveTagForm({"type":"bookmark"}))
     )
 
 

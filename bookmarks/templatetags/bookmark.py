@@ -10,8 +10,8 @@ import types
 
 register = template.Library()
 
-@register.inclusion_tag('bookmarks/bookmark.html', takes_context=True)
-def bookmark(context, bookmark, atf, rtf, untag=None, **kwargs):
+@register.inclusion_tag("bookmarks/bookmark.html")
+def bookmark(bookmark, atf, rtf, untag=None, **kwargs):
     kwargs["bm"] = bookmark
     kwargs["tags"] = Tag.expand_implies_check(bookmark.tags.all())
     kwargs["atf"] = atf

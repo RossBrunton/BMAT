@@ -131,7 +131,7 @@ def htmlBlock(request, tag):
     
     return TemplateResponse(
         request, "tags/tagBlock.html",
-        tagBlock({}, tag, AddTagForm(taggable_type="tag"), RemoveTagForm(taggable_type="tag"))
+        tagBlock(tag, AddTagForm({"type":"tag"}), RemoveTagForm({"type":"tag"}))
     )
 
 
