@@ -14,7 +14,7 @@ class Settings(models.Model):
     )
     
     user = models.OneToOneField(User, unique=True)
-    theme = models.CharField(max_length=10, default=THEME_GREY_BOXES, choices=THEME_OPTIONS)
+    theme = models.CharField(max_length=10, default=THEME_LIGHT, choices=THEME_OPTIONS)
     
     def __str__(self):
         return "Settings for "+self.user.username
