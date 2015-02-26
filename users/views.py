@@ -91,7 +91,7 @@ def register(request):
         if not f.is_valid():
             return render(request, "users/register.html", {"form":f})
         
-        u = f.save()
+        u = f.save(commit=False)
         
         u.email = f.cleaned_data.get("email", "")
         u.save()
