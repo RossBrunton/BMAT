@@ -1,3 +1,7 @@
+""" View functions for tag related things
+
+This includes both viewing the tag list, and manipulating tags on other things.
+"""
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import SuspiciousOperation
 from django.http import HttpResponse
@@ -14,6 +18,7 @@ from .templatetags.tag import tagBlock
 
 @login_required
 def home(request):
+    """ Uses index.html to display a list of all the user's tags """
     ctx = {}
     
     ctx["area"] = "tags"
@@ -26,6 +31,7 @@ def home(request):
 
 @login_required
 def filter(request, tag):
+    """ Given a slug, uses filter.html to display all the things tagged with that specific tag """
     tag = get_object_or_404(Tag, owner=request.user, slug=defaultfilters.slugify(tag))
     
     ctx = {}
@@ -40,6 +46,12 @@ def filter(request, tag):
 
 @login_required
 def suggest(request, value):
+    """ Returns a JSON object containing tag suggestions for the sepecified value
+    
+    The JSON object contains two values:
+    - yours: The string that was submitted to this page
+    - tags: An array of strings for the suggestions
+    """
     tags = Tag.objects.filter(owner=request.user, slug__startswith=defaultfilters.slugify(value))[:10]
     
     return TemplateResponse(request, "tags/suggest.json", {"tags":tags, "value":value}, "application/json")
@@ -48,6 +60,11 @@ def suggest(request, value):
 @login_required
 @require_POST
 def tag(request):
+    """ Tags a thing using an AddTagForm
+    
+    Returns a JSON response with an "obj" and "key" porperty. "obj" is the object that was tagged, while "type" is it's
+    type. If there is an error, a JSON object with an "error" key is returned instead.
+    """
     f = AddTagForm(request.POST)
     
     if not f.is_valid():
@@ -81,6 +98,12 @@ def tag(request):
 @login_required
 @require_POST
 def untag(request):
+    """ Untags a thing using a RemoveTagForm
+    
+    Returns a JSON response with a "deleted" and "key" porperty. "deleted" is the primary key of the object that had
+    its tag removed, while "type" is it's type. If there is an error, a JSON object with an "error" key is returned
+    instead.
+    """
     f = RemoveTagForm(request.POST)
     
     if not f.is_valid():
@@ -110,6 +133,16 @@ def untag(request):
 @login_required
 @require_POST
 def delete(request):
+    """ Deletes a tag
+    
+    The primary key of the tag must be specified with the "tag" POST value. If the tag doesn't exist, nothing happens.
+    
+    This returns a JSON object with the following properties:
+    deleted: The primary key of the deleted tag, or null if it didn't exist.
+    obj: The JSON representation of the deleted tag, or null if it didn't exist.
+    alreadyDeleted: True if and only if the tag was deleted before this request.
+    type: Always "tag".
+    """
     if "tag" not in request.POST:
         raise SuspiciousOperation
     
@@ -132,6 +165,10 @@ def delete(request):
 
 @login_required
 def htmlBlock(request, tag):
+    """ Outputs the HTML for a tag block, such as for the tags list page
+    
+    This uses the tagBlock.html temlpate.
+    """
     tag = get_object_or_404(Tag, pk=tag, owner=request.user)
     
     return TemplateResponse(
@@ -143,7 +180,13 @@ def htmlBlock(request, tag):
 @login_required
 @require_POST
 def rename(request, tag):
+    """ Renames a tag using a RenameTagForm
     
+    If successfull, outputs a JSON object with "obj" and "type" properties. "obj" is the JSON object of the tag that was
+    renamed, while "type" will always be "tag".
+    
+    If it fails, a JSON object with an "error" value will be returned.
+    """
     tagObj = get_object_or_404(Tag, owner=request.user, slug=tag)
     
     form = RenameTagForm(request.POST, instance=tagObj)

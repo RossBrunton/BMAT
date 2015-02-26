@@ -1,3 +1,15 @@
+""" URLs for bookmark related things 
+
+URLs are:
+- home
+- export (For exporting bookmarks to HTML that browsers can import)
+- add
+- delete
+- (bookmark)/html
+- (bookmark)/rename
+
+"""
+
 from django.conf.urls import patterns, url
 
 urlpatterns = patterns("",

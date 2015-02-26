@@ -1,3 +1,19 @@
+""" URLs for user management things
+
+URLs are:
+- home
+- import
+- logout
+- login
+- register
+
+And the URLs used by Django's password reset thing:
+- reset
+- resetDone
+- resetConfirm/(code)
+- resetComplete
+"""
+
 from django.conf.urls import patterns, url
 from django.contrib.auth.views import\
     password_reset, password_reset_done, password_reset_confirm, password_reset_complete

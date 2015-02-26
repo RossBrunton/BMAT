@@ -1,3 +1,5 @@
+""" View functions for user management """
+
 from django.contrib.auth import logout as alogout, login as alogin, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
@@ -16,6 +18,11 @@ import re, datetime
 
 @login_required
 def home(request):
+    """ The settings page for users
+    
+    If you post a SettingsForm to this, it will be saved. In all cases, it renders index.html to provide the user some
+    account managment things.
+    """
     if request.method == "POST":
         form = SettingsForm(request.POST, instance=request.user.settings)
         if form.is_valid():
@@ -36,6 +43,11 @@ def home(request):
 @require_POST
 @login_required
 def importFile(request):
+    """ When sent an ImportForm, will import the bookmarks from the file
+    
+    Outputs a JSON object with an "error" property when it encounters an error. If it succeeds, it redirects to the
+    home page. This behaviour should probably be changed at some point.
+    """
     form = ImportForm(request.POST, request.FILES)
     
     if not form.is_valid():
@@ -55,12 +67,20 @@ def importFile(request):
 @require_POST
 @login_required
 def logout(request):
+    """ Logs the user out and redirects them to the home page """
     alogout(request)
     
     return HttpResponseRedirect("/")
 
 
 def login(request):
+    """ Either displays or handles a login request
+    
+    If an AuthenticationForm is posted, the user will be logged in and be redirect to the value of the "next" GET value
+    if it exists, otherwise they will be redirected to the home page.
+    
+    If this page is requested via GET, it just displays a log in form.
+    """
     if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
@@ -79,6 +99,13 @@ def login(request):
 
 
 def register(request):
+    """ Either registers a new user, displays a registration form or tells the user that they can't register
+    
+    If the setting BMAT_ALLOW_REGISTER is false, then this renders the template no_register.html and does nothing with
+    any POST data.
+    
+    This uses the register.html template if users are allowed to register.
+    """
     if not settings.BMAT_ALLOW_REGISTER:
         return render(request, "users/no_register.html", {})
     
@@ -100,6 +127,11 @@ def register(request):
 
 
 def _handle_import(contents, use_tags, owner):
+    """ Handles the import of a bookmarks file
+    
+    Loops through all links in the file and adds them as bookmarks. It then tags them if the file contains tags and
+    "use_tags" is true.
+    """
     lines = contents.split("\n")
     
     title = re.compile(r"<a.*?>(.+?)</a>", re.I)

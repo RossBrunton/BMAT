@@ -3,6 +3,7 @@
 window.bmat = (function() {
     var bmat = {};
     
+    // Error handling
     var _error = function(message) {
         $("#error .errorText").html(message);
         $("#error").slideDown();
@@ -29,7 +30,7 @@ window.bmat = (function() {
     
     // Resets all the listeners, used when a document has been changed or initially loaded
     var _update = function() {
-        // Clean first
+        // Remove all the old listeners
         _clean();
         
         // Delete button
@@ -76,7 +77,7 @@ window.bmat = (function() {
             }
         });
         
-        // Tag Entry
+        // "Add tag" entry, for generating suggestions
         $(".tagEntry").on("input", function(e) {
             var input = this;
             
@@ -95,7 +96,7 @@ window.bmat = (function() {
             }, "json");
         });
         
-        // Title editing
+        // Title editing; hides the "real title" and replaces it with the text box, or the opposite
         $(".editTitle").on("click", function(e) {
             if(!$(this).hasClass("open")) {
                 $(this).parents(".block").find(".title.noedit").hide();
@@ -128,6 +129,7 @@ window.bmat = (function() {
         });
     };
     
+    // Removes all listeners
     var _clean = function() {
         $(".delete.button").off();
         $(".untag.button").off();
@@ -145,6 +147,7 @@ window.bmat = (function() {
         $(".editTitle").off();
     };
     
+    // Downloads a bookmark by an id and adds it to the list; used when adding a new one
     var _prependBookmark = function(id) {
         $.get("/bookmarks/"+id+"/html", function(e) {
             $("#bookmark-list").prepend(e);
@@ -153,6 +156,8 @@ window.bmat = (function() {
     };
     
     
+    // Given an id and a type, downloads a new version of the specific block and replaces them
+    // If expand is true, then they are expanded as if the user had clicked the expand button
     var _replace = function(id, type, expand) {
         var url = "";
         if(type == "tag") url = "/tags/htmlBlock/" + id;
@@ -172,6 +177,7 @@ window.bmat = (function() {
     };
     
     
+    // Add the listeners on initial load
     var _ready = function() {
         // Bookmark adding
         $("#add-bookmark").on("submit", function(e) {
@@ -188,6 +194,7 @@ window.bmat = (function() {
         });
     };
     
+    // These two are ran on page load
     $(_ready);
     $(_update);
     

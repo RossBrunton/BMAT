@@ -1,3 +1,7 @@
+""" Models relating to tags 
+
+This also contains "colours_enum" which is a list of (css_class, colour_name) for each colour.
+"""
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.signals import post_save
@@ -24,10 +28,12 @@ colours_enum = [
 ]
 
 class Taggable(models.Model):
+    """ Base class for taggable models; anything taggable must extend this """
     class Meta:
         abstract = True
     
     def tag(self, tag):
+        """ Tags this object with a tag specified by a tag name, primary key or Tag model instance """
         if isinstance(tag, (int, long)):
             try:
                 tag = Tag.objects.get(pk=tag, owner=self.owner)
@@ -47,6 +53,7 @@ class Taggable(models.Model):
         self.tags.add(tag)
     
     def untag(self, tag):
+        """ Untags this object from a tag specified by a tag name, primary key or Tag model instance """
         if isinstance(tag, (int, long)):
             try:
                 tag = Tag.objects.get(pk=tag, owner=self.owner)
@@ -63,6 +70,7 @@ class Taggable(models.Model):
     
     @classmethod
     def get_by_tag(cls, tag):
+        """ Returns all the elements tagged with the given tag or any other tags it implies """
         out = []
         
         tags = Tag.expand_implied_by([tag])
@@ -79,6 +87,23 @@ class Taggable(models.Model):
 
 @tags.taggable("tag")
 class Tag(Taggable):
+    """ A Tag, which may be used to categorize taggable things
+    
+    Contains:
+    - owner:ForeignKey to User
+    - name:TextField
+    - colour:CharField with choices being the colours enum
+    - slug:SlugField
+    - tags:ManyToManyField with itself
+    
+    Tags themselves can be tagged, conceptually "Crowns" being tagged "Hats" means "Crowns" implies "Hats". Anything
+    tagged with "Crowns" will also be tagged "Hats". This is dynamic, so it is not possible to have a crown that is not
+    a hat, and removing the "hat" tag from "crown" will remove the hat tag from everything tagged "crown".
+    
+    Tags are ordered alphabetically.
+    
+    The slug of a tag is also set automatically when it is saved.
+    """
     class Meta:
         ordering = ["slug"]
     
@@ -92,6 +117,10 @@ class Tag(Taggable):
         return ("Tag '"+self.name+"' for "+self.owner.username).encode("ascii", "ignore")
     
     def to_dir(self):
+        """ Returns a dictionary representation of this tag
+        
+        The keys of the object are the field names, and the values are the respective values.
+        """
         out = {}
         out["name"] = self.name
         out["colour"] = self.colour
@@ -101,10 +130,18 @@ class Tag(Taggable):
         return out
     
     def to_json(self):
+        """ Produces the JSON representation of this tag
+        
+        It's the JSON for the output of to_dir()
+        """
         return json.dumps(self.to_dir())
     
     @staticmethod
     def get_or_create_with_slug(owner, instance):
+        """ Checks if a tag exists for a given user, and returns it if it does
+        
+        If it doesn't, the owner of the instance is set to the provided one, it is saved and then returned.
+        """
         try:
             return Tag.objects.get(owner=owner, slug=defaultfilters.slugify(instance.name))
         except Tag.DoesNotExist:
@@ -114,6 +151,15 @@ class Tag(Taggable):
     
     @staticmethod
     def expand_implies(tags):
+        """ Takes an iterable of tags, and returns a list of those tags and all that they imply
+        
+        That is, make a list out of the argument, and for each tag T, add all T's tags to this list if they aren't in it
+        already.
+        
+        The list is sorted alphabetically.
+        
+        For example, if A is tagged B (A implies B), then expand_implies([A]) == [A, B] and expand_implies([B]) == [B]
+        """
         out = list(tags)
         
         i = 0
@@ -129,8 +175,10 @@ class Tag(Taggable):
     
     @staticmethod
     def expand_implies_check(tags):
-        """ Same as expand_implies, but as a pair, second element is whether the given tag is attached directly rather
-        than implied. """
+        """ Does the same as expand_implies, but each element is a (tag, direct) pair
+        
+        Direct is true only for the tags in the input iterable, not for the implied ones.
+        """
         out = map(lambda x : (x, True), list(tags))
         tlist = list(tags)
         
@@ -148,6 +196,15 @@ class Tag(Taggable):
     
     @staticmethod
     def expand_implied_by(tags):
+        """ Takes an iterable of tags, and returns a list of those tags and all that imply them
+        
+        That is, make a list out of the argument, and for each tag T, add all tags that have T as a tag if it isn't
+        already in the list.
+        
+        The list is sorted alphabetically.
+        
+        For example if A is tagged B (A implies B), expand_implied_by([A]) == [A] and expand_implied_by([B]) == [A, B]
+        """
         out = list(tags)
         
         i = 0
@@ -163,8 +220,10 @@ class Tag(Taggable):
     
     @staticmethod
     def expand_implied_by_check(tags):
-        """ Same as expand_implied_by, but as a pair, second element is whether the given tag is attached directly
-        rather than implied. """
+        """ Does the same as expand_implied_by, but each element is a (tag, direct) pair
+        
+        Direct is true only for the tags in the input iterable, not for the implied ones.
+        """
         out = map(lambda x : (x, True), list(tags))
         tlist = list(tags)
         
@@ -182,11 +241,13 @@ class Tag(Taggable):
 
     @staticmethod
     def by_user(user):
+        """ Returns all the tags owned by this user """
         return Tag.objects.all().filter(owner=user)
 
 
 @receiver(post_save, sender=Tag)
-def tag_save(sender, instance, created, **kwargs):    
+def tag_save(sender, instance, created, **kwargs):
+    """ Save hook, used to update the slug if it needs to be changed """
     if instance.slug != defaultfilters.slugify(instance.name):
         instance.slug = defaultfilters.slugify(instance.name)
         instance.save()

@@ -1,3 +1,5 @@
+""" Extra models for users, only contains the settings model at the moment """
+
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
@@ -5,6 +7,15 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 class Settings(models.Model):
+    """ Additional user settings, this is attached to a user when they are created
+    
+    It has the following fields:
+    - user:OneToOneField
+    - theme:CharField
+    
+    At the moment theme can be either Settings.THEME_GREY_BOXES or Settings.THEME_LIGHT, with the default being light.
+    A list of all these themes as (constant, pretty name) are available as Settings.THEME_OPTIONS.
+    """
     THEME_GREY_BOXES = "grey_boxes"
     THEME_LIGHT = "light"
     
@@ -22,6 +33,7 @@ class Settings(models.Model):
 
 @receiver(post_save, sender=User)
 def _add_settings(sender, instance, **kwargs):
+    """ When a user is saved and has no settings, add it """
     try:
         instance.settings
     except ObjectDoesNotExist:

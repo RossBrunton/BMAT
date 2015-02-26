@@ -1,7 +1,21 @@
+""" URLs for tag related things 
+
+URLs are:
+- home
+- suggest/(query)
+- delete
+- rename/(tag)
+- htmlBlock/(tag)
+- tag
+- untag
+- ~(tag) (named "filter")
+
+"""
+
 from django.conf.urls import patterns, url
 
 urlpatterns = patterns("",
-     url(r'^$', "tags.views.home", name="home"),
+    url(r'^$', "tags.views.home", name="home"),
     
     url(r'^suggest/(?P<value>.*)$', "tags.views.suggest", name="suggest"),
     url(r'^delete$', "tags.views.delete", name="delete"),
