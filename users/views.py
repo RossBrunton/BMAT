@@ -66,7 +66,7 @@ def login(request):
         if form.is_valid():
             alogin(request, form.get_user())
 
-            return HttpResponseRedirect("/")
+            return HttpResponseRedirect(request.GET.get("next", "/"))
     else:
         form = AuthenticationForm(request)
 
