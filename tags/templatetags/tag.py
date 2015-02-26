@@ -7,12 +7,11 @@ register = template.Library()
 def tag(tag, obj, rtf, **kwargs):
     if isinstance(tag, Tag): 
         kwargs["tag"] = tag
-        kwargs["explicit"] = False
+        kwargs["direct"] = False
     else:
         kwargs["tag"] = tag[0]
-        kwargs["explicit"] = tag[1]
+        kwargs["direct"] = tag[1]
     
-    kwargs["bookmark"] = obj
     kwargs["rtf"] = rtf
     kwargs["pk_target"] = obj.pk
     
