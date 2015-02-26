@@ -81,13 +81,18 @@ def delete(request):
     try:
         bm = Bookmark.objects.get(owner=request.user, pk=request.POST["bookmark"])
     except Bookmark.DoesNotExist:
-        return HttpResponse('{"deleted":null, "alreadyDeleted":true}', content_type="application/json")
+        return HttpResponse(
+            '{"obj":null, "type":"bookmark", "deleted":null, "alreadyDeleted":true}', content_type="application/json"
+        )
     
     id = bm.pk
     json = bm.to_json()
     bm.delete()
     
-    return HttpResponse('{"deleted":'+str(id)+', "obj":'+json+', "type":"bookmark"}', content_type="application/json")
+    return HttpResponse(
+        '{"deleted":'+str(id)+', "obj":'+json+', "type":"bookmark", "alreadyDeleted":false}',
+        content_type="application/json"
+    )
 
 
 @login_required

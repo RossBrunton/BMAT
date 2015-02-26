@@ -116,13 +116,18 @@ def delete(request):
     try:
         tag = Tag.objects.get(owner=request.user, pk=request.POST["tag"])
     except Tag.DoesNotExist:
-        return HttpResponse('{"deleted":null, "alreadyDeleted":true}', content_type="application/json")
+        return HttpResponse(
+            '{"deleted":null, "obj":null, "alreadyDeleted":true, "type":"tag"}', content_type="application/json"
+        )
     
     id = tag.pk
     json = tag.to_json()
     tag.delete()
     
-    return HttpResponse('{"deleted":'+str(id)+', "obj":'+json+', "type":"tag"}', content_type="application/json")
+    return HttpResponse(
+        '{"deleted":'+str(id)+', "obj":'+json+', "alreadyDeleted":false, "type":"tag"}',
+        content_type="application/json"
+    )
 
 
 @login_required
