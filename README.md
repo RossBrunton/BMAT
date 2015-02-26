@@ -6,9 +6,7 @@ Clone the repo:
 > git clone https://github.com/RossBrunton/BMAT.git bmat/
 
 Create a virtualenv:
-> virtualenv -p /usr/bin/pypy bmat
-
-(You can use /usr/bin/python2.7 if you like, but it may not work)
+> virtualenv -p /usr/bin/python2.7 bmat
 
 Enter this directory:
 > cd bmat
