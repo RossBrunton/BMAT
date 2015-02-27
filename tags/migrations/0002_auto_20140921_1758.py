@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='tag',
             name='implies',
-            field=models.ManyToManyField(related_name=b'tags_to', db_table=b'tags_tag_implies', to=b'tags.Tag')
+            field=models.ManyToManyField(related_name='tags_to', db_table='tags_tag_implies', to='tags.Tag')
         ),
         migrations.RenameField(
             model_name='tag',
