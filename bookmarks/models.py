@@ -8,7 +8,7 @@ from tags.models import Tag, Taggable
 from tags import taggable
 from bookmarks.templatetags.bookmark import bookmark
 
-from HTMLParser import HTMLParser
+from six.moves.html_parser import HTMLParser
 import json
 import requests
 

@@ -132,7 +132,7 @@ def _handle_import(contents, use_tags, owner):
     Loops through all links in the file and adds them as bookmarks. It then tags them if the file contains tags and
     "use_tags" is true.
     """
-    lines = contents.split("\n")
+    lines = str(contents, encoding="utf8").split("\n")
     
     title = re.compile(r"<a.*?>(.+?)</a>", re.I)
     url = re.compile(r"""<a.*href=['"](.+?)['"]""", re.I)

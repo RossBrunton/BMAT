@@ -1,4 +1,4 @@
-{% if pages|length > 1 %}
+{% if pages.num_pages > 1 %}
     <div class='box pages'>
         {% for p in pages.page_range %}
             {% if not forloop.first %} - {% endif %}

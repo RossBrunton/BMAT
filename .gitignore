@@ -10,3 +10,4 @@ __pycache__
 /site-packages
 /db.cnf
 /bmat/settings_local.py
+lib

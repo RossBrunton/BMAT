@@ -65,4 +65,4 @@ LOGIN_URL = "/user/login"
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR + "/static/"
 
-from settings_local import *
+from .settings_local import *

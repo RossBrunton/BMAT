@@ -11,6 +11,7 @@ from django.template import defaultfilters
 import tags
 
 import json
+import six
 
 colours_enum = [
     ("white", "White"),
@@ -34,14 +35,14 @@ class Taggable(models.Model):
     
     def tag(self, tag):
         """ Tags this object with a tag specified by a tag name, primary key or Tag model instance """
-        if isinstance(tag, (int, long)):
+        if isinstance(tag, six.integer_types):
             try:
                 tag = Tag.objects.get(pk=tag, owner=self.owner)
             except Tag.DoesNotExist:
                 #Handle this better?
                 return
         
-        if isinstance(tag, (str, unicode)):
+        if isinstance(tag, six.string_types):
             try:
                 tag = Tag.objects.get(slug=defaultfilters.slugify(tag), owner=self.owner)
             except Tag.DoesNotExist:
@@ -54,13 +55,13 @@ class Taggable(models.Model):
     
     def untag(self, tag):
         """ Untags this object from a tag specified by a tag name, primary key or Tag model instance """
-        if isinstance(tag, (int, long)):
+        if isinstance(tag, six.integer_types):
             try:
                 tag = Tag.objects.get(pk=tag, owner=self.owner)
             except Tag.DoesNotExist:
                 return
         
-        if isinstance(tag, (str, unicode)):
+        if isinstance(tag, six.string_types):
             try:
                 tag = Tag.objects.get(slug=defaultfilters.slugify(tag), owner=self.owner)
             except Tag.DoesNotExist:
@@ -170,7 +171,7 @@ class Tag(Taggable):
             
             i += 1
         
-        out.sort(lambda a, b: cmp(a.slug, b.slug))
+        out.sort(key=lambda a: a.slug)
         return out
     
     @staticmethod
@@ -179,7 +180,7 @@ class Tag(Taggable):
         
         Direct is true only for the tags in the input iterable, not for the implied ones.
         """
-        out = map(lambda x : (x, True), list(tags))
+        out = list(map(lambda x : (x, True), list(tags)))
         tlist = list(tags)
         
         i = 0
@@ -191,7 +192,7 @@ class Tag(Taggable):
             
             i += 1
         
-        out.sort(lambda a, b: cmp(a[0].slug, b[0].slug))
+        out.sort(key=lambda a: a[0].slug)
         return out
     
     @staticmethod
@@ -215,7 +216,7 @@ class Tag(Taggable):
             
             i += 1
         
-        out.sort(lambda a, b: cmp(a.slug, b.slug))
+        out.sort(key=lambda a: a.slug)
         return out
     
     @staticmethod
@@ -224,7 +225,7 @@ class Tag(Taggable):
         
         Direct is true only for the tags in the input iterable, not for the implied ones.
         """
-        out = map(lambda x : (x, True), list(tags))
+        out = list(map(lambda x : (x, True), list(tags)))
         tlist = list(tags)
         
         i = 0
@@ -236,7 +237,7 @@ class Tag(Taggable):
             
             i += 1
         
-        out.sort(lambda a, b: cmp(a[0].slug, b[0].slug))
+        out.sort(key=lambda a: a[0].slug)
         return out
 
     @staticmethod

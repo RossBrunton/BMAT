@@ -9,6 +9,7 @@ from django.shortcuts import get_object_or_404
 from django.template import defaultfilters
 from django.template.response import TemplateResponse
 from django.views.decorators.http import require_POST
+import six
 
 from tags.models import Tag
 from tags.forms import AddTagForm, RemoveTagForm, RenameTagForm
@@ -41,6 +42,8 @@ def filter(request, tag):
     ctx["tag"] = tag
     ctx["atf"] = AddTagForm({"type":"tag"})
     ctx["rtf"] = RemoveTagForm({"type":"tag"})
+    ctx["batf"] = AddTagForm({"type":"bookmark"})
+    ctx["brtf"] = RemoveTagForm({"type":"kookmark"})
     
     return TemplateResponse(request, "tags/filter.html", ctx)
 
@@ -76,7 +79,7 @@ def tag(request):
         return HttpResponse('{"error":"Taggable type invalid"}', content_type="application/json", status=422)
     
     try:
-        obj = get_object_or_404(taggable, owner=request.user, pk=f.cleaned_data["pk"])
+        obj = taggable.objects.get(owner=request.user, pk=f.cleaned_data["pk"])
     except taggable.DoesNotExist:
         return HttpResponse('{"error":"Taggable not found"}', content_type="application/json", status=422)
     
