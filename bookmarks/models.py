@@ -98,8 +98,9 @@ class HTMLTitleReader(HTMLParser):
     the flag is on.
     """
     def __init__(self):
-        self.title = ""
+        self._title = ""
         self._open = False
+        self._nomore = False
         HTMLParser.__init__(self)
     
     def handle_starttag(self, tag, attrs):
@@ -110,6 +111,16 @@ class HTMLTitleReader(HTMLParser):
         if tag == "title":
             self._open = False
         
+        if tag in ["title", "head"]:
+            self._nomore = True
+        
     def handle_data(self, data):
+        if self._open and not self._nomore:
+            self._title += data
+    
+    @property
+    def title(self):
         if self._open:
-            self.title = data
+            return ""
+        
+        return self._title
