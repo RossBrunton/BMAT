@@ -4,7 +4,7 @@ If you want to configure your own settings for the site, please put them here ra
 settings_local.py.sample contains an example. Note that all keys in the expample file, like the security key, must be
 specified here.
 
-See https://docs.djangoproject.com/en/1.7/ref/settings/ for details on settings.
+See https://docs.djangoproject.com/en/1.8/ref/settings/ for details on settings.
 """
 
 DEBUG = True
@@ -19,3 +19,13 @@ ALLOWED_HOSTS = []
 ADMINS = ()
 MANAGERS = ()
 SERVER_EMAIL = "root@localhost"
+
+# Uncomment to use a sqlite database instead of sql
+"""
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'db.sqlite3',
+    }
+}
+"""
