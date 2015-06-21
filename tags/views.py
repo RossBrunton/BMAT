@@ -43,7 +43,7 @@ def filter(request, tag):
     ctx["atf"] = AddTagForm({"type":"tag"})
     ctx["rtf"] = RemoveTagForm({"type":"tag"})
     ctx["batf"] = AddTagForm({"type":"bookmark"})
-    ctx["brtf"] = RemoveTagForm({"type":"kookmark"})
+    ctx["brtf"] = RemoveTagForm({"type":"bookmark"})
     
     return TemplateResponse(request, "tags/filter.html", ctx)
 
