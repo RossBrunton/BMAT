@@ -3,6 +3,8 @@
 window.bmat = (function() {
     var bmat = {};
     
+    var disabledForms = [];
+    
     // Error handling
     var _error = function(message) {
         $("#error .errorText").html(message);
@@ -15,6 +17,8 @@ window.bmat = (function() {
         }else{
             _error("ERROR: "+error);
         }
+        
+        _enableAllForms();
     });
     
     window.addEventListener("error", function(e) {
@@ -32,6 +36,18 @@ window.bmat = (function() {
     var _disableForm = function(e) {
         $(e).parents(".block").addClass("disabled");
         $(e).parents(".block").find("input, select").attr("disabled", "disabled");
+        disabledForms.push(e);
+    };
+    
+    // And to enable all of them again
+    var _enableAllForms = function() {
+        for(var i = 0; i < disabledForms.length; i ++) {
+            var f = disabledForms[i];
+            
+            $(f).parents(".block").removeClass("disabled");
+            $(f).parents(".block").find("input, select").removeAttr("disabled");
+        }
+        disabledForms = [];
     };
     
     
@@ -108,15 +124,15 @@ window.bmat = (function() {
         // Title editing; hides the "real title" and replaces it with the text box, or the opposite
         $(".editTitle").on("click", function(e) {
             if(!$(this).hasClass("open")) {
-                $(this).parents(".block").find(".title.noedit").hide();
-                $(this).parents(".block").find(".title.edit").show();
-                $(this).parents(".block").find(".title.edit input[name=name]").val(
-                    $(this).parents(".block").find(".title.noedit a, .title.noedit").first().text()
-                );
+                $(this).parents(".block").find(".noedit").hide();
+                $(this).parents(".block").find(".edit").show();
+                //$(this).parents(".block").find(".title.edit input[name=title]").val(
+                //    $(this).parents(".block").find(".title.noedit a, .title.noedit").first().text()
+                //);
                 $(this).addClass("open");
             }else{
-                $(this).parents(".block").find(".title.noedit").show();
-                $(this).parents(".block").find(".title.edit").hide();
+                $(this).parents(".block").find(".noedit").show();
+                $(this).parents(".block").find(".edit").hide();
                 $(this).removeClass("open");
             }
         });
@@ -126,6 +142,9 @@ window.bmat = (function() {
         $("form.tagForm, form.renameForm").on("submit", function(e) {
             e.preventDefault();
             var elem = this;
+            $(this).find("input[name=url]").val(
+                $(elem).parents(".block").find(".body input[name=url]").val()
+            );
             
             $.post(this.getAttribute("action"), $(this).serialize(), function(data) {
                 _replace($(elem).parents(".block").data("id"), $(elem).parents(".block").data("taggable-type"), true);

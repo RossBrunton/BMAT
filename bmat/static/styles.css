@@ -116,21 +116,23 @@ nav a:hover {
     padding-top:3px;
 }
 
-.head .title {
+.title, .url {
     flex:1 1 auto;
+    padding-right:30px !important;
 }
 
-.head .title.edit {
+.edit {
     /* Editing name box on titles page */
     display:none;
     padding:0px;
 }
 
-.head .title.edit input {
+.edit input {
     margin:0px;
+    width:100%;
 }
 
-.head .title.edit .done {
+.edit .done {
     margin-top:0px;
 }
 
@@ -157,7 +159,7 @@ nav a:hover {
     margin-left:auto;
 }
 
-.url {
+.url, .added {
     color:#999999;
     font-style:italic;
 }

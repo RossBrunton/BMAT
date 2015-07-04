@@ -13,6 +13,7 @@ from django.template.response import TemplateResponse
 from django.views.decorators.http import require_POST
 
 from tags.forms import AddTagForm, RemoveTagForm
+from .forms import RenameBookmarkForm
 from bookmarks.models import Bookmark
 from tags.models import Tag
 from .templatetags.bookmark import bookmark as bookmarkTag
@@ -152,15 +153,14 @@ def rename(request, bookmark):
     
     If it fails, it returns a JSON object with only an "error" proprerty.
     """
-    if "name" not in request.POST:
-        raise SuspiciousOperation
+    bmObj = get_object_or_404(Bookmark, owner=request.user, pk=bookmark)
     
-    try:
-        bm = Bookmark.objects.get(owner=request.user, pk=bookmark)
-    except Bookmark.DoesNotExist:
-        return HttpResponse('{"error":"Bookmark not found"}', content_type="application/json", status=422)
+    form = RenameBookmarkForm(request.user, request.POST, instance=bmObj)
     
-    bm.title = request.POST["name"]
-    bm.save()
+    if not form.is_valid():
+        e = list(form.errors.keys())[0]+": "+list(form.errors.values())[0][0]
+        return HttpResponse('{"error":"'+e+'"}', content_type="application/json", status=422)
     
-    return HttpResponse('{"obj":'+bm.to_json()+', "type":"bookmark"}', content_type="application/json")
+    form.save()
+    
+    return HttpResponse('{"obj":'+bmObj.to_json()+', "type":"bookmark"}', content_type="application/json")

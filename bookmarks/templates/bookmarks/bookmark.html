@@ -2,11 +2,11 @@
 <div class='bookmark box block' data-id='{{ bm.pk }}' data-taggable-type='bookmark'>
     <div class='head'>
         <div class='title noedit'><a href='{{ bm.url }}'>{{ bm.title }}</a></div>
-        
         <div class='title edit'>
             <form class='renameForm' method='POST' action='{% url "bookmarks:rename" bookmark=bm.id %}'>
                 {% csrf_token %}
-                <input class='renameEntry' name='name' type='text' style='width:500px'/>
+                <input class='renameEntry' name='title' type='text' value='{{ bm.title }}'/>
+                <input name='url' type='hidden'/>
                 <a class='rename button'>&nbsp;</a>
             </form>
         </div>
@@ -19,7 +19,8 @@
     </div>
     
     <div class='body' style='display:none'>
-        <div class='url'>{{ bm.url }} | Added {{ bm.added|date:"D j/n/y H:i" }}</div>
+        <div class='url noedit'>{{ bm.url }} | Added {{ bm.added|date:"D j/n/y H:i" }}</div>
+        <div class='url edit'><input type='text' name='url' value='{{ bm.url }}'/></div>
         
         <div class='right'>
             {% addTag atf bm.pk %}
