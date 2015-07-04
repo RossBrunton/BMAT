@@ -5,6 +5,16 @@
 
 {% block content %}
 
+{% if note %}
+<div class='box'>
+    {{ note }}
+</div>
+{% endif %}
+
+<div class='box title'>
+    Account Settings
+</div>
+
 <div class='box'>
     <form action='{% url "user:logout" %}' method='POST'>
         {% csrf_token %}
@@ -13,18 +23,28 @@
 </div>
 
 {% form_errors settings_form %}
-
 <div class='box'>
-    <form method='POST'>
+    <form method='POST' action='{% url "user:home" %}'>
         {% csrf_token %}
         <label>Theme: {{ settings_form.theme }}</label><br/>
         <input type='submit' value='Update Settings'/>
     </form>
 </div>
 
+{% form_errors pass_form %}
 <div class='box'>
-    Please note that if you export your bookmarks and then import them again, "implies" relationships between tags
-    won't be preserved.
+    <form method='POST' action='{% url "user:pass_change" %}'>
+        {% csrf_token %}
+        Change Password:<br/>
+        <label>Old Password: {{ pass_form.old_password }}</label><br/>
+        <label>New Password: {{ pass_form.new_password1 }}</label><br/>
+        <label>Type it Again: {{ pass_form.new_password2 }}</label><br/>
+        <input type='submit' value='Change Password'/>
+    </form>
+</div>
+
+<div class='box title'>
+    Import and Export
 </div>
 
 <div class='box'>

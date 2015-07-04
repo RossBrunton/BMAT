@@ -2,7 +2,7 @@
 
 from django.contrib.auth import logout as alogout, login as alogin, authenticate
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.template.response import TemplateResponse
@@ -17,13 +17,13 @@ import string
 import re, datetime
 
 @login_required
-def home(request):
+def home(request, note=""):
     """ The settings page for users
     
     If you post a SettingsForm to this, it will be saved. In all cases, it renders index.html to provide the user some
     account managment things.
     """
-    if request.method == "POST":
+    if request.method == "POST" and not note:
         form = SettingsForm(request.POST, instance=request.user.settings)
         if form.is_valid():
             form.save()
@@ -35,7 +35,35 @@ def home(request):
     
     ctx["area"] = "user"
     ctx["importForm"] = ImportForm()
+    ctx["pass_form"] = PasswordChangeForm(request.user)
     ctx["settings_form"] = form
+    ctx["note"] = note
+    
+    return TemplateResponse(request, "users/index.html", ctx)
+
+
+@login_required
+def pass_change(request):
+    """ The password change page
+    
+    If you pass it a Django PasswordChangeForm, it will save it, and display a message. If it fails, it renders the
+    users home page.
+    """
+    if request.method == "POST":
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            form.save()
+            return home(request, "Password Changed Successfully")
+    
+    else:
+        form = PasswordChangeForm(instance=request.user.settings)
+    
+    ctx = {}
+    
+    ctx["area"] = "user"
+    ctx["importForm"] = ImportForm()
+    ctx["pass_form"] = form
+    ctx["settings_form"] = SettingsForm(instance=request.user.settings)
     
     return TemplateResponse(request, "users/index.html", ctx)
 

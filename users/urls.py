@@ -23,6 +23,7 @@ from django.core.urlresolvers import reverse
 urlpatterns = patterns("",
     url(r"^$", "users.views.home", name="home"),
     url(r"^import$", "users.views.importFile", name="import"),
+    url(r"^pass_change$", "users.views.pass_change", name="pass_change"),
     
     url(r"^logout$", "users.views.logout", name="logout"),
     url(r"^login$", "users.views.login", name="login"),
