@@ -7,6 +7,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.template.response import TemplateResponse
 from django.views.decorators.http import require_POST
+from django.forms.util import ErrorList
 
 from django.conf import settings
 from bookmarks.models import Bookmark
@@ -22,6 +23,9 @@ def home(request, note=""):
     
     If you post a SettingsForm to this, it will be saved. In all cases, it renders index.html to provide the user some
     account managment things.
+    
+    This view may also take a note, in which case the note will be displayed at the top of the page and the request
+    will run as if it were a GET.
     """
     if request.method == "POST" and not note:
         form = SettingsForm(request.POST, instance=request.user.settings)
@@ -73,21 +77,40 @@ def pass_change(request):
 def importFile(request):
     """ When sent an ImportForm, will import the bookmarks from the file
     
-    Outputs a JSON object with an "error" property when it encounters an error. If it succeeds, it redirects to the
-    home page. This behaviour should probably be changed at some point.
+    Outputs the users/index.html on error with the appropriate form. If it succeeds, it redirects to the home page. This
+    behaviour should probably be changed at some point.
     """
+    
     form = ImportForm(request.POST, request.FILES)
     
+    error = False
+    
+    def add_error(message):
+        error_list = form._errors.setdefault("file", ErrorList())
+        error_list.append(message)
+    
     if not form.is_valid():
-        return HttpResponse('{"error":"Invalid form"}', content_type="application/json", status=422)
+        error = True
     
-    if request.FILES["file"].multiple_chunks():
-        return HttpResponse('{"error":"File too large"}', content_type="application/json", status=422)
+    if not error and request.FILES["file"].multiple_chunks():
+        add_error("File too large")
+        error = True
     
-    try:
-        _handle_import(request.FILES["file"].read(), form.data.get("use_tags", False), request.user)
-    except:
-        return HttpResponse('{"error":"Invalid file"}', content_type="application/json", status=422)
+    if not error:
+        try:
+            _handle_import(request.FILES["file"].read(), form.data.get("use_tags", False), request.user)
+        except:
+            add_error("File is invalid or not of a supported format")
+            error = True
+    
+    if error:
+        ctx = {}
+        ctx["area"] = "user"
+        ctx["importForm"] = form
+        ctx["pass_form"] = PasswordChangeForm(request.user)
+        ctx["settings_form"] = SettingsForm(instance=request.user.settings)
+        
+        return TemplateResponse(request, "users/index.html", ctx, status=422)
     
     return HttpResponseRedirect("/")
 

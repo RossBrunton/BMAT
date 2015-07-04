@@ -52,6 +52,7 @@
     won't be preserved.
 </div>
 
+{% form_errors importForm %}
 <div class='box'>
     <form enctype='multipart/form-data' action='{% url "user:import" %}' method='POST'>
         {% csrf_token %}
