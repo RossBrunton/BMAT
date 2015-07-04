@@ -18,6 +18,12 @@ body {
     margin-top:5px;
 }
 
+.form-errors {
+    background-color:#cc9999;
+    background-image: linear-gradient(180deg, #cc9999, #aa6666);
+    border-color:#aa6666;
+    color:#442222;
+}
 
 /*
  * Colours

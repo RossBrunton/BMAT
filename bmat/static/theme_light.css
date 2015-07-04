@@ -23,6 +23,13 @@ body {
     border-radius:0px;
 }
 
+.form-errors {
+    background-color:#cc9999;
+    border:2px solid #aa6666;
+    color:#442222;
+    border-radius:5px;
+}
+
 /*
  * Tags
  */

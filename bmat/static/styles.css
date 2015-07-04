@@ -85,13 +85,6 @@ nav a:hover {
     padding:2px;
 }
 
-.form-errors {
-    background-color:#cc9999;
-    background-image: linear-gradient(180deg, #cc9999, #aa6666);
-    border-color:#aa6666;
-    color:#442222;
-}
-
 
 /*
  * Boxes
@@ -99,6 +92,7 @@ nav a:hover {
 .box {
     margin-left:10px;
     margin-right:10px;
+    line-height:150%;
 }
 
 
@@ -177,6 +171,11 @@ nav a:hover {
 
 .currentPage {
     text-decoration:underline;
+}
+
+.box.title {
+    font-size:120%;
+    margin-top:20px;
 }
 
 
