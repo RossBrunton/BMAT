@@ -4,8 +4,8 @@
     {{ atf.type.as_hidden }}
     <input type='hidden' name='pk' value='{{ pk }}' />
     <input class='tagEntry' type='text' placeholder='Add Tag' name='name'
-        list='tslist-{{ atf.type }}-{{ pk }}'/>
-    <datalist id='tslist-{{ atf.type }}-{{ pk }}'>
+        list='tslist-{{ atf.type_str }}-{{ pk }}'/>
+    <datalist id='tslist-{{ atf.type_str }}-{{ pk }}'>
         
     </datalist>
     {{ atf.colour }}

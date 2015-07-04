@@ -23,6 +23,11 @@ class AddTagForm(forms.ModelForm):
         model = Tag
         fields = ["colour", "name"]
     
+    def __init__(self, *args, **kwargs):
+        super(AddTagForm, self).__init__(*args, **kwargs)
+        
+        self.type_str = args[0].get("type")
+    
     type = forms.CharField()
     pk = forms.IntegerField(min_value=1)
 
