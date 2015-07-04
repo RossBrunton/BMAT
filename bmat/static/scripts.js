@@ -25,7 +25,14 @@ window.bmat = (function() {
     // Function that finds the form this element is in, and submits it
     var _submitParent = function() {
         $(this).parents("form").submit();
-    }
+        _disableForm(this);
+    };
+    
+    // And a function that disables a form
+    var _disableForm = function(e) {
+        $(e).parents(".block").addClass("disabled");
+        $(e).parents(".block").find("input, select").attr("disabled", "disabled");
+    };
     
     
     // Resets all the listeners, used when a document has been changed or initially loaded
@@ -61,6 +68,8 @@ window.bmat = (function() {
             $.post(this.getAttribute("action"), $(this).serialize(), function(data) {
                 _replace(bookmark, $(elem).parents(".block").data("taggable-type"), true);
             }, "json");
+            
+            _disableForm(this);
         });
         
         
