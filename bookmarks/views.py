@@ -17,6 +17,7 @@ from .forms import RenameBookmarkForm
 from bookmarks.models import Bookmark
 from tags.models import Tag
 from .templatetags.bookmark import bookmark as bookmarkTag
+from users.models import Settings
 
 @login_required
 def home(request):
@@ -74,19 +75,23 @@ def add(request):
     url = request.POST["url"]
     val = URLValidator()
     
-    try:
-        val(url)
-    except ValidationError:
+    if request.user.settings.url_settings == Settings.URL_SETTINGS_VALIDATE:
         try:
-            val("http://"+url)
-            url = "http://"+url
+            val(url)
         except ValidationError:
-            return HttpResponse('{"error":"Invalid URL"}', content_type="application/json", status=422)
+            try:
+                val("http://"+url)
+                url = "http://"+url
+            except ValidationError:
+                return HttpResponse('{"error":"Invalid URL"}', content_type="application/json", status=422)
     
     bm = Bookmark(owner=request.user, url=url)
     
-    bm.download_title()
+    bm.title = url
     bm.save()
+    if bm.valid_url:
+        bm.download_title()
+        bm.save()
     
     if "tag" in request.POST:
         bm.tag(request.POST["tag"])

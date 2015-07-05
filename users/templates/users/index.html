@@ -27,6 +27,7 @@
     <form method='POST' action='{% url "user:home" %}'>
         {% csrf_token %}
         <label>Theme: {{ settings_form.theme }}</label><br/>
+        <label>Invalid URL Handling: {{ settings_form.url_settings }}</label><br/>
         <input type='submit' value='Update Settings'/>
     </form>
 </div>

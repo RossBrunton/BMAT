@@ -4,6 +4,7 @@ from django.core.validators import URLValidator
 from django.core.exceptions import ValidationError
 
 from bookmarks.models import Bookmark
+from users.models import Settings
 
 class RenameBookmarkForm(forms.ModelForm):
     """ A model form for renaming a bookmark
@@ -16,7 +17,7 @@ class RenameBookmarkForm(forms.ModelForm):
     
     def __init__(self, user, *args, **kwargs):
         super(RenameBookmarkForm, self).__init__(*args, **kwargs)
-        self.allow_invalid_urls = False
+        self.allow_invalid_urls = user.settings.url_settings != Settings.URL_SETTINGS_VALIDATE
     
     def clean_url(self):
         if self.allow_invalid_urls:

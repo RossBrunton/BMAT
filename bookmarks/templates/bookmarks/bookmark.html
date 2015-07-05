@@ -1,7 +1,10 @@
 {% load tag %}
 <div class='bookmark box block' data-id='{{ bm.pk }}' data-taggable-type='bookmark'>
     <div class='head'>
-        <div class='title noedit'><a href='{{ bm.url }}'>{{ bm.title }}</a></div>
+        <div class='title noedit'>
+            {% if bm.do_link %}<a href='{{ bm.url }}'>{{ bm.title }}</a>
+            {% else %}<span class='nolink'>{{ bm.title }}</span>{% endif %}
+        </div>
         <div class='title edit'>
             <form class='renameForm' method='POST' action='{% url "bookmarks:rename" bookmark=bm.id %}'>
                 {% csrf_token %}

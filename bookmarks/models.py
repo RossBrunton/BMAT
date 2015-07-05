@@ -3,10 +3,13 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.template import defaultfilters
+from django.core.validators import URLValidator
+from django.core.exceptions import ValidationError
 
 from tags.models import Tag, Taggable
 from tags import taggable
 from bookmarks.templatetags.bookmark import bookmark
+from users.models import Settings
 
 from six.moves.html_parser import HTMLParser
 import json
@@ -33,12 +36,29 @@ class Bookmark(Taggable):
     url = models.TextField(max_length = 500)
     tags = models.ManyToManyField(Tag, related_name="bookmarks")
     added = models.DateTimeField(auto_now_add=True)
+    valid_url = models.BooleanField(default=False)
     
     class Meta:
         ordering = ["-added"]
     
     def __str__(self):
         return ("Bookmark '"+self.title+"' for "+self.owner.username).encode("ascii", "ignore")
+    
+    def save(self, *args, **kwargs):
+        """ Override of save method to validate url and set the appropriate setting """
+        uv = URLValidator()
+        
+        try:
+            uv(self.url)
+            self.valid_url = True
+        except:
+            self.valid_url = False
+        
+        super(Bookmark, self).save(*args, **kwargs)
+    
+    @property
+    def do_link(self):
+        return self.valid_url or self.owner.settings.url_settings == Settings.URL_SETTINGS_LINK
     
     def download_title(self):
         """ Downloads the title of the bookmark

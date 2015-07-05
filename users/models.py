@@ -24,8 +24,19 @@ class Settings(models.Model):
         (THEME_LIGHT, "Light")
     )
     
+    URL_SETTINGS_VALIDATE = "v"
+    URL_SETTINGS_NOLINK = "n"
+    URL_SETTINGS_LINK = "y"
+    
+    URL_SETTINGS = (
+        (URL_SETTINGS_VALIDATE, "Check if URLs are correct"),
+        (URL_SETTINGS_NOLINK, "Allow incorrect URLs"),
+        (URL_SETTINGS_LINK, "Allow incorrect URLs, and make them links")
+    )
+    
     user = models.OneToOneField(User, unique=True)
     theme = models.CharField(max_length=10, default=THEME_LIGHT, choices=THEME_OPTIONS)
+    url_settings = models.CharField(max_length=1, default=URL_SETTINGS_VALIDATE, choices=URL_SETTINGS)
     
     def __str__(self):
         return ("Settings for "+self.user.username).encode("ascii", "ignore")

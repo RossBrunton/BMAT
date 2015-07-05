@@ -17,4 +17,4 @@ class SettingsForm(forms.ModelForm):
     """ And a form to edit settings, specifically the theme """
     class Meta:
         model = Settings
-        fields = ("theme",)
+        fields = ("theme", "url_settings")
