@@ -11,30 +11,40 @@
             </form>
         </div>
         
-        <div class='tags'>{% for t in tags %}{% tag t bm rtf %}{% endfor %}</div>
+        <div class='tags nomobile'>{% for t in tags %}{% tag t bm rtf %}{% endfor %}</div>
         
         <div class='buttons'>
             <a class='expand button'>&nbsp;</a>
         </div>
     </div>
+    <div class='head mobile'>
+        <div class='tags'>{% for t in tags %}{% tag t bm rtf %}{% endfor %}</div>
+    </div>
     
     <div class='body' style='display:none'>
-        <div class='url noedit'>{{ bm.url }} | Added {{ bm.added|date:"D j/n/y H:i" }}</div>
-        <div class='url edit'><input type='text' name='url' value='{{ bm.url }}'/></div>
+        <div class='added nomobile'>{{ bm.added|date:"D j/n/y H:i" }}</div>
         
-        <div class='right'>
+        <div>
             {% addTag atf bm.pk %}
         </div>
         
         <div class='buttons'>
-            <a class='addTag button'>&nbsp;</a>
-            <a class='editTitle button'>&nbsp;</a>
+            <a class='addTag button rightSpace'>&nbsp;&nbsp;&nbsp;</a>
+        </div>
+        
+        <div class='rightIfMobile buttons'>
+            <a class='editTitle button'>&nbsp;&nbsp;&nbsp;</a>
             
             <form action='{% url "bookmarks:delete" %}' method='POST' class='deleteForm'>
                 {% csrf_token %}
                 <input type='hidden' name='bookmark' value='{{ bm.pk }}'/>
-                <a class='delete button'>&nbsp;</a>
+                <a class='delete button'>&nbsp;&nbsp;&nbsp;</a>
             </form>
         </div>
+    </div>
+    
+    <div class='body' style='display:none'>
+        <div class='url noedit'>{{ bm.url }}</div>
+        <div class='url edit'><input type='text' name='url' value='{{ bm.url }}'/></div>
     </div>
 </div>

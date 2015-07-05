@@ -15,20 +15,25 @@ data-taggable-type='tag'>
         
         <span class='count'>{{ tag.bookmarks.all.count }}</span>
         
-        <div class='tags'>{% for t in implies %}{% tag t tag rtf %}{% endfor %}</div>
+        <div class='tags nomobile'>{% for t in implies %}{% tag t tag rtf %}{% endfor %}</div>
         
         <div class='buttons'>
             <a class='expand button'>&nbsp;</a>
         </div>
     </div>
+    <div class='head mobile'>
+        <div class='tags'>{% for t in implies %}{% tag t tag rtf %}{% endfor %}</div>
+    </div>
     
     <div class='body' style='display:none'>
-        <div class=''>{% for t in tag.tags_to.all %}{% tag t tag rtf %}{% endfor %}</div>
+        <div class='nomobile'>{% for t in tag.tags_to.all %}{% tag t tag rtf %}{% endfor %}</div>
         
-        <div class='right'>{% addTag atf tag.pk %}</div>
-        
+        <div class='rightIfNotMobile'>{% addTag atf tag.pk %}</div>
         <div class='buttons'>
-            <a class='addTag button'>&nbsp;</a>
+            <a class='addTag button rightSpace'>&nbsp;</a>
+        </div>
+        
+        <div class='buttons rightIfMobile'>
             <a class='editTitle button'>&nbsp;</a>
             
             <form action='{% url "tags:delete" %}' method='POST' class='deleteForm'>

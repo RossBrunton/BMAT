@@ -145,6 +145,10 @@ nav a:hover {
     align-items:center;
 }
 
+.tagEntry {
+    width:150px;
+}
+
 
 /* 
  * Contents of a box, hidden until displayed with a button
@@ -164,6 +168,10 @@ nav a:hover {
     font-style:italic;
 }
 
+.added {
+    margin-right:auto;
+}
+
 /*
  * Misc
  */
@@ -178,6 +186,10 @@ nav a:hover {
 .box.title {
     font-size:120%;
     margin-top:20px;
+}
+
+#add-bookmark input[type=submit] {
+    width:80px;
 }
 
 
@@ -211,10 +223,14 @@ nav a:hover {
     margin-top:4px;
     cursor:pointer;
     overflow:hidden;
+    margin-left:3px;
+    margin-right:3px;
 }
 
 .buttons.buttons.buttons {
     padding:0px;
+    margin-top:3px;
+    height:16px;
 }
 
 .delete.button {
@@ -231,7 +247,10 @@ nav a:hover {
 
 .addTag.button {
     background-image:url('/static/icons/addTag.png');
-    margin-right:16px;
+}
+
+.rightSpace {
+    margin-right:20px;
 }
 
 .untag.button {
@@ -285,4 +304,33 @@ nav a:hover {
 
 .black .rename.button, .darkblue .rename.button, .darkgreen .rename.button, .darkred .rename.button {
     background-image:url('/static/icons/saveLight.png');
+}
+
+/* Mobile support */
+@media (max-width: 550px) {
+    .nomobile {
+        display:none !important;
+    }
+    
+    .rightIfMobile {
+        display:flex;
+        margin-left:auto;
+    }
+}
+
+@media (min-width: 551px) {
+    .mobile {
+        display:none !important;
+    }
+    
+    .rightIfNotMobile {
+        display:flex;
+        margin-left:auto;
+    }
+}
+
+@media (max-width: 375px) {
+    .tagEntry {
+        width:100px;
+    }
 }
