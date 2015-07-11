@@ -31,3 +31,7 @@ def taggable(name):
         
         return c
     return decorator
+
+def taggables():
+    """ Returns an object, key is taggable name, value is taggable class """
+    return _taggable

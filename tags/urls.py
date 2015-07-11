@@ -19,6 +19,7 @@ urlpatterns = patterns("",
     
     url(r'^suggest/(?P<value>.*)$', "tags.views.suggest", name="suggest"),
     url(r'^delete$', "tags.views.delete", name="delete"),
+    url(r'^restore$', "tags.views.restore", name="restore"),
     url(r'^rename/(?P<tag>.*)$', "tags.views.rename", name="rename"),
     url(r'^htmlBlock/(?P<tag>\d+)$', "tags.views.htmlBlock", name="htmlBlock"),
     url(r'^tag$', "tags.views.tag", name="tag"),

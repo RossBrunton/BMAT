@@ -127,6 +127,10 @@ class Tag(Taggable):
         out["colour"] = self.colour
         out["slug"] = self.slug
         out["id"] = self.pk
+        out["tags"] = []
+        
+        for t in self.tags.all():
+            out["tags"].append(t.pk)
         
         return out
     
@@ -136,6 +140,50 @@ class Tag(Taggable):
         It's the JSON for the output of to_dir()
         """
         return json.dumps(self.to_dir())
+    
+    def undoable_json(self):
+        out = {}
+        
+        out["tag"] = self.to_dir()
+        
+        out["tagged_objects"] = {}
+        
+        for k, v in tags.taggables().items():
+            out["tagged_objects"][k] = list(map(lambda x: x.pk, v.objects.filter(tags__pk=self.pk)))
+        
+        return json.dumps(out)
+    
+    @staticmethod
+    def from_undoable(jsonData, user):
+        """ Given the undoable JSON representation of the tag, creates one for it
+        
+        Note that this SAVES the object to the database.
+        """
+        obj = json.loads(jsonData)
+        
+        tag = Tag(owner=user, name=obj["tag"]["name"], colour=obj["tag"]["colour"],
+            slug=obj["tag"]["slug"],
+        )
+        
+        tag.save()
+        
+        for t in obj["tag"]["tags"]:
+            tag.tag(t)
+        
+        for t, v in obj["tagged_objects"].items():
+            taggable = tags.lookup_taggable(t)
+            
+            for pk in v:
+                try:
+                    taggable.objects.get(pk=pk).tag(tag.pk)
+                except taggable.DoesNotExist:
+                    pass
+            
+        
+        tag.save()
+        
+        return tag
+    
     
     @staticmethod
     def get_or_create_with_slug(owner, instance):

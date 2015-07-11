@@ -17,6 +17,8 @@ import tags
 from bookmarks.models import Bookmark
 from .templatetags.tag import tagBlock
 
+import json
+
 @login_required
 def home(request):
     """ Uses index.html to display a list of all the user's tags """
@@ -135,6 +137,32 @@ def untag(request):
 
 @login_required
 @require_POST
+def restore(request):
+    """ Given the undoable json representation of a bookmark, performs the undo, recovering the tag
+    
+    The tag must have been from "undoable_json", and must be the "obj" POST value.
+    
+    If it succeeds it returns a JSON object with "obj" being the JSON representation of the bookmark, "type" which
+    is always "tag" and "id" which is the id of the newly created bookmark.
+    """
+    if "obj" not in request.POST:
+        raise SuspiciousOperation
+    
+    try:
+        tag = Tag.from_undoable(request.POST.get("obj"), request.user)
+    except Exception:
+        raise SuspiciousOperation
+    
+    out = {}
+    out["type"] = "tag"
+    out["obj"] = tag.to_json()
+    out["id"] = tag.pk
+    
+    return HttpResponse(json.dumps(out), content_type="application/json")
+
+
+@login_required
+@require_POST
 def delete(request):
     """ Deletes a tag
     
@@ -157,7 +185,7 @@ def delete(request):
         )
     
     id = tag.pk
-    json = tag.to_json()
+    json = tag.undoable_json()
     tag.delete()
     
     return HttpResponse(
