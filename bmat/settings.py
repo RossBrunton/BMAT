@@ -39,6 +39,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.tz",
     "django.contrib.messages.context_processors.messages",
     "users.context_processors.theme",
+    "bmat.context_processors.analytics_and_ads",
 )
 
 ROOT_URLCONF = 'bmat.urls'

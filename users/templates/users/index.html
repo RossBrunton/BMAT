@@ -28,6 +28,7 @@
         {% csrf_token %}
         <label>Theme: {{ settings_form.theme }}</label><br/>
         <label>Invalid URL Handling: {{ settings_form.url_settings }}</label><br/>
+        <label>Opt out of anonymous usage tracking: {{ settings_form.no_analytics }}</label><br/>
         <input type='submit' value='Update Settings'/>
     </form>
 </div>
