@@ -5,6 +5,7 @@ from django.db import models
 from django.template import defaultfilters
 from django.core.validators import URLValidator
 from django.core.exceptions import ValidationError
+from django.utils.timezone import UTC, make_aware
 
 from tags.models import Tag, Taggable
 from tags import taggable
@@ -14,6 +15,10 @@ from users.models import Settings
 from six.moves.html_parser import HTMLParser
 import json
 import requests
+
+from datetime import datetime
+
+_DT_FORMAT = "%a, %d %b %Y %H:%M:%S +0000"
 
 @taggable("bookmark")
 class Bookmark(Taggable):
@@ -42,7 +47,7 @@ class Bookmark(Taggable):
         ordering = ["-added"]
     
     def __str__(self):
-        return ("Bookmark '"+self.title+"' for "+self.owner.username).encode("ascii", "ignore")
+        return ("Bookmark '"+self.title+"' for "+self.owner.username).encode("ascii", "ignore").decode("ascii")
     
     def save(self, *args, **kwargs):
         """ Override of save method to validate url and set the appropriate setting """
@@ -91,7 +96,9 @@ class Bookmark(Taggable):
         out["title"] = self.title
         out["url"] = self.url
         out["id"] = self.pk
+        out["added"] = self.added.astimezone(UTC()).strftime(_DT_FORMAT)
         out["tags"] = []
+        out["valid_url"] = self.valid_url
         
         for t in self.tags.all():
             out["tags"].append(t.to_dir())
@@ -104,6 +111,29 @@ class Bookmark(Taggable):
         It's the JSON for the output of to_dir()
         """
         return json.dumps(self.to_dir())
+    
+    @staticmethod
+    def from_json(jsonData, user):
+        """ Given the JSON representation of the bookmark, creates one for it
+        
+        Note that this SAVES the object to the database.
+        """
+        obj = json.loads(jsonData)
+        
+        bm = Bookmark(owner=user, title=obj["title"], url=obj["url"],
+            valid_url=obj["valid_url"]
+        )
+        
+        bm.save()
+        
+        bm.added = make_aware(datetime.strptime(obj["added"], _DT_FORMAT), UTC())
+        
+        for t in obj["tags"]:
+            bm.tag(t["id"])
+        
+        bm.save()
+        
+        return bm
     
     @staticmethod
     def by_user(user):
