@@ -38,7 +38,9 @@
         <div class='rightIfMobile buttons'>
             <a class='editTitle button'>&nbsp;&nbsp;&nbsp;</a>
             
-            <form action='{% url "bookmarks:delete" %}' method='POST' class='deleteForm'>
+            <form action='{% url "bookmarks:delete" %}' method='POST' class='deleteForm'
+                data-undo-url='{% url "bookmarks:create" %}'
+            >
                 {% csrf_token %}
                 <input type='hidden' name='bookmark' value='{{ bm.pk }}'/>
                 <a class='delete button'>&nbsp;&nbsp;&nbsp;</a>

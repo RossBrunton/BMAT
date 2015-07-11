@@ -17,6 +17,7 @@ urlpatterns = patterns("",
     url(r'^export$', "bookmarks.views.export", name="export"),
     url(r'^add$', "bookmarks.views.add", name="add"),
     url(r'^delete$', "bookmarks.views.delete", name="delete"),
+    url(r'^create$', "bookmarks.views.create", name="create"),
     
     url(r'^(?P<bookmark>[0-9]+)/html$', "bookmarks.views.html", name="html"),
     url(r'^(?P<bookmark>[0-9]+)/rename$', "bookmarks.views.rename", name="rename"),

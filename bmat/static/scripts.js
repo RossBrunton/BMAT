@@ -5,6 +5,8 @@ window.bmat = (function() {
     
     var disabledForms = [];
     
+    var undoCallback = null;
+    
     // Error handling
     var _error = function(message) {
         $("#error .errorText").html(message);
@@ -36,6 +38,7 @@ window.bmat = (function() {
     var _disableForm = function(e) {
         $(e).parents(".block").addClass("disabled");
         $(e).parents(".block").find("input, select").attr("disabled", "disabled");
+        $(e).find("input, select").attr("disabled", "disabled");
         disabledForms.push(e);
     };
     
@@ -50,6 +53,16 @@ window.bmat = (function() {
         disabledForms = [];
     };
     
+    // And the undo thing
+    var _displayUndo = function(message, url, payload, callback) {
+        $("#undo .undoText").html(message);
+        $("#undo").slideDown();
+        
+        $("#undoForm [name=obj]").val(JSON.stringify(payload));
+        $("#undoForm").attr("action", url);
+        undoCallback = callback;
+    };
+    
     
     // Resets all the listeners, used when a document has been changed or initially loaded
     var _update = function() {
@@ -62,13 +75,18 @@ window.bmat = (function() {
             e.preventDefault();
             
             var elem = $(this);
+            var id = elem.parents(".block").attr("data-id");
             
-            if(!confirm("Are you sure you want to delete this?")) return;
+            //if(!confirm("Are you sure you want to delete this?")) return;
             
-            $.post(elem.attr("action"), elem.serialize(), function() {
-                if(e.deleted !== null) {
-                    elem.parents(".block").remove();
+            $.post(elem.attr("action"), elem.serialize(), function(data) {
+                if(data.deleted !== null) {
+                    elem.parents(".block").slideUp();
                 }
+                
+                _displayUndo("Object deleted", elem.attr("data-undo-url"), data.obj, function(dat) {
+                    _replace(id, dat.type, false, true, dat.id);
+                });
             });
         });
         
@@ -155,6 +173,21 @@ window.bmat = (function() {
         $(".addTag.button").on("click", function(e) {
             $(this).parents(".block").find(".tagForm").submit();
         });
+        
+        // And handle undo
+        $("#undo").on("submit", function(e) {
+            e.preventDefault();
+            
+            var elem = $(this).find("form");
+            
+            $.post(elem.attr("action"), elem.serialize(), function(data) {
+                undoCallback(data);
+            }, "json");
+            
+            _disableForm(elem);
+            
+            $("#undo").slideUp();
+        });
     };
     
     // Removes all listeners
@@ -186,10 +219,11 @@ window.bmat = (function() {
     
     // Given an id and a type, downloads a new version of the specific block and replaces them
     // If expand is true, then they are expanded as if the user had clicked the expand button
-    var _replace = function(id, type, expand) {
+    var _replace = function(id, type, expand, slide, newid) {
+        if(newid == undefined) newid = id;
         var url = "";
-        if(type == "tag") url = "/tags/htmlBlock/" + id;
-        if(type == "bookmark") url = "/bookmarks/" + id + "/html";
+        if(type == "tag") url = "/tags/htmlBlock/" + newid;
+        if(type == "bookmark") url = "/bookmarks/" + newid + "/html";
         
         $.get(url, function(e) {
             $(".block[data-id="+id+"]").replaceWith(e);
@@ -199,6 +233,10 @@ window.bmat = (function() {
                 $(".block[data-id="+id+"][data-taggable-type="+type+"] .inlineUntag")
                     .css("width", "16px").css("display", "inline-block");
                 $(".block[data-id="+id+"][data-taggable-type="+type+"] input")[0].focus();
+            }
+            if(slide) {
+                $(".block[data-id="+id+"][data-taggable-type="+type+"]").css("display", "none");
+                $(".block[data-id="+id+"][data-taggable-type="+type+"]").slideDown();
             }
             _update();
         }, "text");

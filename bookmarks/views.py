@@ -7,7 +7,6 @@ from django.core.validators import URLValidator
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 
-
 from django.template import defaultfilters
 from django.template.response import TemplateResponse
 from django.views.decorators.http import require_POST
@@ -18,6 +17,8 @@ from bookmarks.models import Bookmark
 from tags.models import Tag
 from .templatetags.bookmark import bookmark as bookmarkTag
 from users.models import Settings
+
+import json
 
 @login_required
 def home(request):
@@ -97,6 +98,32 @@ def add(request):
         bm.tag(request.POST["tag"])
     
     return HttpResponse(bm.to_json(), content_type="application/json")
+
+
+@login_required
+@require_POST
+def create(request):
+    """ Given the json representation of a bookmark, creates it
+    
+    The bookmark must have been from "to_json", and must be the "obj" POST value.
+    
+    If it succeeds it returns a JSON object with "obj" being the JSON representation of the bookmark, "type" which
+    is always "bookmark" and "id" which is the id of the newly created bookmark.
+    """
+    if "obj" not in request.POST:
+        raise SuspiciousOperation
+    
+    try:
+        bm = Bookmark.from_json(request.POST.get("obj"), request.user)
+    except Exception:
+        raise SuspiciousOperation
+    
+    out = {}
+    out["type"] = "bookmark"
+    out["obj"] = bm.to_json()
+    out["id"] = bm.pk
+    
+    return HttpResponse(json.dumps(out), content_type="application/json")
 
 
 @login_required
