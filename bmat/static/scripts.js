@@ -61,6 +61,8 @@ window.bmat = (function() {
         $("#undoForm [name=obj]").val(JSON.stringify(payload));
         $("#undoForm").attr("action", url);
         undoCallback = callback;
+        
+        $("#undoForm").find("input, select").removeAttr("disabled");
     };
     
     
@@ -82,11 +84,11 @@ window.bmat = (function() {
             $.post(elem.attr("action"), elem.serialize(), function(data) {
                 if(data.deleted !== null) {
                     elem.parents(".block").slideUp();
+                    
+                    _displayUndo("Object deleted", elem.attr("data-undo-url"), data.obj, function(dat) {
+                        _replace(id, dat.type, false, true, dat.id);
+                    });
                 }
-                
-                _displayUndo("Object deleted", elem.attr("data-undo-url"), data.obj, function(dat) {
-                    _replace(id, dat.type, false, true, dat.id);
-                });
             });
         });
         
@@ -173,21 +175,6 @@ window.bmat = (function() {
         $(".addTag.button").on("click", function(e) {
             $(this).parents(".block").find(".tagForm").submit();
         });
-        
-        // And handle undo
-        $("#undo").on("submit", function(e) {
-            e.preventDefault();
-            
-            var elem = $(this).find("form");
-            
-            $.post(elem.attr("action"), elem.serialize(), function(data) {
-                undoCallback(data);
-            }, "json");
-            
-            _disableForm(elem);
-            
-            $("#undo").slideUp();
-        });
     };
     
     // Removes all listeners
@@ -235,8 +222,8 @@ window.bmat = (function() {
                 $(".block[data-id="+id+"][data-taggable-type="+type+"] input")[0].focus();
             }
             if(slide) {
-                $(".block[data-id="+id+"][data-taggable-type="+type+"]").css("display", "none");
-                $(".block[data-id="+id+"][data-taggable-type="+type+"]").slideDown();
+                $(".block[data-id="+newid+"][data-taggable-type="+type+"]").css("display", "none");
+                $(".block[data-id="+newid+"][data-taggable-type="+type+"]").slideDown();
             }
             _update();
         }, "text");
@@ -257,6 +244,25 @@ window.bmat = (function() {
         // Error closing
         $("#error .close.button").on("click", function(e) {
             $(this).parents("#error").slideUp();
+        });
+        
+        // And handle undo
+        $("#undo").on("submit", function(e) {
+            e.preventDefault();
+            
+            var elem = $(this).find("form");
+            
+            $.post(elem.attr("action"), elem.serialize(), function(data) {
+                undoCallback(data);
+            }, "json");
+            
+            _disableForm(elem);
+            
+            $("#undo").slideUp();
+        });
+        
+        $("#undo .close.button").on("click", function(e) {
+            $(this).parents("#undo").slideUp();
         });
     };
     

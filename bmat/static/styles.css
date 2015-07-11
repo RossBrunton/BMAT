@@ -85,6 +85,29 @@ nav a:hover {
     padding:2px;
 }
 
+/*
+ * Undo
+ */
+#undo {
+    display:flex;
+    padding:5px;
+    background-color:#dddd77;
+    border-bottom:1px solid #bbbb55;
+    position:fixed;
+    width:100%;
+}
+
+#undo form {
+    margin-right:5px;
+}
+
+.undoButtons {
+    margin-right:15px;
+}
+
+.undoText {
+    flex: 1 1 auto;
+}
 
 /*
  * Boxes
@@ -279,6 +302,10 @@ nav a:hover {
 
 #error .close.button {
     background-image:url('/static/icons/close.png');
+}
+
+#undo .close.button {
+    background-image:url('/static/icons/undoClose.png');
 }
 
 .black .expand.button, .darkblue .expand.button, .darkgreen .expand.button, .darkred .expand.button {
