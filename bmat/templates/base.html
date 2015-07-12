@@ -58,15 +58,19 @@
         
         <nav>
             {% if user.is_authenticated %}
-                <a href='{% url "bookmarks:home"%}' {% if area == "bookmarks" %}class='active'{% endif %}>
+                <a href='{% url "bookmarks:home" %}' {% if area == "bookmarks" %}class='active'{% endif %}>
                     Bookmarks
                 </a>
                 
-                <a href='{% url "tags:home"%}' {% if area == "tags" %}class='active'{% endif %}>
+                <a href='{% url "tags:home" %}' {% if area == "tags" %}class='active'{% endif %}>
                     Tags
                 </a>
                 
-                <a href='{% url "user:home"%}' {% if area == "user" %}class='active'{% endif %}>
+                <a href='{% url "search:home" %}' {% if area == "search" %}class='active'{% endif %}>
+                    Search
+                </a>
+                
+                <a href='{% url "user:home" %}' {% if area == "user" %}class='active'{% endif %}>
                     {{ user.username }}
                 </a>
             {% else %}

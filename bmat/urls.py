@@ -3,7 +3,7 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 
-import bmat.views, bookmarks.urls, users.urls, tags.urls
+import bmat.views, bookmarks.urls, users.urls, tags.urls, search.urls
 
 admin.autodiscover()
 
@@ -15,4 +15,5 @@ urlpatterns = patterns('',
     url(r'^user/', include(users.urls, namespace="user")),
     url(r'^bookmarks/', include(bookmarks.urls, namespace="bookmarks")),
     url(r'^tags/', include(tags.urls, namespace="tags")),
+    url(r'^search/', include(search.urls, namespace="search")),
 )

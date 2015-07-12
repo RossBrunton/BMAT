@@ -1,0 +1,33 @@
+{% load bookmark tag %}
+
+{% if query %}
+    {% if bookmarks %}
+        <div class='box title'>
+            Bookmarks
+        </div>
+
+        {% for bm in bookmarks %}
+            {% bookmark bm bmatf bmrtf %}
+        {% endfor %}
+    {% endif %}
+
+    {% if tags %}
+        <div class='box title'>
+            Tags
+        </div>
+
+        {% for tag in tags %}
+            {% tagBlock tag tagatf tagrtf %}
+        {% endfor %}
+    {% endif %}
+    
+    {% if not tags and not bookmarks %}
+        <div class='box title'>
+            No Results Found
+        </div>
+    {% endif %}
+{% else %}
+    <div class='box title'>
+        Enter a Query
+    </div>
+{% endif %}

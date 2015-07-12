@@ -17,7 +17,8 @@ INSTALLED_APPS = (
     'bmat',
     'users',
     'bookmarks',
-    'tags'
+    'tags',
+    'search'
 )
 
 MIDDLEWARE_CLASSES = (
