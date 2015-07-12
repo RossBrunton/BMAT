@@ -40,6 +40,9 @@ class Settings(models.Model):
     no_analytics = models.BooleanField(default=False)
     no_ads = models.BooleanField(default=False)
     
+    class Meta:
+        verbose_name_plural = "Settings"
+    
     def __str__(self):
         return ("Settings for "+self.user.username).encode("ascii", "ignore").decode("ascii")
 
