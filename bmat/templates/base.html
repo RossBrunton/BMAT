@@ -18,6 +18,10 @@
             </script>
         {% endif %}
         
+        {% if ad_client %}
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        {% endif %}
+        
         <script src='//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'></script>
         <script src='{% static "scripts.js" %}'></script>
         <link rel="shortcut icon" href="/static/icons/favicon.png" />
@@ -72,6 +76,13 @@
             {% endif %}
         </nav>
         
+        {% if ad_slot_top %}
+        <ins class="adsbygoogle" style="display:block" data-ad-client="{{ ad_client }}" data-ad-slot="{{ ad_slot_top }}"
+            data-ad-format="auto"
+        ></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        {% endif %}
+        
         <main>
         {% block content %}
             <div class='box'>No document content specified.</div>
@@ -81,6 +92,13 @@
         <footer>
             
         </footer>
+        
+        {% if ad_slot_bottom %}
+        <ins class="adsbygoogle" style="display:block" data-ad-client="{{ ad_client }}"
+            data-ad-slot="{{ ad_slot_bottom }}" data-ad-format="auto"
+        ></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        {% endif %}
         
         <div class='hidden' id='csrf'>{{ csrf_token }}</div>
     </body>

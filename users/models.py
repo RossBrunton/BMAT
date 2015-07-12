@@ -38,6 +38,7 @@ class Settings(models.Model):
     theme = models.CharField(max_length=10, default=THEME_LIGHT, choices=THEME_OPTIONS)
     url_settings = models.CharField(max_length=1, default=URL_SETTINGS_VALIDATE, choices=URL_SETTINGS)
     no_analytics = models.BooleanField(default=False)
+    no_ads = models.BooleanField(default=False)
     
     def __str__(self):
         return ("Settings for "+self.user.username).encode("ascii", "ignore").decode("ascii")

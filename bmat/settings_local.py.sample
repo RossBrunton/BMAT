@@ -32,3 +32,8 @@ DATABASES = {
 
 # Code for google analytics, leave blank to not use it
 ANALYTICS_CODE = ""
+
+# And code for adverts, again blank to not use it
+AD_CLIENT = ""
+AD_SLOT_TOP = ""
+AD_SLOT_BOTTOM = ""
