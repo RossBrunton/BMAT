@@ -343,8 +343,8 @@ nav a:hover {
     background-image:url('/static/icons/removeTagLight.png');
 }
 
-.black .inlineUntag.button, .darkblue .inlineUntag.button, .darkgreen .inlineUntag.button,
-.darkred .inlineUntag.button {
+.black > form .inlineUntag.button, .darkblue > form .inlineUntag.button, .darkgreen > form .inlineUntag.button,
+.darkred > form .inlineUntag.button {
     background-image:url('/static/icons/removeTagLight.png');
 }
 
