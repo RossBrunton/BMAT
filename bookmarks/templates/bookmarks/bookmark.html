@@ -10,14 +10,14 @@
                 {% csrf_token %}
                 <input class='renameEntry' name='title' type='text' value='{{ bm.title }}'/>
                 <input name='url' type='hidden'/>
-                <a class='rename button'>&nbsp;</a>
+                <a class='rename button' title='Submit'>&nbsp;</a>
             </form>
         </div>
         
         <div class='tags nomobile'>{% for t in tags %}{% tag t bm rtf %}{% endfor %}</div>
         
         <div class='buttons'>
-            <a class='expand button'>&nbsp;</a>
+            <a class='expand button' title='Show Options'>&nbsp;</a>
         </div>
     </div>
     <div class='head mobile'>
@@ -32,18 +32,18 @@
         </div>
         
         <div class='buttons'>
-            <a class='addTag button rightSpace'>&nbsp;&nbsp;&nbsp;</a>
+            <a class='addTag button rightSpace' title='Add Tag'>&nbsp;&nbsp;&nbsp;</a>
         </div>
         
         <div class='rightIfMobile buttons'>
-            <a class='editTitle button'>&nbsp;&nbsp;&nbsp;</a>
+            <a class='editTitle button' title='Edit'>&nbsp;&nbsp;&nbsp;</a>
             
             <form action='{% url "bookmarks:delete" %}' method='POST' class='deleteForm'
                 data-undo-url='{% url "bookmarks:create" %}'
             >
                 {% csrf_token %}
                 <input type='hidden' name='bookmark' value='{{ bm.pk }}'/>
-                <a class='delete button'>&nbsp;&nbsp;&nbsp;</a>
+                <a class='delete button' title='Delete'>&nbsp;&nbsp;&nbsp;</a>
             </form>
         </div>
     </div>

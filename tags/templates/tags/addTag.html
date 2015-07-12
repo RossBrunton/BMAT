@@ -3,8 +3,7 @@
     {% csrf_token %}
     {{ atf.type.as_hidden }}
     <input type='hidden' name='pk' value='{{ pk }}' />
-    <input class='tagEntry' type='text' placeholder='Add Tag' name='name'
-        list='tslist-{{ atf.type_str }}-{{ pk }}'/>
+    <input class='tagEntry' type='text' placeholder='Add Tag' name='name' list='tslist-{{ atf.type_str }}-{{ pk }}'/>
     <datalist id='tslist-{{ atf.type_str }}-{{ pk }}'>
         
     </datalist>
