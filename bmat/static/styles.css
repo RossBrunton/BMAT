@@ -35,6 +35,10 @@ a {
     color:#333333;
 }
 
+.underlink a {
+    text-decoration:underline;
+}
+
 a:visited {
     color:#888888;
 }

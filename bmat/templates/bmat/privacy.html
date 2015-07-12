@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}Privacy Policy{% endblock %}
+
+{% block content %}
+
+<div class='box underlink'>
+    This page details what personal information is collected and what is done with it.
+</div>
+
+<div class='box underlink'>
+    When you create an account, you provide a username, password and possibly a valid email address. All of this
+    information is hidden to the public, although your username may be revealed if someone tries to make a new user
+    with the same username (a "This username is already taken" message is displayed). The email address provided is only
+    to validate the account and for resetting your password, it will not be transferred to any third parties.
+</div>
+
+<div class='box underlink'>
+    Any content you create, such as bookmarks and tags, using this website will be private, and visible only to you and
+    administrators of the website (unless required by law).
+</div>
+
+<div class='box underlink'>
+    <a href='http://www.google.com/analytics/'>Google Analytics</a> is used on this site to collect anonymous usage
+    information about your system (such as screen resolution, browser information, what pages you visit and in what
+    order, and so on). You can opt out of this by going to <a href='{% url "user:home" %}'>your settings</a> and opting
+    out, or you can opt out on all websites that use this system using
+    <a href='https://tools.google.com/dlpage/gaoptout'>this browser extension</a>.
+</div>
+
+<div class='box underlink'>
+    <a href='https://www.google.com/adsense/'>Google Adsense</a> is used on this site. This service uses cookes
+    (explained below) to display adverts tailored to your browsing history. You can opt out of this from Google's
+    <a href='https://www.google.co.uk/settings/ads'>Ads Settings</a> page, although adverts will still be displayed.
+</div>
+
+<div class='box underlink'>
+    Cookies are small pieces of information that your browser stores for the website. Cookies are used on this site for
+    the following purposes:
+    <ul>
+        <li>Unless you have opted out, Google Analytics uses cookies to track which pages you have visited and in what
+        order.</li>
+        <li>Unless you have opted out, Google Adsense uses cookies to decide what adverts to display to you.</li>
+        <li>A cookie is set when you log in to the website, and is used to keep you logged in.</li>
+        <li>A cookie is set when you visit the site, and is used for security reasons to ensure nobody can take actions
+        on your behalf.</li>
+    </ul>
+</div>
+
+<div class='box underlink'>
+    Whenever you view a page, an entry may be added to a log file with the page you visited, the current time and your
+    IP address (a unique number linked to your ISP and device), and which site directed you to the page you are viewing.
+</div>
+
+<div class='box underlink'>
+    There is no way from within the site to erase all your data. If you wish to do so, please email
+    <a href='mailto:bruntonross+bmatpp@gmail.com'>bruntonross@gmail.com</a> with your username.
+</div>
+
+<div class='box underlink'>
+    All information you provide is stored on a server operated by <a href='https://www.linode.com/'>Linode</a>. Steps
+    have been taken to make this server secure. In the event of a security breach, reasonable steps will be taken to
+    mitigate the damage and notify any user whose data has been compromised.
+</div>
+
+<div class='box underlink'>
+    The terms of this privacy policy may change at any time.
+</div>
+{% endblock %}
