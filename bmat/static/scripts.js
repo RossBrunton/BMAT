@@ -7,6 +7,8 @@ window.bmat = (function() {
     
     var undoCallback = null;
     
+    var searchCount = 0;
+    
     // Error handling
     var _error = function(message) {
         $("#error .errorText").html(message);
@@ -263,6 +265,24 @@ window.bmat = (function() {
         
         $("#undo .close.button").on("click", function(e) {
             $(this).parents("#undo").slideUp();
+        });
+        
+        // Search page
+        $("#search-form input[name=q]").on("input", function(e) {
+            var query = e.originalEvent.target.value;
+            
+            searchCount ++;
+            var localSearchCount = searchCount;
+            
+            if("replaceState" in history) {
+                history.replaceState({}, "", "?q="+encodeURIComponent(query).replace(/%20/gi, "+"));
+            }
+            
+            $.get($("#search-form").attr("data-results"), $("#search-form").serialize(), function(results) {
+                if(searchCount == localSearchCount) {
+                    $("#search-results").html(results);
+                }
+            }, "html");
         });
     };
     
