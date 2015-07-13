@@ -4,5 +4,13 @@
 {% block title %}Tags{% endblock %}
 
 {% block content %}
-<div id='tag-list'>{% for tag in tags %}{% tagBlock tag atf rtf %}{% endfor %}</div>
+<div id='tag-list'>
+    {% for tag in tags %}
+        {% tagBlock tag atf rtf %}
+    {% empty %}
+        <div class='box'>
+            You have no tags; add some by going to a bookmark, clicking the settings button and entering one there.
+        </div>
+    {% endfor %}
+</div>
 {% endblock %}
