@@ -12,7 +12,7 @@ from django.forms.util import ErrorList
 from django.conf import settings
 from bookmarks.models import Bookmark
 from users.forms import ImportForm, CustomUserCreationForm, SettingsForm
-from users import clean_trial
+from users import clean_trial, make_trial_user
 
 import random
 import string
@@ -179,6 +179,22 @@ def register(request):
         u.save()
     
     return redirect("/")
+
+
+@require_POST
+def make_trial(request):
+    if not settings.BMAT_ALLOW_REGISTER:
+        return render(request, "users/no_register.html", {})
+    
+    user = make_trial_user()
+    alogin(request, user)
+    
+    return redirect("/")
+
+
+@login_required
+def upgrade(request):
+    pass
 
 
 def _handle_import(contents, use_tags, owner):

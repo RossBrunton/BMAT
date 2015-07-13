@@ -24,9 +24,11 @@ def make_trial_user():
             # Unused uid, create one
             user = User.objects.create_user("trial_"+uid)
             
+            user.backend = 'django.contrib.auth.backends.ModelBackend'
             user.settings.is_trial = True
-            user.settings.save()
             
+            user.settings.save()
+            user.save()
             return user
     
     raise SuspiciousOperation

@@ -29,6 +29,9 @@ urlpatterns = patterns("",
     url(r"^login$", "users.views.login", name="login"),
     url(r"^register$", "users.views.register", name="register"),
     
+    url(r"^make_trial$", "users.views.make_trial", name="make_trial"),
+    url(r"^upgrade$", "users.views.upgrade", name="upgrade"),
+    
     url(r"^reset$", password_reset,\
         {'template_name': "users/reset.html", "post_reset_redirect":"/user/resetDone",\
         "email_template_name":"users/reset_email.txt"},
