@@ -6,16 +6,16 @@
 {% block content %}
 
 <div class='box underlink'>
-    Please note, by using this site you agree to the use of cookies on your device. This is to gather anonymous
-    statistics, such as your browser version or screen resolution. If you wish, you may opt out of this by going into
-    your settings after you log in. Your personal information or stored bookmarks will never be shared with any third
-    parties.<br/>
-    <br/>
-    This application also uses Google AdSense, which uses cookies to show you adverts tailored to your interests. If you
-    wish, you may opt out of targeted advertising here: <a href='https://www.google.co.uk/settings/ads'>Google
-    Advert Settings</a><br/>
-    <br/>
-    <a href='{% url "privacy" %}'>Privacy Policy</a>
+    This is a web application that allows you to manage your bookmarks across multiple devices It has the following
+    features:
+    <ul>
+        <li>Bookmarks can e tagged into categories!</li>
+        <li>Those categories can also be tagged themselves. So if you have a category &quot;dogs&quot; you can tag it
+        &quot;animals&quot; and anything tagged &quot;dogs&quot; will also be tagged &quot;animals&quot;!</li>
+        <li>You can search your bookmarks and tags!</li>
+        <li>No social media integration! No &quot;like&quot; buttons everywhere, no counters saying how popular websites
+        are, nothing.</li>
+    </ul>
 </div>
 
 {% form_errors form %}
@@ -31,6 +31,19 @@
         <label>Password: {{ form.password }}</label><br/>
         <input type='submit' value='Log In'/> - <a href='{% url "user:reset" %}'>Forgot Password?</a>
     </form>
+</div>
+
+<div class='box underlink'>
+    Please note, by using this site you agree to the use of cookies on your device. This is to gather anonymous
+    statistics, such as your browser version or screen resolution. If you wish, you may opt out of this by going into
+    your settings after you log in. Your personal information or stored bookmarks will never be shared with any third
+    parties.<br/>
+    <br/>
+    This application also uses Google AdSense, which uses cookies to show you adverts tailored to your interests. If you
+    wish, you may opt out of targeted advertising here: <a href='https://www.google.co.uk/settings/ads'>Google
+    Advert Settings</a><br/>
+    <br/>
+    <a href='{% url "privacy" %}'>Privacy Policy</a>
 </div>
 
 {% endblock %}
