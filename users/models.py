@@ -39,6 +39,7 @@ class Settings(models.Model):
     url_settings = models.CharField(max_length=1, default=URL_SETTINGS_VALIDATE, choices=URL_SETTINGS)
     no_analytics = models.BooleanField(default=False)
     no_ads = models.BooleanField(default=False)
+    is_trial = models.BooleanField(default=False)
     
     class Meta:
         verbose_name_plural = "Settings"
