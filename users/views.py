@@ -12,6 +12,7 @@ from django.forms.util import ErrorList
 from django.conf import settings
 from bookmarks.models import Bookmark
 from users.forms import ImportForm, CustomUserCreationForm, SettingsForm
+from users import clean_trial
 
 import random
 import string
@@ -131,10 +132,13 @@ def login(request):
     if it exists, otherwise they will be redirected to the home page.
     
     If this page is requested via GET, it just displays a log in form.
+    
+    This also deletes any expired trial users, since I have no idea where else to put it.
     """
     if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
+            clean_trial()
             alogin(request, form.get_user())
 
             return HttpResponseRedirect(request.GET.get("next", "/"))
