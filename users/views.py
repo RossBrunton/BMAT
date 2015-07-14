@@ -194,7 +194,32 @@ def make_trial(request):
 
 @login_required
 def upgrade(request):
-    pass
+    if not request.user.settings.is_trial:
+        raise SuspiciousOperation
+    
+    if not settings.BMAT_ALLOW_REGISTER:
+        return render(request, "users/no_register.html", {})
+    
+    if request.method == "POST":
+        form = CustomUserCreationForm(data=request.POST)
+        if form.is_valid():
+            request.user.username = form.cleaned_data["username"]
+            request.user.set_password(form.cleaned_data["password1"])
+            request.user.email = form.cleaned_data.get("email", "")
+            request.user.settings.is_trial = False
+            request.user.settings.save()
+            request.user.save()
+
+            return HttpResponseRedirect(request.GET.get("next", "/"))
+    else:
+        form = CustomUserCreationForm()
+    
+    context = {
+        "form": form,
+        "upgrade": True
+    }
+    
+    return TemplateResponse(request, "users/register.html", context)
 
 
 def _handle_import(contents, use_tags, owner):

@@ -8,10 +8,13 @@
 
 {% form_errors form %}
 
+<div class='box title'>
+    {% if not upgrade %}Register New Account{% else %}Upgrade Trial Account{% endif %}
+</div>
+
 <div class='box'>
     <form method='POST'>
         {% csrf_token %}
-        <strong>Register Account</strong><br/>
         <label>Username: {{ form.username }}</label><br/>
         <label>Optional Email: {{ form.email }}</label><br/>
         <label>Password: {{ form.password1 }}</label><br/>

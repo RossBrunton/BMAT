@@ -33,17 +33,19 @@
     </form>
 </div>
 
-{% form_errors pass_form %}
-<div class='box'>
-    <form method='POST' action='{% url "user:pass_change" %}'>
-        {% csrf_token %}
-        Change Password:<br/>
-        <label>Old Password: {{ pass_form.old_password }}</label><br/>
-        <label>New Password: {{ pass_form.new_password1 }}</label><br/>
-        <label>Type it Again: {{ pass_form.new_password2 }}</label><br/>
-        <input type='submit' value='Change Password'/>
-    </form>
-</div>
+{% if not user.settings.is_trial %}
+    {% form_errors pass_form %}
+    <div class='box'>
+        <form method='POST' action='{% url "user:pass_change" %}'>
+            {% csrf_token %}
+            Change Password:<br/>
+            <label>Old Password: {{ pass_form.old_password }}</label><br/>
+            <label>New Password: {{ pass_form.new_password1 }}</label><br/>
+            <label>Type it Again: {{ pass_form.new_password2 }}</label><br/>
+            <input type='submit' value='Change Password'/>
+        </form>
+    </div>
+{% endif %}
 
 <div class='box title'>
     Import and Export

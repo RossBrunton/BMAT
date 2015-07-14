@@ -88,9 +88,14 @@
         {% endif %}
         
         <main>
-        {% block content %}
-            <div class='box'>No document content specified.</div>
-        {% endblock %}
+            {% if user.is_authenticated and user.settings.is_trial %}
+                <div class='box underlink'>You are using a trial account. If you want to upgrade to a full account, go
+                <a href='{% url "user:upgrade" %}'>here</a>.</div>
+            {% endif %}
+            
+            {% block content %}
+                <div class='box'>No document content specified.</div>
+            {% endblock %}
         </main>
         
         <footer class='underlink'>
