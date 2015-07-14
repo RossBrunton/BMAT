@@ -271,20 +271,18 @@ window.bmat = (function() {
         $("#search-form input[name=q]").on("input", function(e) {
             var query = e.originalEvent.target.value;
             
-            if(query.length >= 4) {
-                searchCount ++;
-                var localSearchCount = searchCount;
-                
-                if("replaceState" in history) {
-                    history.replaceState({}, "", "?q="+encodeURIComponent(query).replace(/%20/gi, "+"));
-                }
-                
-                $.get($("#search-form").attr("data-results"), $("#search-form").serialize(), function(results) {
-                    if(searchCount == localSearchCount) {
-                        $("#search-results").html(results);
-                    }
-                }, "html");
+            searchCount ++;
+            var localSearchCount = searchCount;
+            
+            if("replaceState" in history) {
+                history.replaceState({}, "", "?q="+encodeURIComponent(query).replace(/%20/gi, "+"));
             }
+            
+            $.get($("#search-form").attr("data-results"), $("#search-form").serialize(), function(results) {
+                if(searchCount == localSearchCount) {
+                    $("#search-results").html(results);
+                }
+            }, "html");
         });
     };
     

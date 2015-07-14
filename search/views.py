@@ -49,6 +49,11 @@ def home(request):
 def results(request):
     """ Returns the actual body of the search results, for AJAX stuff """
     
-    ctx = _search_context(request.GET.get("q", ""), request.user)
+    query = request.GET.get("q", "")
     
-    return TemplateResponse(request, "search/results.html", ctx)
+    if len(query) >= 4:
+        ctx = _search_context(query, request.user)
+    
+        return TemplateResponse(request, "search/results.html", ctx)
+    
+    return TemplateResponse(request, "search/too_short.html", {})
