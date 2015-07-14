@@ -177,6 +177,9 @@ def register(request):
         
         u.email = f.cleaned_data.get("email", "")
         u.save()
+        
+        u = authenticate(username=u.username, password=f.cleaned_data["password1"])
+        alogin(request, u)
     
     return redirect("/")
 
