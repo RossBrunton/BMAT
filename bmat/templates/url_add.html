@@ -2,6 +2,6 @@
     <form id='add-bookmark' method="POST" style='display:flex'>
         {% csrf_token %}
         {% if tag %}<input name='tag' type='hidden' value='{{ tag }}'/>{% endif %}
-        <input type='text' name='url' style='width:100%' placeholder='Add URL'/> <input type='submit'/>
+        <input type='text' name='url' style='width:100%' placeholder='Add URL'/> <input type='submit' value='Add'/>
     </form>
 </div>
