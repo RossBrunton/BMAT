@@ -281,6 +281,7 @@ window.bmat = (function() {
             $.get($("#search-form").attr("data-results"), $("#search-form").serialize(), function(results) {
                 if(searchCount == localSearchCount) {
                     $("#search-results").html(results);
+                    _update();
                 }
             }, "html");
         });
