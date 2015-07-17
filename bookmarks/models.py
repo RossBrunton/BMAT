@@ -13,6 +13,8 @@ from bookmarks.templatetags.bookmark import bookmark
 from users.models import Settings
 
 from six.moves.html_parser import HTMLParser
+from six.moves.urllib.robotparser import RobotFileParser
+from six.moves.urllib.parse import urlparse
 import json
 import requests
 
@@ -73,15 +75,22 @@ class Bookmark(Taggable):
         self.title = "Unknown Title"
         
         try:
-            r = requests.get(self.url, timeout=3.0)
-            r.raise_for_status()
+            url = urlparse(self.url)
+            robots = "{}://{}/robots.txt".format(url.scheme, url.netloc)
             
-            p = HTMLTitleReader()
-            p.feed(r.text)
+            rfp = RobotFileParser(robots)
+            rfp.read()
             
-            self.title = p.title
-            self.save()
-            
+            if rfp.can_fetch("BMAT", self.url):
+                r = requests.get(self.url, timeout=3.0, headers={"User-Agent": "BMAT"})
+                r.raise_for_status()
+                
+                p = HTMLTitleReader()
+                p.feed(r.text)
+                
+                self.title = p.title
+                self.save()
+        
         except:
             return
     
