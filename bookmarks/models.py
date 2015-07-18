@@ -39,7 +39,7 @@ class Bookmark(Taggable):
     Bookmarks are ordered latest to oldest.
     """
     owner = models.ForeignKey(User)
-    title = models.TextField(max_length = 50)
+    title = models.TextField(max_length = 150)
     url = models.TextField(max_length = 500)
     tags = models.ManyToManyField(Tag, related_name="bookmarks")
     added = models.DateTimeField(auto_now_add=True)
