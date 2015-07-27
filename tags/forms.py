@@ -12,6 +12,15 @@ class RenameTagForm(forms.ModelForm):
         model = Tag
         fields = ["colour", "name"]
 
+class PinTagForm(forms.ModelForm):
+    """ A model form for pinning and unpinning a tag
+    
+    It requires the "pinned" field.
+    """
+    class Meta:
+        model = Tag
+        fields = ["pinned"]
+
 
 class AddTagForm(forms.ModelForm):
     """ A model form for adding a new tag

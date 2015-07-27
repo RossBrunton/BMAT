@@ -5,6 +5,13 @@
 {% block title %}Tag: {{ tag.name }}{% endblock %}
 
 {% block content %}
+
+<div class='box'>
+    <form action='{% url "tags:pin" tag=tag.slug %}' method='POST'>{% csrf_token %}
+        You can pin this tag so it appears in the top bar if you like.<br/>
+        <label>Yes, pin it. {{ pin_form.pinned }}</label> <input type='submit' value='Update'/>
+    </form>
+</div>
 {% url_add tag %}
 {% tagBlock tag atf rtf %}
 

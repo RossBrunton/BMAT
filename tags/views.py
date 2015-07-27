@@ -12,7 +12,7 @@ from django.views.decorators.http import require_POST
 import six
 
 from tags.models import Tag
-from tags.forms import AddTagForm, RemoveTagForm, RenameTagForm
+from tags.forms import AddTagForm, RemoveTagForm, RenameTagForm, PinTagForm
 import tags
 from bookmarks.models import Bookmark
 from .templatetags.tag import tagBlock
@@ -46,6 +46,7 @@ def filter(request, tag):
     ctx["rtf"] = RemoveTagForm({"type":"tag"})
     ctx["batf"] = AddTagForm({"type":"bookmark"})
     ctx["brtf"] = RemoveTagForm({"type":"bookmark"})
+    ctx["pin_form"] = PinTagForm(instance=tag)
     
     return TemplateResponse(request, "tags/filter.html", ctx)
 
@@ -231,6 +232,28 @@ def rename(request, tag):
             return HttpResponse('{"error":"Tag already exists"}', content_type="application/json", status=422)
     except Tag.DoesNotExist:
         pass
+    
+    form.save()
+    
+    return HttpResponse('{"obj":'+tagObj.to_json()+', "type":"tag"}', content_type="application/json")
+
+
+@login_required
+@require_POST
+def pin(request, tag):
+    """ Updates a tags pinning using a PinTagForm
+    
+    If successfull, outputs a JSON object with "obj" and "type" properties. "obj" is the JSON object of the tag that was
+    renamed, while "type" will always be "tag".
+    
+    If it fails, a JSON object with an "error" value will be returned.
+    """
+    tagObj = get_object_or_404(Tag, owner=request.user, slug=tag)
+    
+    form = PinTagForm(request.POST, instance=tagObj)
+    
+    if not form.is_valid():
+        return HttpResponse('{"error":"Form invalid"}', content_type="application/json", status=422)
     
     form.save()
     
