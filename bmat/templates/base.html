@@ -70,9 +70,11 @@
                     Search
                 </a>
                 
-                <a href='{% url "user:home" %}' {% if area == "user" %}class='active'{% endif %}>
-                    {{ user.username }}
-                </a>
+                {% if not user.settings.hide_settings %}
+                    <a href='{% url "user:home" %}' {% if area == "user" %}class='active'{% endif %}>
+                        Settings
+                    </a>
+                {% endif %}
             {% else %}
                 <a href='{% url "user:login"%}' class='active'>
                     Log In
@@ -102,6 +104,9 @@
             Website Created by <a href='mailto:bruntonross+bmat@gmail.com'>Ross Brunton</a> - 
             <a href='{% url "privacy" %}'>Privacy Policy</a> - 
             <a href='https://github.com/RossBrunton/BMAT/issues'>Bug Reports and Feature Requests</a>
+            {% if user.is_authenticated %}
+                - <a href='{% url "user:home" %}'>Site Settings</a>
+            {% endif %}
         </footer>
         
         {% if ad_slot_bottom %}

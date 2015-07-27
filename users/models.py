@@ -40,6 +40,7 @@ class Settings(models.Model):
     no_analytics = models.BooleanField(default=False)
     no_ads = models.BooleanField(default=False)
     is_trial = models.BooleanField(default=False)
+    hide_settings = models.BooleanField(default=False)
     
     class Meta:
         verbose_name_plural = "Settings"

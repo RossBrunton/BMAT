@@ -16,6 +16,7 @@
 </div>
 
 <div class='box'>
+    You are logged in as {{ user.username }}.<br/>
     <form action='{% url "user:logout" %}' method='POST'>
         {% csrf_token %}
         <input type='submit' value='Log Out'/>
@@ -28,7 +29,9 @@
         {% csrf_token %}
         <label>Theme: {{ settings_form.theme }}</label><br/>
         <label>Invalid URL Handling: {{ settings_form.url_settings }}</label><br/>
-        <label>Opt out of anonymous usage tracking: {{ settings_form.no_analytics }}</label><br/>
+        <label>{{ settings_form.no_analytics }} Opt out of anonymous usage tracking</label><br/>
+        <label>{{ settings_form.hide_settings }} Hide settings on navbar; you can access it from the bottom of the page
+        </label><br/>
         <input type='submit' value='Update Settings'/>
     </form>
 </div>
