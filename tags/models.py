@@ -96,6 +96,7 @@ class Tag(Taggable):
     - colour:CharField with choices being the colours enum
     - slug:SlugField
     - tags:ManyToManyField with itself
+    - pinned:Whether the tag is pinned or not
     
     Tags themselves can be tagged, conceptually "Crowns" being tagged "Hats" means "Crowns" implies "Hats". Anything
     tagged with "Crowns" will also be tagged "Hats". This is dynamic, so it is not possible to have a crown that is not
@@ -113,6 +114,7 @@ class Tag(Taggable):
     colour = models.CharField(max_length=20, choices=colours_enum, default='white')
     slug = models.SlugField()
     tags = models.ManyToManyField("self", related_name="tags_to", symmetrical=False, db_table="tags_tag_implies")
+    pinned = models.BooleanField(default=False)
 
     def __str__(self):
         return ("Tag '"+self.name+"' for "+self.owner.username).encode("ascii", "ignore").decode("ascii")
