@@ -267,6 +267,19 @@ window.bmatFn = function() {
             $(this).parents("#undo").slideUp();
         });
         
+        // And handle the pinning form
+        $("#pinForm").on("submit", function(e) {
+            e.preventDefault();
+            
+            var elem = $(this);
+            
+            $.post(elem.attr("action"), elem.serialize(), function(data) {
+                document.location.reload();
+            }, "json");
+            
+            _disableForm(elem);
+        });
+        
         // Search page
         $("#search-form input[name=q]").on("input", function(e) {
             var query = e.originalEvent.target.value;

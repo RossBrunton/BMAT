@@ -7,11 +7,16 @@
 {% block content %}
 
 <div class='box'>
-    <form action='{% url "tags:pin" tag=tag.slug %}' method='POST'>{% csrf_token %}
-        You can pin this tag so it appears in the top bar if you like.<br/>
-        <label>Yes, pin it. {{ pin_form.pinned }}</label> <input type='submit' value='Update'/>
+    <form action='{% url "tags:pin" tag=tag.slug %}' method='POST' id='pinForm'>{% csrf_token %}
+        {% if tag.pinned %}
+            <input type='submit' value='Remove this tag from the top bar'/>
+        {% else %}
+            <input type='hidden' name='pinned' value='on'/>
+            <input type='submit' value='Pin this tag so it appears in the top bar'/>
+        {% endif %}
     </form>
 </div>
+
 {% url_add tag %}
 {% tagBlock tag atf rtf %}
 
