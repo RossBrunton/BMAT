@@ -75,6 +75,12 @@
                         Settings
                     </a>
                 {% endif %}
+                
+                {% for t in pinned_tags %}
+                <a href='{% url "tags:filter" tag=t.slug %}' {% if tag.pk == t.pk %}class='active'{% endif %}>
+                    {{ t.name }}
+                </a>
+                {% endfor %}
             {% else %}
                 <a href='{% url "user:login"%}' class='active'>
                     Log In

@@ -39,7 +39,10 @@ def filter(request, tag):
     
     ctx = {}
     
-    ctx["area"] = "tags"
+    if not tag.pinned:
+        # Don't display "tags" thing as active when the tag is pinned
+        ctx["area"] = "tags"
+    
     ctx["bookmarks"] = Bookmark.get_by_tag(tag)
     ctx["tag"] = tag
     ctx["atf"] = AddTagForm({"type":"tag"})
