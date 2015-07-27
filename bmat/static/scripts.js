@@ -1,6 +1,6 @@
 "use strict";
 
-window.bmat = (function() {
+window.bmatFn = function() {
     var bmat = {};
     
     var disabledForms = [];
@@ -292,4 +292,14 @@ window.bmat = (function() {
     $(_update);
     
     return bmat;
-}());
+};
+
+window.bmatCheckReady = function() {
+    if("$" in window) {
+        window.bmat = window.bmatFn();
+    }else{
+        setTimeout(window.bmatCheckReady, 100);
+    }
+}
+
+bmatCheckReady();
