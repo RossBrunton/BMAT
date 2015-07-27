@@ -8,10 +8,14 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 
-@login_required
+from users.views import login
+
 def home(request):
-    """ Home page is a redirect to the bookmarks list"""
-    return redirect(reverse("bookmarks:home"))
+    """ Home page is a redirect to the bookmarks list or a direct insert of the login page"""
+    if request.user.is_authenticated():
+        return redirect(reverse("bookmarks:home"))
+    else:
+        return login(request)
 
 
 def privacy(request):
