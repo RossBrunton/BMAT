@@ -12,10 +12,15 @@ form {
 }
 
 nav {
+    display:-webkit-flex;
+    display:-ms-flex;
     display:flex;
     justify-content:center;
     border-bottom:1px solid #cccccc;
     background:#fafafa;
+    flex-wrap:wrap;
+    -ms-flex-wrap:wrap;
+    -webkit-flex-wrap:wrap;
 }
 
 main {
@@ -81,6 +86,8 @@ nav a:hover {
  * Errors
  */
 #error {
+    display:-ms-flex;
+    display:-webkit-flex;
     display:flex;
     padding:5px;
     background-color:#994444;
@@ -103,6 +110,8 @@ nav a:hover {
  * Undo
  */
 #undo {
+    display:-ms-flex;
+    display:-webkit-flex;
     display:flex;
     padding:5px;
     background-color:#dddd77;
@@ -120,6 +129,8 @@ nav a:hover {
 }
 
 .undoText {
+    -ms-flex: 1 1 auto;
+    -webkit-flex: 1 1 auto;
     flex: 1 1 auto;
 }
 
@@ -145,6 +156,8 @@ nav a:hover {
  * Top part of a block
  */
 .head {
+    display:-ms-flex;
+    display:-webkit-flex;
     display:flex;
 }
 
@@ -162,6 +175,8 @@ nav a:hover {
 }
 
 .title, .url {
+    -ms-flex: 1 1 auto;
+    -webkit-flex: 1 1 auto;
     flex:1 1 auto;
     padding-right:30px !important;
 }
@@ -182,10 +197,14 @@ nav a:hover {
 }
 
 .head .tags {
+    display:-ms-flex;
+    display:-webkit-flex;
     display:flex;
 }
 
 .head form {
+    display:-ms-flex;
+    display:-webkit-flex;
     display:flex;
     align-items:center;
 }
@@ -199,11 +218,15 @@ nav a:hover {
  * Contents of a box, hidden until displayed with a button
  */
 .body {
+    display:-ms-flex;
+    display:-webkit-flex;
     display:flex;
     visibility:none;
 }
 
 .body .right {
+    display:-ms-flex;
+    display:-webkit-flex;
     display:flex;
     margin-left:auto;
 }
@@ -246,6 +269,8 @@ nav a:hover {
  * Tags
  */
 .tag {
+    display:-ms-flex;
+    display:-webkit-flex;
     display:flex;
     align-items:center;
     padding:2px;
@@ -366,6 +391,8 @@ nav a:hover {
     }
     
     .rightIfMobile {
+        display:-ms-flex;
+        display:-webkit-flex;
         display:flex;
         margin-left:auto;
     }
@@ -377,6 +404,8 @@ nav a:hover {
     }
     
     .rightIfNotMobile {
+        display:-ms-flex;
+        display:-webkit-flex;
         display:flex;
         margin-left:auto;
     }
