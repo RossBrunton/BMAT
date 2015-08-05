@@ -65,7 +65,24 @@ class Bookmark(Taggable):
     
     @property
     def do_link(self):
+        """ Returns a boolean indicating whether the bookmark should be formatted as a link
+        
+        It takes its owners preference and whether this is a valid URL into account.
+        """
         return self.valid_url or self.owner.settings.url_settings == Settings.URL_SETTINGS_LINK
+    
+    @property
+    def url_domain(self):
+        """ Returns the scheme and domain for this bookmark's URL or None
+        
+        That is, https://somedomain.tld/path/to/file goes to https://somedomain.tld.
+        
+        Returns None if the URL isn't a valid URL.
+        """
+        if self.valid_url:
+            return "{uri.scheme}://{uri.netloc}".format(uri=urlparse(self.url))
+        else:
+            return None
     
     def download_title(self):
         """ Downloads the title of the bookmark
