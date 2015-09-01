@@ -10,7 +10,6 @@
                 {% csrf_token %}
                 <input class='renameEntry' name='title' type='text' value='{{ bm.title }}'/>
                 <input name='url' type='hidden'/>
-                <a class='rename button' title='Submit'>&nbsp;</a>
             </form>
         </div>
         
@@ -36,7 +35,8 @@
         </div>
         
         <div class='rightIfMobile buttons'>
-            <a class='editTitle button' title='Edit'>&nbsp;&nbsp;&nbsp;</a>
+            <a class='editTitle button noedit' title='Edit'>&nbsp;&nbsp;&nbsp;</a>
+            <a class='rename button edit' style='display:none' title='Save'>&nbsp;</a>
             
             <form action='{% url "bookmarks:delete" %}' method='POST' class='deleteForm'
                 data-undo-url='{% url "bookmarks:create" %}'

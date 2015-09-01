@@ -9,7 +9,6 @@ data-taggable-type='tag'>
                 {% csrf_token %}
                 <input class='renameEntry' name='name' type='text' value='{{ tag.name }}'/>
                 {{ atf.colour }}
-                <a class='rename button' title='Submit'>&nbsp;</a>
             </form>
         </div>
         
@@ -34,7 +33,8 @@ data-taggable-type='tag'>
         </div>
         
         <div class='buttons rightIfMobile'>
-            <a class='editTitle button' title='Edit'>&nbsp;</a>
+            <a class='rename button edit' style='display:none' title='Save'>&nbsp;</a>
+            <a class='editTitle button noedit' title='Edit'>&nbsp;</a>
             
             <form action='{% url "tags:delete" %}' method='POST' class='deleteForm'
                 data-undo-url='{% url "tags:restore" %}'

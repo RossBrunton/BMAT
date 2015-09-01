@@ -168,7 +168,11 @@ window.bmatFn = function() {
         });
         
         // Rename and tag forms, both do the same thing and both result in updating the block
-        $(".rename.button").on("click", _submitParent);
+        $(".rename.button").on("click", function() {
+            var form = $(this).parents(".block").find(".renameForm");
+            form.submit();
+            _disableForm(form);
+        });
         $("form.tagForm, form.renameForm").on("submit", function(e) {
             e.preventDefault();
             var elem = this;
