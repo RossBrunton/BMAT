@@ -117,6 +117,7 @@ window.bmatFn = function() {
                 $(this).parents(".block").children(".body").slideUp("fast");
                 $(this).parents(".block").find(".inlineUntag").animate({"width":"0px"}, "fast");
                 $(this).removeClass("open");
+                _hideEditing($(this).parents(".block"));
             }else{
                 $(this).parents(".block").children(".body").slideDown("fast");
                 $(this).parents(".block").find(".inlineUntag").animate({"width":"16px"}, "fast");
@@ -144,18 +145,25 @@ window.bmatFn = function() {
         });
         
         // Title editing; hides the "real title" and replaces it with the text box, or the opposite
+        var _showEditing = function(e) {
+            $(e).find(".noedit").hide();
+            $(e).find(".edit").show();
+            $(e).addClass("editing");
+        };
+        
+        var _hideEditing = function(e) {
+            $(e).find(".noedit").show();
+            $(e).find(".edit").hide();
+            $(e).removeClass("editing");
+        };
+        
         $(".editTitle").on("click", function(e) {
-            if(!$(this).hasClass("open")) {
-                $(this).parents(".block").find(".noedit").hide();
-                $(this).parents(".block").find(".edit").show();
-                //$(this).parents(".block").find(".title.edit input[name=title]").val(
-                //    $(this).parents(".block").find(".title.noedit a, .title.noedit").first().text()
-                //);
-                $(this).addClass("open");
+            var block = $(this).parents(".block");
+            
+            if(!block.hasClass("editing")) {
+                _showEditing(block);
             }else{
-                $(this).parents(".block").find(".noedit").show();
-                $(this).parents(".block").find(".edit").hide();
-                $(this).removeClass("open");
+                _hideEditing(block);
             }
         });
         
