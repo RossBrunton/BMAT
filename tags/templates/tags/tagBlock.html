@@ -8,7 +8,7 @@ data-taggable-type='tag'>
             <form class='renameForm' method='POST' action='{% url "tags:rename" tag=tag.slug %}'>
                 {% csrf_token %}
                 <input class='renameEntry' name='name' type='text' value='{{ tag.name }}'/>
-                {{ atf.colour }}
+                {{ renametf.colour }}
             </form>
         </div>
         

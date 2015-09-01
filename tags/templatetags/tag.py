@@ -1,6 +1,7 @@
 """ This contains the templatetags used to display and manipulate tags """
 from django import template
 from tags.models import Tag
+from tags.forms import AddTagForm, RenameTagForm
 
 register = template.Library()
 
@@ -36,6 +37,7 @@ def tagBlock(tag, atf, rtf, **kwargs):
     kwargs["implies"] = Tag.expand_implies_check(tag.tags.all())
     kwargs["atf"] = atf
     kwargs["rtf"] = rtf
+    kwargs["renametf"] = RenameTagForm(instance=tag)
     
     return kwargs
 
