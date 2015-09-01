@@ -13,21 +13,21 @@
             </form>
         </div>
         
-        <div class='tags nomobile'>{% for t in tags %}{% tag t bm rtf %}{% endfor %}</div>
+        <div class='tags nomobile'>{% for t in tags %}{% tag t bm %}{% endfor %}</div>
         
         <div class='buttons'>
             <a class='expand button' title='Show Options'>&nbsp;</a>
         </div>
     </div>
     <div class='head mobile'>
-        <div class='tags'>{% for t in tags %}{% tag t bm rtf %}{% endfor %}</div>
+        <div class='tags'>{% for t in tags %}{% tag t bm %}{% endfor %}</div>
     </div>
     
     <div class='body' style='display:none'>
         <div class='added nomobile'>{{ bm.added|date:"D j/n/y H:i" }}</div>
         
         <div>
-            {% addTag atf bm.pk %}
+            {% addTag "bookmark" bm.pk %}
         </div>
         
         <div class='buttons'>

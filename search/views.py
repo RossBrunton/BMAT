@@ -25,11 +25,6 @@ def _search_context(query, user):
     
     ctx = {"query":query, "area":"search"}
     
-    ctx["bmatf"] = AddTagForm({"type":"bookmark"})
-    ctx["bmrtf"] = RemoveTagForm({"type":"bookmark"})
-    ctx["tagatf"] = AddTagForm({"type":"tag"})
-    ctx["tagrtf"] = RemoveTagForm({"type":"tag"})
-    
     ctx["bookmarks"] = Bookmark.by_user(user).filter(Q(title__icontains=query) | Q(url__icontains=query))
     ctx["tags"] = Tag.by_user(user).filter(name__icontains=query)
     

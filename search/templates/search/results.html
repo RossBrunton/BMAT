@@ -7,7 +7,7 @@
         </div>
 
         {% for bm in bookmarks %}
-            {% bookmark bm bmatf bmrtf %}
+            {% bookmark bm %}
         {% endfor %}
     {% endif %}
 
@@ -17,7 +17,7 @@
         </div>
 
         {% for tag in tags %}
-            {% tagBlock tag tagatf tagrtf %}
+            {% tagBlock tag %}
         {% endfor %}
     {% endif %}
     

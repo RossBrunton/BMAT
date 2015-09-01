@@ -14,20 +14,20 @@ data-taggable-type='tag'>
         
         <span class='count'>{{ tag.bookmarks.all.count }}</span>
         
-        <div class='tags nomobile'>{% for t in implies %}{% tag t tag rtf %}{% endfor %}</div>
+        <div class='tags nomobile'>{% for t in implies %}{% tag t tag %}{% endfor %}</div>
         
         <div class='buttons'>
             <a class='expand button' title='Show Options'>&nbsp;</a>
         </div>
     </div>
     <div class='head mobile'>
-        <div class='tags'>{% for t in implies %}{% tag t tag rtf %}{% endfor %}</div>
+        <div class='tags'>{% for t in implies %}{% tag t tag %}{% endfor %}</div>
     </div>
     
     <div class='body' style='display:none'>
-        <div class='nomobile'>{% for t in tag.tags_to.all %}{% tag t tag rtf %}{% endfor %}</div>
+        <div class='nomobile'>{% for t in tag.tags_to.all %}{% tag t tag %}{% endfor %}</div>
         
-        <div class='rightIfNotMobile'>{% addTag atf tag.pk %}</div>
+        <div class='rightIfNotMobile'>{% addTag "tag" tag.pk %}</div>
         <div class='buttons'>
             <a class='addTag button rightSpace' title='Add Tag'>&nbsp;</a>
         </div>

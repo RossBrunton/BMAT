@@ -29,6 +29,8 @@ def taggable(name):
         
         _taggable[name] = c
         
+        c.taggable_type = name
+        
         return c
     return decorator
 

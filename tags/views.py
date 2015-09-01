@@ -26,8 +26,6 @@ def home(request):
     
     ctx["area"] = "tags"
     ctx["tags"] = Tag.by_user(request.user)
-    ctx["atf"] = AddTagForm({"type":"tag"})
-    ctx["rtf"] = RemoveTagForm({"type":"tag"})
     
     return TemplateResponse(request, "tags/index.html", ctx)
 
@@ -45,10 +43,6 @@ def filter(request, tag):
     
     ctx["bookmarks"] = Bookmark.get_by_tag(tag)
     ctx["tag"] = tag
-    ctx["atf"] = AddTagForm({"type":"tag"})
-    ctx["rtf"] = RemoveTagForm({"type":"tag"})
-    ctx["batf"] = AddTagForm({"type":"bookmark"})
-    ctx["brtf"] = RemoveTagForm({"type":"bookmark"})
     ctx["pin_form"] = PinTagForm(instance=tag)
     
     return TemplateResponse(request, "tags/filter.html", ctx)
@@ -206,10 +200,7 @@ def htmlBlock(request, tag):
     """
     tag = get_object_or_404(Tag, pk=tag, owner=request.user)
     
-    return TemplateResponse(
-        request, "tags/tagBlock.html",
-        tagBlock(tag, AddTagForm({"type":"tag"}), RemoveTagForm({"type":"tag"}))
-    )
+    return TemplateResponse(request, "tags/tagBlock.html", tagBlock(tag))
 
 
 @login_required

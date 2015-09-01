@@ -16,7 +16,7 @@ import types
 register = template.Library()
 
 @register.inclusion_tag("bookmarks/bookmark.html")
-def bookmark(bookmark, atf, rtf, untag=None, **kwargs):
+def bookmark(bookmark, untag=None, **kwargs):
     """ Displays a bookmark as a block 
     
     A bookmark block is a HTML element with the class "block", surprisingly enough, and consist of a head and a body.
@@ -25,8 +25,6 @@ def bookmark(bookmark, atf, rtf, untag=None, **kwargs):
     """
     kwargs["bm"] = bookmark
     kwargs["tags"] = Tag.expand_implies_check(bookmark.tags.all())
-    kwargs["atf"] = atf
-    kwargs["rtf"] = rtf
     
     return kwargs
 

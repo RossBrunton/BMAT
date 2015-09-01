@@ -38,8 +38,6 @@ def home(request):
     # Set up the context
     ctx["area"] = "bookmarks"
     ctx["bookmarks"] = bookmarks
-    ctx["atf"] = AddTagForm({"type":"bookmark"})
-    ctx["rtf"] = RemoveTagForm({"type":"bookmark"})
     
     return TemplateResponse(request, "bookmarks/index.html", ctx)
 
@@ -169,7 +167,7 @@ def html(request, bookmark):
     
     return TemplateResponse(
         request, "bookmarks/bookmark.html", 
-        bookmarkTag(bm, AddTagForm({"type":"bookmark"}), RemoveTagForm({"type":"bookmark"}))
+        bookmarkTag(bm)
     )
 
 
