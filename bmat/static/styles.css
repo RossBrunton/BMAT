@@ -192,6 +192,14 @@ nav a:hover {
     width:100%;
 }
 
+input[type=text], input[type=password] {
+    background-color:inherit;
+    font-size:100%;
+    font-style:inherit;
+    padding-left:3px;
+    padding-right:3px;
+}
+
 .edit .done {
     margin-top:0px;
 }
