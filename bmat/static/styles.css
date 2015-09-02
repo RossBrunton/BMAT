@@ -289,6 +289,12 @@ input[type=text], input[type=password] {
     margin-top:6px;
 }
 
+.multiTagCheckVisible {
+    width:16px;
+    margin-left:5px;
+    margin-right:5px;
+}
+
 .multiTagBox {
     display:none;
 }
