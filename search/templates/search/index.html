@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load form_errors bookmark pages url_add %}
+{% load form_errors bookmark pages url_add tag %}
 
 {% block title %}Search{% endblock %}
 
@@ -11,6 +11,8 @@
         <input type='submit' value='Search'/>
     </form>
 </div>
+
+{% multiTag "bookmarkms" automulti=True %}
 
 <div id='search-results'>
     {% include "search/results.html" %}

@@ -1,11 +1,16 @@
 {% extends "base.html" %}
-{% load form_errors bookmark pages url_add %}
+{% load form_errors bookmark pages url_add tag %}
 
 {% block title %}Bookmarks{% endblock %}
 
 {% block content %}
 {% form_errors form %}
-{% url_add %}
+<div class='box flex'>
+    {% multiTagButton %}{% url_add %}
+</div>
+
+{% multiTag "bookmark" %}
+
 <div id='bookmark-list'>
     {% for bm in bookmarks %}
         {% bookmark bm %}

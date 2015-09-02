@@ -151,6 +151,12 @@ nav a:hover {
     line-height:150%;
 }
 
+.flex {
+    display:-ms-flex;
+    display:-webkit-flex;
+    display:flex;
+}
+
 
 /*
  * Top part of a block
@@ -268,8 +274,29 @@ input[type=text], input[type=password] {
     width:80px;
 }
 
+#add-bookmark {
+    flex: 1;
+}
+
 #search-results {
     margin-top:100px; /* For autocomplete */
+}
+
+.multiTagCheck {
+    width:0px;
+    margin:0px;
+    height:16px;
+    margin-top:6px;
+}
+
+.multiTagCheckVisible {
+    width:16px;
+    margin-left:5px;
+    margin-right:5px;
+}
+
+.multiTagBox {
+    display:none;
 }
 
 
@@ -335,9 +362,21 @@ input[type=text], input[type=password] {
     margin-right:20px;
 }
 
+.multiTag.button {
+    background-image:url('/static/icons/multiTag.png');
+    margin-right:15px;
+}
+
+.multiTagAll.button {
+    background-image:url('/static/icons/multiTagAll.png');
+    margin-right:10px;
+}
+
 .untag.button {
     background-image:url('/static/icons/removeTag.png');
 }
+
+
 
 .inlineUntag.button {
     background-image:url('/static/icons/removeTag.png');

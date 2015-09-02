@@ -18,7 +18,12 @@
         </form>
     </div>
 
-    {% url_add tag %}
+    <div class='box flex'>
+        {% multiTagButton %}{% url_add %}
+    </div>
+
+    {% multiTag "bookmark" %}
+    
     {% tagBlock tag %}
 {% else %}
     <div class='tagBlock box block white'>
@@ -27,11 +32,17 @@
             <span class='count'>{{ untag_count }}</span>
         </div>
     </div>
+    
+    {% multiTag "bookmark" automulti=True %}
 {% endif %}
 
 <div id='bookmark-list'>
     {% for bm in bookmarks %}
-        {% bookmark bm tag %}
+        {% if tag %}
+            {% bookmark bm tag %}
+        {% else %}
+            {% bookmark bm tag automulti=True %}
+        {% endif %}
     {% endfor %}
 </div>
 

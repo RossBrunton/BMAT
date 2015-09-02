@@ -1,6 +1,7 @@
 {% load tag %}
 <div class='bookmark box block' data-id='{{ bm.pk }}' data-taggable-type='bookmark'>
     <div class='head'>
+        <input type='checkbox' class='multiTagCheck{% if automulti %} multiTagCheckVisible{% endif %}'/>
         <div class='title noedit'>
             {% if bm.do_link %}<a href='{{ bm.url }}'>{{ bm.title }}</a>
             {% else %}<span class='nolink'>{{ bm.title }}</span>{% endif %}
