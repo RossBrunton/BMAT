@@ -18,6 +18,19 @@ from users import clean_trial, make_trial_user
 import random
 import string
 import re, datetime
+import six
+
+try:
+    import html
+except ImportError:
+    html = None
+    import HTMLParser
+
+def _unescape(text):
+    if html:
+        return html.unescape(text)
+    else:
+        return HTMLParser.HTMLParser().unescape(text)
 
 @login_required
 def home(request, note=""):
@@ -247,18 +260,18 @@ def _handle_import(contents, use_tags, owner):
             bookmark["title"] = title.search(l)
             if not bookmark["title"]:
                 continue
-            bookmark["title"] = bookmark["title"].group(1)
+            bookmark["title"] = _unescape(bookmark["title"].group(1))
             
             bookmark["url"] = url.search(l)
             if not bookmark["url"]:
                 continue
-            bookmark["url"] = bookmark["url"].group(1)
+            bookmark["url"] = _unescape(bookmark["url"].group(1))
             
             bookmark["tags"] = [];
             if use_tags:
                 result = tags.search(l)
                 if result:
-                    bookmark["tags"] = result.group(1).split(",")
+                    bookmark["tags"] = map(_unescape, result.group(1).split(","))
             
             bookmark["added"] = addTime.search(l)
             if bookmark["added"]:
