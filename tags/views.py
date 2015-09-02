@@ -26,6 +26,7 @@ def home(request):
     
     ctx["area"] = "tags"
     ctx["tags"] = Tag.by_user(request.user)
+    ctx["untag_count"] = Bookmark.by_user(request.user).filter(tags=None).count()
     
     return TemplateResponse(request, "tags/index.html", ctx)
 
@@ -44,6 +45,18 @@ def filter(request, tag):
     ctx["bookmarks"] = Bookmark.get_by_tag(tag)
     ctx["tag"] = tag
     ctx["pin_form"] = PinTagForm(instance=tag)
+    
+    return TemplateResponse(request, "tags/filter.html", ctx)
+
+@login_required
+def untagged(request):
+    """ Given a slug, uses filter.html to display all the things tagged with that specific tag """
+    
+    ctx = {}
+    ctx["area"] = "tags"
+    ctx["bookmarks"] = Bookmark.by_user(request.user).filter(tags=None)
+    ctx["untag_count"] = ctx["bookmarks"].count()
+    ctx["tag"] = None
     
     return TemplateResponse(request, "tags/filter.html", ctx)
 

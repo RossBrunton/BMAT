@@ -5,6 +5,13 @@
 
 {% block content %}
 <div id='tag-list'>
+    <div class='tagBlock box block white'>
+        <div class='head'>
+            <div class='title'><a href='{% url "tags:untagged" %}'>Untagged</a></div>
+            <span class='count'>{{ untag_count }}</span>
+        </div>
+    </div>
+    
     {% for tag in tags %}
         {% tagBlock tag %}
     {% empty %}

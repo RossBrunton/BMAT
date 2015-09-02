@@ -2,23 +2,32 @@
 
 {% load tag bookmark url_add %}
 
-{% block title %}Tag: {{ tag.name }}{% endblock %}
+{% block title %}{% if tag %}Tag: {{ tag.name }}{% else %}Untagged{% endif %}{% endblock %}
 
 {% block content %}
 
-<div class='box'>
-    <form action='{% url "tags:pin" tag=tag.slug %}' method='POST' id='pinForm'>{% csrf_token %}
-        {% if tag.pinned %}
-            <input type='submit' value='Remove this tag from the top bar'/>
-        {% else %}
-            <input type='hidden' name='pinned' value='on'/>
-            <input type='submit' value='Pin this tag so it appears in the top bar'/>
-        {% endif %}
-    </form>
-</div>
+{% if tag %}
+    <div class='box'>
+        <form action='{% url "tags:pin" tag=tag.slug %}' method='POST' id='pinForm'>{% csrf_token %}
+            {% if tag.pinned %}
+                <input type='submit' value='Remove this tag from the top bar'/>
+            {% else %}
+                <input type='hidden' name='pinned' value='on'/>
+                <input type='submit' value='Pin this tag so it appears in the top bar'/>
+            {% endif %}
+        </form>
+    </div>
 
-{% url_add tag %}
-{% tagBlock tag %}
+    {% url_add tag %}
+    {% tagBlock tag %}
+{% else %}
+    <div class='tagBlock box block white'>
+        <div class='head'>
+            <div class='title'><a href='{% url "tags:untagged" %}'>Untagged</a></div>
+            <span class='count'>{{ untag_count }}</span>
+        </div>
+    </div>
+{% endif %}
 
 <div id='bookmark-list'>
     {% for bm in bookmarks %}
