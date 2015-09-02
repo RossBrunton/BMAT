@@ -52,3 +52,13 @@ def addTag(type, pk, **kwargs):
     kwargs["atf"] = AddTagForm({"type":type})
     
     return kwargs
+
+@register.inclusion_tag("tags/multiTag.html")
+def multiTag(type, tag=None, **kwargs):
+    """ Displays the "multiple tag widget"
+    """
+    kwargs["tag"] = tag
+    kwargs["type"] = type
+    kwargs["atf"] = AddTagForm({"type":type})
+    
+    return kwargs

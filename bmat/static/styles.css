@@ -151,6 +151,12 @@ nav a:hover {
     line-height:150%;
 }
 
+.flex {
+    display:-ms-flex;
+    display:-webkit-flex;
+    display:flex;
+}
+
 
 /*
  * Top part of a block
@@ -272,6 +278,17 @@ input[type=text], input[type=password] {
     margin-top:100px; /* For autocomplete */
 }
 
+.multiTagCheck {
+    width:0px;
+    margin:0px;
+    height:16px;
+    margin-top:6px;
+}
+
+.multiTagForm {
+    display:none;
+}
+
 
 /*
  * Tags
@@ -336,6 +353,10 @@ input[type=text], input[type=password] {
 }
 
 .untag.button {
+    background-image:url('/static/icons/removeTag.png');
+}
+
+.multiTag.button {
     background-image:url('/static/icons/removeTag.png');
 }
 

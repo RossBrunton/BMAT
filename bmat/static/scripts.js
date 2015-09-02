@@ -260,6 +260,19 @@ window.bmatFn = function() {
             $(this).parents("#error").slideUp();
         });
         
+        // Multitag expand
+        $(".multiTag.button").on("click", function(e) {
+            if($(this).hasClass("open")) {
+                $(this).removeClass("open");
+                $(".multiTagCheck").animate({width:"0px", marginRight:"0px", marginLeft:"0px"}, 350);
+                $(".multiTagForm").fadeOut();
+            }else{
+                $(this).addClass("open");
+                $(".multiTagCheck").animate({width:"16px", marginRight:"5px", marginLeft:"5px"}, 350);
+                $(".multiTagForm").fadeIn();
+            }
+        });
+        
         // And handle undo
         $("#undo").on("submit", function(e) {
             e.preventDefault();

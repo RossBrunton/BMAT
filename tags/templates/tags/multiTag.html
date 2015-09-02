@@ -1,0 +1,13 @@
+{% load tag %}
+<div>
+    <a class='multiTag button' title='MULTITAG!'>&nbsp;</a>
+</div>
+
+<form class='multiTagForm'>
+    <input class='tagEntry' type='text' placeholder='Add Tag' name='name' list='tslist-multi'/>
+    <datalist id='tslist-multi'>
+        
+    </datalist>
+    {{ atf.colour }}
+    <input type='submit' value='Add tag to all selected'/> 
+</form>
