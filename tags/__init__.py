@@ -9,6 +9,7 @@ on the "Tags" page (similar to bookmarks). If it doesn't mention "blocks", then 
 that are in the head of other blocks (i.e. On a bookmark, each tag displayed next to the menu button).
 """
 from django.template import defaultfilters
+from six import text_type
 
 _taggable = {}
 
@@ -37,3 +38,15 @@ def taggable(name):
 def taggables():
     """ Returns an object, key is taggable name, value is taggable class """
     return _taggable
+
+def makeslug(text):
+    """ Special slug creating function for tags
+    
+    If the slug would otherwise be empty, convert it to its hex string and return that.
+    """
+    normal = defaultfilters.slugify(text)
+    
+    if normal:
+        return normal
+    
+    return u"".join(map(lambda x: format(ord(x), "x"), text))

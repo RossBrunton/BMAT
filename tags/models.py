@@ -10,6 +10,7 @@ from django.template import defaultfilters
 from django.db import transaction, IntegrityError
 
 import tags
+from tags import makeslug
 
 import json
 import six
@@ -49,7 +50,7 @@ class Taggable(models.Model):
                 tag = Tag(owner=self.owner, name=tag)
                 tag.save()
             except IntegrityError:
-                tag = Tag.objects.get(slug=defaultfilters.slugify(tag), owner=self.owner)
+                tag = Tag.objects.get(slug=makeslug(tag), owner=self.owner)
         
         tag.save() # If this isn't here there are crashes for some reason
         self.tags.add(tag)
@@ -64,7 +65,7 @@ class Taggable(models.Model):
         
         if isinstance(tag, six.string_types):
             try:
-                tag = Tag.objects.get(slug=defaultfilters.slugify(tag), owner=self.owner)
+                tag = Tag.objects.get(slug=makeslug(tag), owner=self.owner)
             except Tag.DoesNotExist:
                 return
         
@@ -158,7 +159,7 @@ class Tag(Taggable):
         return json.dumps(out)
     
     def save(self, *args, **kwargs):
-        self.slug = defaultfilters.slugify(self.name)
+        self.slug = makeslug(self.name)
         
         super(Taggable, self).save(*args, **kwargs)
     
@@ -201,7 +202,7 @@ class Tag(Taggable):
         If it doesn't, the owner of the instance is set to the provided one, it is saved and then returned.
         """
         try:
-            return Tag.objects.get(owner=owner, slug=defaultfilters.slugify(instance.name))
+            return Tag.objects.get(owner=owner, slug=makeslug(instance.name))
         except Tag.DoesNotExist:
             instance.owner = owner
             instance.save()

@@ -14,6 +14,7 @@ import six
 from tags.models import Tag
 from tags.forms import AddTagForm, RemoveTagForm, RenameTagForm, PinTagForm
 import tags
+from tags import makeslug
 from bookmarks.models import Bookmark
 from .templatetags.tag import tagBlock
 
@@ -34,7 +35,7 @@ def home(request):
 @login_required
 def filter(request, tag):
     """ Given a slug, uses filter.html to display all the things tagged with that specific tag """
-    tag = get_object_or_404(Tag, owner=request.user, slug=defaultfilters.slugify(tag))
+    tag = get_object_or_404(Tag, owner=request.user, slug=makeslug(tag))
     
     ctx = {}
     
@@ -68,7 +69,7 @@ def suggest(request, value):
     - yours: The string that was submitted to this page
     - tags: An array of strings for the suggestions
     """
-    tags = Tag.objects.filter(owner=request.user, slug__startswith=defaultfilters.slugify(value))[:10]
+    tags = Tag.objects.filter(owner=request.user, slug__startswith=makeslug(value))[:10]
     
     return TemplateResponse(request, "tags/suggest.json", {"tags":tags, "value":value}, "application/json")
 
@@ -98,7 +99,7 @@ def tag(request):
     
     tag = f.instance
     try:
-        tag = Tag.objects.get(owner=request.user, slug=defaultfilters.slugify(f.instance.name))
+        tag = Tag.objects.get(owner=request.user, slug=makeslug(f.instance.name))
     except Tag.DoesNotExist:
         pass
     
@@ -234,7 +235,7 @@ def rename(request, tag):
         return HttpResponse('{"error":"Form invalid"}', content_type="application/json", status=422)
     
     try:
-        existing = Tag.objects.get(owner=request.user, slug=defaultfilters.slugify(form.data["name"]))
+        existing = Tag.objects.get(owner=request.user, slug=makeslug(form.data["name"]))
         if existing.pk != form.instance.pk:
             return HttpResponse('{"error":"Tag already exists"}', content_type="application/json", status=422)
     except Tag.DoesNotExist:

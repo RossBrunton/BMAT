@@ -25,6 +25,6 @@ urlpatterns = patterns("",
     url(r'^htmlBlock/(?P<tag>\d+)$', "tags.views.htmlBlock", name="htmlBlock"),
     url(r'^tag$', "tags.views.tag", name="tag"),
     url(r'^untag$', "tags.views.untag", name="untag"),
-    url(r'^~(?P<tag>.+)$', "tags.views.filter", name="filter"),
+    url(r'^~(?P<tag>.*)$', "tags.views.filter", name="filter"),
     url(r'^untagged$', "tags.views.untagged", name="untagged"),
 )
