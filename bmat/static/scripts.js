@@ -104,7 +104,7 @@ window.bmatFn = function() {
             var bookmark = $(this).parents(".block").data("id");
             
             $.post(this.getAttribute("action"), $(this).serialize(), function(data) {
-                _replace(bookmark, $(elem).parents(".block").data("taggable-type"), true);
+                _replace(bookmark, $(elem).parents(".block").data("taggable-type"), false);
             }, "json");
             
             _disableForm(this);
@@ -176,12 +176,20 @@ window.bmatFn = function() {
         $("form.tagForm, form.renameForm").on("submit", function(e) {
             e.preventDefault();
             var elem = this;
+            
             $(this).find("input[name=url]").val(
                 $(elem).parents(".block").find(".body input[name=url]").val()
             );
             
+            var focus = $(this).hasClass("tagForm");
+            
             $.post(this.getAttribute("action"), $(this).serialize(), function(data) {
-                _replace($(elem).parents(".block").data("id"), $(elem).parents(".block").data("taggable-type"), true);
+                _replace($(elem).parents(".block").data("id"), $(elem).parents(".block").data("taggable-type"), 
+                function(node) {
+                    if(focus) {
+                        $(node).find("input[name=name]").focus();
+                    }
+                });
             }, "json");
         });
         
@@ -219,7 +227,7 @@ window.bmatFn = function() {
     
     
     // Given an id and a type, downloads a new version of the specific block and replaces them
-    var _replace = function(id, type, unused, slide, newid) {
+    var _replace = function(id, type, callback, slide, newid) {
         if(newid == undefined) newid = id;
         var url = "";
         if(type == "tag") url = "/tags/htmlBlock/" + newid;
@@ -251,6 +259,7 @@ window.bmatFn = function() {
                 $(".block[data-id="+newid+"] .multiTagCheck").prop("checked", true);
             }
             _update();
+            if(callback) callback($(".block[data-id="+newid+"][data-taggable-type="+type+"]"));
         }, "text");
     };
     
