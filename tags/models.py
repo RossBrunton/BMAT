@@ -113,7 +113,7 @@ class Tag(Taggable):
     owner = models.ForeignKey(User)
     name = models.TextField(max_length=100)
     colour = models.CharField(max_length=20, choices=colours_enum, default='white')
-    slug = models.SlugField()
+    slug = models.SlugField(db_index=True)
     tags = models.ManyToManyField("self", related_name="tags_to", symmetrical=False, db_table="tags_tag_implies")
     pinned = models.BooleanField(default=False)
 
