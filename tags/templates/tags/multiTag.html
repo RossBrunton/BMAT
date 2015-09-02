@@ -1,11 +1,14 @@
 {% load tag %}
 <div class='multiTagBox box'>
-    <form class='multiTagForm'>
-        <input class='tagEntry' type='text' placeholder='Add Tag' name='name' list='tslist-multi'/>
-        <datalist id='tslist-multi'>
-            
-        </datalist>
-        {{ atf.colour }}
-        <input type='submit' value='Add tag to all selected'/> 
-    </form>
+    <div class='flex'>
+        <div><a class='multiTagAll button' title='Select All'>&nbsp;</a></div>
+        <form class='multiTagForm'>
+            <input class='tagEntry' type='text' placeholder='Add Tag' name='name' list='tslist-multi'/>
+            <datalist id='tslist-multi'>
+                
+            </datalist>
+            {{ atf.colour }}
+            <input type='submit' value='Add tag to all selected'/> 
+        </form>
+    </div>
 </div>

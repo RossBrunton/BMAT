@@ -356,13 +356,19 @@ input[type=text], input[type=password] {
     margin-right:20px;
 }
 
+.multiTag.button {
+    background-image:url('/static/icons/removeTag.png');
+}
+
+.multiTagAll.button {
+    background-image:url('/static/icons/addTag.png');
+}
+
 .untag.button {
     background-image:url('/static/icons/removeTag.png');
 }
 
-.multiTag.button {
-    background-image:url('/static/icons/removeTag.png');
-}
+
 
 .inlineUntag.button {
     background-image:url('/static/icons/removeTag.png');

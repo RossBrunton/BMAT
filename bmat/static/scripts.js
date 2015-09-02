@@ -284,6 +284,17 @@ window.bmatFn = function() {
             }
         });
         
+        // "Select all" button for multitag
+        $(".multiTagAll.button").on("click", function(e) {
+            if($(".multiTagCheck:checked").length == $(".multiTagCheck").length) {
+                // All checked
+                $(".multiTagCheck").prop("checked", false);
+            }else{
+                $(".multiTagCheck").prop("checked", true);
+            }
+        });
+        
+        // When the multitag form is submitted
         $(".multiTagForm").on("submit", function(e) {
             e.preventDefault();
             var tag = $(this).find("[name=name]").val();
