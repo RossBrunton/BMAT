@@ -51,6 +51,7 @@ class Taggable(models.Model):
             except IntegrityError:
                 tag = Tag.objects.get(slug=defaultfilters.slugify(tag), owner=self.owner)
         
+        tag.save() # If this isn't here there are crashes for some reason
         self.tags.add(tag)
     
     def untag(self, tag):
