@@ -46,11 +46,12 @@ class Taggable(models.Model):
                 return
         
         if isinstance(tag, six.string_types):
+            tname = tag
             try:
                 tag = Tag(owner=self.owner, name=tag)
                 tag.save()
             except IntegrityError:
-                tag = Tag.objects.get(slug=makeslug(tag), owner=self.owner)
+                tag = Tag.objects.get(slug=makeslug(tname), owner=self.owner)
         
         tag.save() # If this isn't here there are crashes for some reason
         self.tags.add(tag)
