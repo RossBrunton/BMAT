@@ -7,6 +7,7 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.template import defaultfilters
+from django.db import transaction, IntegrityError
 
 import tags
 
@@ -35,6 +36,7 @@ class Taggable(models.Model):
     
     def tag(self, tag):
         """ Tags this object with a tag specified by a tag name, primary key or Tag model instance """
+        
         if isinstance(tag, six.integer_types):
             try:
                 tag = Tag.objects.get(pk=tag, owner=self.owner)
@@ -44,13 +46,11 @@ class Taggable(models.Model):
         
         if isinstance(tag, six.string_types):
             try:
-                tag = Tag.objects.get(slug=defaultfilters.slugify(tag), owner=self.owner)
-            except Tag.DoesNotExist:
                 tag = Tag(owner=self.owner, name=tag)
                 tag.save()
+            except IntegrityError:
+                tag = Tag.objects.get(slug=defaultfilters.slugify(tag), owner=self.owner)
         
-        tag.owner = self.owner
-        tag.save()
         self.tags.add(tag)
     
     def untag(self, tag):
@@ -108,6 +108,7 @@ class Tag(Taggable):
     """
     class Meta:
         ordering = ["slug"]
+        unique_together = (("owner", "slug"),)
     
     owner = models.ForeignKey(User)
     name = models.TextField(max_length=100)
@@ -154,6 +155,11 @@ class Tag(Taggable):
             out["tagged_objects"][k] = list(map(lambda x: x.pk, v.objects.filter(tags__pk=self.pk)))
         
         return json.dumps(out)
+    
+    def save(self, *args, **kwargs):
+        self.slug = defaultfilters.slugify(self.name)
+        
+        super(Taggable, self).save(*args, **kwargs)
     
     @staticmethod
     def from_undoable(jsonData, user):
@@ -294,11 +300,3 @@ class Tag(Taggable):
     def by_user(user):
         """ Returns all the tags owned by this user """
         return Tag.objects.all().filter(owner=user)
-
-
-@receiver(post_save, sender=Tag)
-def tag_save(sender, instance, created, **kwargs):
-    """ Save hook, used to update the slug if it needs to be changed """
-    if instance.slug != defaultfilters.slugify(instance.name):
-        instance.slug = defaultfilters.slugify(instance.name)
-        instance.save()
