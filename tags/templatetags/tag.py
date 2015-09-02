@@ -62,3 +62,8 @@ def multiTag(type, tag=None, **kwargs):
     kwargs["atf"] = AddTagForm({"type":type})
     
     return kwargs
+
+@register.inclusion_tag("tags/multiTagButton.html")
+def multiTagButton(**kwargs):
+    """ Displays the "multiple tag widget"'s button """
+    return kwargs

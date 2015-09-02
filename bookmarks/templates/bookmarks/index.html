@@ -5,10 +5,11 @@
 
 {% block content %}
 {% form_errors form %}
-{% url_add %}
 <div class='box flex'>
-    {% multiTag "bookmark" %}
+    {% multiTagButton %}{% url_add %}
 </div>
+
+{% multiTag "bookmark" %}
 
 <div id='bookmark-list'>
     {% for bm in bookmarks %}

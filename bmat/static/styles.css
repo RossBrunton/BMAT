@@ -274,6 +274,10 @@ input[type=text], input[type=password] {
     width:80px;
 }
 
+#add-bookmark {
+    flex: 1;
+}
+
 #search-results {
     margin-top:100px; /* For autocomplete */
 }
@@ -285,7 +289,7 @@ input[type=text], input[type=password] {
     margin-top:6px;
 }
 
-.multiTagForm {
+.multiTagBox {
     display:none;
 }
 
