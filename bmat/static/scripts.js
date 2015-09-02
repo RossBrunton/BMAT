@@ -219,12 +219,15 @@ window.bmatFn = function() {
     
     
     // Given an id and a type, downloads a new version of the specific block and replaces them
-    // If expand is true, then they are expanded as if the user had clicked the expand button
-    var _replace = function(id, type, expand, slide, newid) {
+    var _replace = function(id, type, unused, slide, newid) {
         if(newid == undefined) newid = id;
         var url = "";
         if(type == "tag") url = "/tags/htmlBlock/" + newid;
         if(type == "bookmark") url = "/bookmarks/" + newid + "/html";
+        
+        var displayMultiCheck = $(".block[data-id="+id+"] .multiTagCheck").css("width") == "16px";
+        var multiChecked = $(".block[data-id="+id+"] .multiTagCheck:checked").length > 0;
+        var expand = $(".block[data-id="+id+"] .expand.open").length > 0;
         
         $.get(url, function(e) {
             $(".block[data-id="+id+"]").replaceWith(e);
@@ -238,6 +241,14 @@ window.bmatFn = function() {
             if(slide) {
                 $(".block[data-id="+newid+"][data-taggable-type="+type+"]").css("display", "none");
                 $(".block[data-id="+newid+"][data-taggable-type="+type+"]").slideDown();
+            }
+            
+            if(displayMultiCheck) {
+                $(".block[data-id="+newid+"] .multiTagCheck")
+                    .css("width", "16px").css("margin-left", "5px").css("margin-right", "5px");
+            }
+            if(multiChecked) {
+                $(".block[data-id="+newid+"] .multiTagCheck").prop("checked", true);
             }
             _update();
         }, "text");
