@@ -273,6 +273,18 @@ window.bmatFn = function() {
             }
         });
         
+        $(".multiTagForm").on("submit", function(e) {
+            e.preventDefault();
+            var tag = $(this).find("[name=name]").val();
+            var colour = $(this).find("[name=colour]").val();
+            
+            $(".multiTagCheck:checked").parents(".block").find(".tagForm").each(function(i, node) {
+                $(node).find("[name=name]").val(tag);
+                $(node).find("[name=colour]").val(colour);
+                $(node).submit();
+            });
+        });
+        
         // And handle undo
         $("#undo").on("submit", function(e) {
             e.preventDefault();
