@@ -252,7 +252,7 @@ window.bmatFn = function() {
             }
             
             if(displayMultiCheck) {
-                $(".block[data-id="+newid+"] .multiTagCheck")
+                $(".block[data-id="+newid+"] .multiTagCheck").show()
                     .css("width", "16px").css("margin-left", "5px").css("margin-right", "5px");
             }
             if(multiChecked) {
@@ -284,11 +284,15 @@ window.bmatFn = function() {
         $(".multiTag.button").on("click", function(e) {
             if($(this).hasClass("open")) {
                 $(this).removeClass("open");
-                $(".multiTagCheck").animate({width:"0px", marginRight:"0px", marginLeft:"0px"}, 350);
+                $(".multiTagCheck").animate({width:"0px", marginRight:"0px", marginLeft:"0px"}, 350, "swing",
+                    function() {
+                        $(".multiTagCheck").hide();
+                    }
+                );
                 $(".multiTagBox").slideUp();
             }else{
                 $(this).addClass("open");
-                $(".multiTagCheck").animate({width:"16px", marginRight:"5px", marginLeft:"5px"}, 350);
+                $(".multiTagCheck").show().animate({width:"16px", marginRight:"5px", marginLeft:"5px"}, 350);
                 $(".multiTagBox").slideDown();
             }
         });
