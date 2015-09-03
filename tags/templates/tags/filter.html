@@ -7,8 +7,10 @@
 {% block content %}
 
 {% if tag %}
-    <div class='box'>
-        <form action='{% url "tags:pin" tag=tag.slug %}' method='POST' id='pinForm'>{% csrf_token %}
+    <div class='box flex'>
+        {% multiTagButton %}
+        {% url_add tag %}
+        <form action='{% url "tags:pin" tag=tag.slug %}' method='POST' id='pinForm' class='flex'>{% csrf_token %}
             {% if tag.pinned %}
                 <input type='submit' value='Remove this tag from the top bar'/>
             {% else %}
@@ -16,10 +18,6 @@
                 <input type='submit' value='Pin this tag so it appears in the top bar'/>
             {% endif %}
         </form>
-    </div>
-
-    <div class='box flex'>
-        {% multiTagButton %}{% url_add tag %}
     </div>
 
     {% multiTag "bookmark" %}
