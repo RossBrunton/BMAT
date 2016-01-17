@@ -26,6 +26,13 @@ body {
 }
 
 /*
+ *  Multitag box thing
+ */
+.multiTagBox {
+    background-color:#eeeeee;
+}
+
+/*
  * Forms
  */
 input[type=text], input[type=password] {

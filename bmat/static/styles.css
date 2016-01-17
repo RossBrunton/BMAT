@@ -157,6 +157,16 @@ nav a:hover {
     display:flex;
 }
 
+/*
+ *  Multitag box thing
+ */
+.multiTagBox.multiTagBox {
+    position:fixed;
+    right:40px;
+    top:5px;
+    margin:0px;
+    border-radius:5px;
+}
 
 /*
  * Top part of a block
