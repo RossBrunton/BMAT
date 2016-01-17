@@ -300,6 +300,10 @@ input[type=text], input[type=password] {
     display:none;
 }
 
+#search-results .multiTagCheck {
+    display:initial; /* Always display the checkbox in search */
+}
+
 .multiTagCheckVisible {
     width:16px;
     margin-left:5px;
