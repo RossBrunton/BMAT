@@ -112,7 +112,7 @@ window.bmatFn = function() {
         
         
         // Open/close button
-        $(".expand.button").on("click", function() {
+        var _expand = function() {
             if($(this).hasClass("open")) {
                 $(this).parents(".block").children(".body").slideUp("fast");
                 $(this).parents(".block").find(".inlineUntag").animate({"width":"0px"}, "fast");
@@ -123,7 +123,9 @@ window.bmatFn = function() {
                 $(this).parents(".block").find(".inlineUntag").animate({"width":"16px"}, "fast");
                 $(this).addClass("open");
             }
-        });
+        };
+        $(".expand.button").on("click", _expand);
+        $(".head").on("dblclick", _expand);
         
         // "Add tag" entry, for generating suggestions
         $(".tagEntry").on("input", function(e) {
