@@ -100,14 +100,19 @@ def tag(request):
     except taggable.DoesNotExist:
         return HttpResponse('{"error":"Taggable not found"}', content_type="application/json", status=422)
     
-    tag = f.instance
-    try:
-        tag = Tag.objects.get(owner=request.user, slug=makeslug(f.instance.name))
-    except Tag.DoesNotExist:
-        pass
+    tag_names = map(lambda x: x.strip(), f.cleaned_data["name"].split(","))
     
-    f.instance.owner = request.user
-    obj.tag(tag)
+    for n in tag_names:
+        if not n:
+            continue
+        
+        try:
+            tag = Tag.objects.get(owner=request.user, slug=makeslug(n))
+        except Tag.DoesNotExist:
+            tag = Tag(owner=request.user, name=n, colour=f.instance.colour)
+            tag.save()
+        
+        obj.tag(tag)
     
     return HttpResponse(
         '{{"obj":{}, "type":"{}"}}'.format(obj.to_json(), f.cleaned_data["type"]),
