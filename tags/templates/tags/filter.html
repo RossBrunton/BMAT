@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% load tag bookmark url_add %}
+{% load tag bookmark url_add pages %}
 
 {% block title %}{% if tag %}Tag: {{ tag.name }}{% else %}Untagged{% endif %}{% endblock %}
 
@@ -44,4 +44,5 @@
     {% endfor %}
 </div>
 
+{% pages bookmarks "" %}
 {% endblock %}

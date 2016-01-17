@@ -9,6 +9,7 @@ from django.shortcuts import get_object_or_404
 from django.template import defaultfilters
 from django.template.response import TemplateResponse
 from django.views.decorators.http import require_POST
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import six
 
 from tags.models import Tag
@@ -17,6 +18,7 @@ import tags
 from tags import makeslug
 from bookmarks.models import Bookmark
 from .templatetags.tag import tagBlock
+from bmat.utils import make_page
 
 import json
 
@@ -43,9 +45,9 @@ def filter(request, tag):
         # Don't display "tags" thing as active when the tag is pinned
         ctx["area"] = "tags"
     
-    ctx["bookmarks"] = Bookmark.get_by_tag(tag)
     ctx["tag"] = tag
     ctx["pin_form"] = PinTagForm(instance=tag)
+    ctx["bookmarks"] = make_page(Bookmark.get_by_tag(tag), request.GET.get("p"))
     
     return TemplateResponse(request, "tags/filter.html", ctx)
 
@@ -54,10 +56,11 @@ def untagged(request):
     """ Given a slug, uses filter.html to display all the things tagged with that specific tag """
     
     ctx = {}
+    bookmarks = Bookmark.by_user(request.user).filter(tags=None)
+    ctx["untag_count"] = bookmarks.count()
     ctx["area"] = "tags"
-    ctx["bookmarks"] = Bookmark.by_user(request.user).filter(tags=None)
-    ctx["untag_count"] = ctx["bookmarks"].count()
     ctx["tag"] = None
+    ctx["bookmarks"] = make_page(bookmarks, request.GET.get("p"))
     
     return TemplateResponse(request, "tags/filter.html", ctx)
 

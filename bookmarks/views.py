@@ -17,6 +17,7 @@ from bookmarks.models import Bookmark
 from tags.models import Tag
 from .templatetags.bookmark import bookmark as bookmarkTag
 from users.models import Settings
+from bmat.utils import make_page
 
 import json
 
@@ -25,19 +26,9 @@ def home(request):
     """ Home page is a list of all bookmarks and uses template index.html """
     ctx = {}
     
-    # Use the paginator
-    paginator = Paginator(Bookmark.by_user(request.user), 30)
-    bookmarks = None
-    try:
-        bookmarks = paginator.page(request.GET.get("p", "1"))
-    except PageNotAnInteger:
-        bookmarks = paginator.page(1)
-    except EmptyPage:
-        bookmarks = paginator.page(paginator.num_pages)
-    
     # Set up the context
     ctx["area"] = "bookmarks"
-    ctx["bookmarks"] = bookmarks
+    ctx["bookmarks"] = make_page(Bookmark.by_user(request.user), request.GET.get("p"))
     
     return TemplateResponse(request, "bookmarks/index.html", ctx)
 
