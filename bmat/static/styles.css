@@ -329,11 +329,12 @@ input[type=text], input[type=password] {
     border: 1px solid;
     margin-right:4px;
     border-radius:5px;
-    overflow:hidden;
+    white-space:nowrap;
 }
 
 .tags.tags.tags {
     padding:0px;
+    overflow:hidden;
 }
 
 
