@@ -286,7 +286,8 @@ window.bmatFn = function() {
         $(".multiTag.button").on("click", function(e) {
             if($(this).hasClass("open")) {
                 $(this).removeClass("open");
-                $(".multiTagCheck").animate({width:"0px", marginRight:"0px", marginLeft:"0px"}, 350, "swing",
+                $(".multiTagCheck").animate({
+                    width:"0px", minWidth:"0px", marginRight:"0px", marginLeft:"0px"}, 350, "swing",
                     function() {
                         $(".multiTagCheck").hide();
                     }
@@ -294,7 +295,9 @@ window.bmatFn = function() {
                 $(".multiTagBox").slideUp();
             }else{
                 $(this).addClass("open");
-                $(".multiTagCheck").show().animate({width:"16px", marginRight:"5px", marginLeft:"5px"}, 350);
+                $(".multiTagCheck").show().animate({width:"16px", minWidth:"16px", marginRight:"5px", marginLeft:"5px"},
+                    350
+                );
                 $(".multiTagBox").slideDown();
             }
         });
