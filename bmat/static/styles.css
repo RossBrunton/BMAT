@@ -16,8 +16,8 @@ nav {
     display:-ms-flex;
     display:flex;
     justify-content:center;
-    border-bottom:1px solid #cccccc;
-    background:#fafafa;
+    border-bottom:1px solid #999999;
+    background:#eeeeee;
     flex-wrap:wrap;
     -ms-flex-wrap:wrap;
     -webkit-flex-wrap:wrap;
@@ -57,14 +57,15 @@ a:visited {
 
 nav a {
     display:block;
-    margin-left: 5px;
-    margin-right: 5px;
-    margin-top: 5px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
     margin-bottom: -1px;
     padding:5px;
     font-size:120%;
     color:#999999 !important;
     border-bottom:2px solid transparent;
+    cursor:pointer;
 }
 
 nav a.active.active {
@@ -224,6 +225,7 @@ input[type=text], input[type=password] {
     display:-ms-flex;
     display:-webkit-flex;
     display:flex;
+    flex-wrap:wrap;
 }
 
 .head form {
@@ -282,6 +284,7 @@ input[type=text], input[type=password] {
 
 #add-bookmark input[type=submit] {
     width:80px;
+    margin-left:10px;
 }
 
 #add-bookmark {
@@ -328,14 +331,18 @@ input[type=text], input[type=password] {
     padding-left:4px;
     padding-right:4px;
     border: 1px solid;
-    margin-right:4px;
-    border-radius:5px;
+    margin-right:8px;
+    border-radius:8px;
     white-space:nowrap;
+    margin-bottom:10px;
 }
 
 .tags.tags.tags {
     padding:0px;
     overflow:hidden;
+    margin-bottom:-10px;
+    flex-wrap:wrap;
+    justify-content:flex-end;
 }
 
 

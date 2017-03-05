@@ -13,14 +13,18 @@ body {
 .box {
     background:inherit;
     border:0px;
-    border-bottom:2px solid #eeeeee;
-    padding-bottom:7px;
-    padding-top:7px;
+    border-bottom:1px solid #dddddd;
+    padding-bottom:12px;
+    padding-top:12px;
     padding-left:5px;
     padding-right:5px;
     margin-top:0px;
     margin-bottom:0px;
     border-radius:0px;
+}
+
+.body {
+    margin-top:7px;
 }
 
 .form-errors {
@@ -52,8 +56,8 @@ input[type=text], input[type=password] {
  */
 .tag {
     border:0px;
-    padding-left:6px;
-    padding-right:6px;
+    padding-left:10px;
+    padding-right:10px;
 }
 
 .tagBlock {
