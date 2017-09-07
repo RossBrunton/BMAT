@@ -18,7 +18,8 @@ INSTALLED_APPS = (
     'users',
     'bookmarks',
     'tags',
-    'search'
+    'search',
+    'autotags'
 )
 
 MIDDLEWARE_CLASSES = (

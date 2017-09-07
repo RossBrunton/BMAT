@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load form_errors autotag pages pattern_add tag %}
+
+{% block title %}Automatic Tag Rules{% endblock %}
+
+{% block content %}
+{% form_errors form %}
+<div class='box flex'>
+    {% multiTagButton %}{% url_add %}
+</div>
+
+{% multiTag "bookmark" %}
+
+<div id='autotag-list'>
+    {% for at in autotags %}
+        {% autotag at %}
+    {% empty %}
+        <div class='box'>
+            You have no rules; add a pattern in the box above.
+        </div>
+    {% endfor %}
+</div>
+{% pages autotags "autotags:home" %}
+{% endblock %}

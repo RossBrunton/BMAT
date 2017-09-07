@@ -1,0 +1,51 @@
+{% load tag %}
+<div class='autotag box block {{ colour }}' data-id='{{ at.pk }}' data-taggable-type='autotag'>
+    <div class='head'>
+        <input type='checkbox' class='multiTagCheck{% if automulti %} multiTagCheckVisible{% endif %}'/>
+        <div class='title noedit'><span class='nolink'>{{ at.pattern }}</span></div>
+        <div class='title edit'>
+            <form class='setPatternForm' method='POST' action='{% url "autotags:setPattern" autotag=at.id %}'>
+                {% csrf_token %}
+                <input class='setPatternEntry' name='title' type='text' value='{{ at.pattern }}'/>
+            </form>
+        </div>
+        
+        <div class='tags nomobile'>{% for t in tags %}{% tag t at %}{% endfor %}</div>
+        
+        <div class='buttons'>
+            <a class='expand button' title='Show Options'>&nbsp;</a>
+        </div>
+    </div>
+    <div class='head mobile'>
+        <div class='tags'>{% for t in tags %}{% tag t at %}{% endfor %}</div>
+    </div>
+    
+    <div class='body' style='display:none'>
+        <div class='added nomobile'>&nbsp;</div>
+        
+        <div>
+            {% addTag "autotag" at.pk %}
+        </div>
+        
+        <div class='buttons'>
+            <a class='addTag button rightSpace' title='Add Tag'>&nbsp;&nbsp;&nbsp;</a>
+        </div>
+        
+        <div class='rightIfMobile buttons'>
+            <a class='editTitle button noedit' title='Edit'>&nbsp;&nbsp;&nbsp;</a>
+            <a class='rename button edit' style='display:none' title='Save'>&nbsp;</a>
+            
+            <form action='{% url "autotags:delete" %}' method='POST' class='deleteForm'
+                data-undo-url='{% url "autotags:create" %}'
+            >
+                {% csrf_token %}
+                <input type='hidden' name='autotag' value='{{ at.pk }}'/>
+                <a class='delete button' title='Delete'>&nbsp;&nbsp;&nbsp;</a>
+            </form>
+        </div>
+    </div>
+    
+    <div class='body' style='display:none'>
+        <!-- Nothing here (yet?) -->
+    </div>
+</div>
