@@ -23,19 +23,6 @@
     </form>
 </div>
 
-{% form_errors settings_form %}
-<div class='box'>
-    <form method='POST' action='{% url "user:home" %}'>
-        {% csrf_token %}
-        <label>Theme: {{ settings_form.theme }}</label><br/>
-        <label>Invalid URL Handling: {{ settings_form.url_settings }}</label><br/>
-        <label>{{ settings_form.no_analytics }} Opt out of anonymous usage tracking</label><br/>
-        <label>{{ settings_form.hide_settings }} Hide settings on navbar; you can access it from the bottom of the page
-        </label><br/>
-        <input type='submit' value='Update Settings'/>
-    </form>
-</div>
-
 {% if not user.settings.is_trial %}
     {% form_errors pass_form %}
     <div class='box'>
@@ -51,25 +38,47 @@
 {% endif %}
 
 <div class='box title'>
-    Import and Export
+    Site Settings
 </div>
 
+{% form_errors settings_form %}
 <div class='box'>
-    Please note that if you export your bookmarks and then import them again, "implies" relationships between tags
-    won't be preserved.
+    <form method='POST' action='{% url "user:home" %}'>
+        {% csrf_token %}
+        <label>Theme: {{ settings_form.theme }}</label><br/>
+        <label>Invalid URL Handling: {{ settings_form.url_settings }}</label><br/>
+        <label>{{ settings_form.no_analytics }} Opt out of anonymous usage tracking</label><br/>
+        <label>{{ settings_form.hide_settings }} Hide settings button on navbar; you can access it from the bottom of the page
+        </label><br/>
+        <input type='submit' value='Update Settings'/>
+    </form>
+</div>
+
+<div class='box title'>
+    Import and Export
 </div>
 
 {% form_errors importForm %}
 <div class='box'>
+    This allows you to import bookmarks from another application or browser. When exporting from them, you should be
+    given a &quot;html&quot; file, simply select that file here and click import.<br/><br/>
+    
+    Note that not all applications include information about tags, so clicking "Include Tags" may not do anything. In
+    addition, information about tags, such as their colour and links to other tags is never included, even if you
+    export bookmarks from BMAT.<br/><br/>
+    
     <form enctype='multipart/form-data' action='{% url "user:import" %}' method='POST'>
         {% csrf_token %}
-        <label>{{ importForm.use_tags }} Include tags on import if they are available</label><br/>
+        <label>{{ importForm.use_tags }} Include Tags</label><br/>
         {{ importForm.file }}<br/>
         <input type='submit' value='Import Bookmarks From HTML'/>
     </form>
 </div>
 
 <div class='box'>
+    You can export your bookmarks here by clicking the button below and saving the page. The saved file can then be
+    imported into other browsers or applications.<br/><br/>
+    
     <button><a href='{% url "bookmarks:export" %}' style='color:inherit'>Export Bookmarks To HTML</a></button>
 </div>
 
