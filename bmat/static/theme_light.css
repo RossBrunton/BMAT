@@ -45,7 +45,7 @@ body {
 /*
  * Forms
  */
-input[type=text], input[type=password] {
+input[type=text], input[type=password], input[type=email] {
     border:2px solid #cccccc;
     border-radius:5px;
     background-color:#f8f8f8;
