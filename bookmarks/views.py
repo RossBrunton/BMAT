@@ -86,6 +86,8 @@ def add(request):
     if "tag" in request.POST:
         bm.tag(request.POST["tag"])
     
+    bm.autotag_rules()
+    
     return HttpResponse(bm.to_json(), content_type="application/json")
 
 

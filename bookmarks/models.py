@@ -11,6 +11,7 @@ from tags.models import Tag, Taggable
 from tags import taggable
 from bookmarks.templatetags.bookmark import bookmark
 from users.models import Settings
+from autotags.models import Autotag
 
 from six.moves.html_parser import HTMLParser
 from six.moves.urllib.robotparser import RobotFileParser
@@ -152,14 +153,30 @@ class Bookmark(Taggable):
         
         bm.save()
         
-        bm.added = make_aware(datetime.strptime(obj["added"], _DT_FORMAT), UTC())
+        if "added" in obj:
+            bm.added = make_aware(datetime.strptime(obj["added"], _DT_FORMAT), UTC())
         
         for t in obj["tags"]:
-            bm.tag(t["id"])
+            if isinstance(t, six.string_types):
+                bm.tag(t)
+            else:
+                bm.tag(t["id"])
         
         bm.save()
         
         return bm
+    
+    def autotag_rules(self):
+        """ Loops through all the autotag instances, and applies them
+        
+        Basically, loops through them all and if their pattern matches, it applies all the tags.
+        """
+        #TODO: Should see if I should do this in the database
+        url = self.url.lower()
+        for at in Autotag.by_user(self.owner):
+            if at.pattern.lower() in url:
+                for t in at.tags.all():
+                    self.tag(t)
     
     @staticmethod
     def by_user(user):

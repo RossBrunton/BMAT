@@ -277,9 +277,7 @@ def _handle_import(contents, use_tags, owner):
             if bookmark["added"]:
                 bookmark["added"] = bookmark["added"].group(1)
             
-            try:
-                Bookmark.objects.get(owner=owner, url=bookmark["url"])
-            except Bookmark.DoesNotExist:
+            if not Bookmark.objects.filter(owner=owner, url=bookmark["url"]).exists():
                 bm = Bookmark(owner=owner, url=bookmark["url"], title=bookmark["title"])
                 
                 bm.save()
@@ -290,3 +288,4 @@ def _handle_import(contents, use_tags, owner):
                     bm.tag(t)
                 
                 bm.save()
+                bm.autotag_rules()
