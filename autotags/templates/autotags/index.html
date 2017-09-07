@@ -9,14 +9,23 @@
     {% multiTagButton %}{% url_add %}
 </div>
 
-{% multiTag "bookmark" %}
+{% multiTag "autotag" %}
+
+<div class='box'>
+    How this works is simple:
+    <ul>
+        <li>Enter a pattern in the box above, and click add &quot;Add Pattern&quot;</li>
+        <li>Add some tags to the pattern by clicking the menu button and adding it there</li>
+        <li>Now, whenever you add a bookmark whose URL contains the pattern, it will be tagged with those tags</li>
+    </ul>
+</div>
 
 <div id='autotag-list'>
     {% for at in autotags %}
         {% autotag at %}
     {% empty %}
         <div class='box'>
-            You have no rules; add a pattern in the box above.
+            You have no rules yet.
         </div>
     {% endfor %}
 </div>
