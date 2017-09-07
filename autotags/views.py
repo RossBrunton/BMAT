@@ -106,7 +106,7 @@ def delete(request):
     
     try:
         at = Autotag.objects.get(owner=request.user, pk=request.POST["autotag"])
-    except Bookmark.DoesNotExist:
+    except Autotag.DoesNotExist:
         return HttpResponse(
             '{"obj":null, "type":"autotag", "deleted":null, "alreadyDeleted":true}', content_type="application/json"
         )
