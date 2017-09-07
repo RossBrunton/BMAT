@@ -1,6 +1,7 @@
 """ Forms for user management """
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
 from users.models import Settings
 
@@ -18,3 +19,9 @@ class SettingsForm(forms.ModelForm):
     class Meta:
         model = Settings
         fields = ("theme", "url_settings", "no_analytics", "hide_settings")
+
+class EmailForm(forms.ModelForm):
+    """ And a form to edit settings, specifically the theme """
+    class Meta:
+        model = User
+        fields = ("email",)

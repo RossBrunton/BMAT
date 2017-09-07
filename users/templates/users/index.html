@@ -35,6 +35,16 @@
             <input type='submit' value='Change Password'/>
         </form>
     </div>
+    
+    {% form_errors email_form %}
+    <div class='box'>
+        <form method='POST' action='{% url "user:email_change" %}'>
+            {% csrf_token %}
+            Here you can set or change an email for use when sending password reset emails<br/><br/>
+            <label>Email: {{ email_form.email }}</label><br/>
+            <input type='submit' value='Change Email'/>
+        </form>
+    </div>
 {% endif %}
 
 <div class='box title'>
