@@ -60,7 +60,7 @@ input[type=text], input[type=password] {
     padding-right:10px;
 }
 
-.tagBlock {
+.tagBlock, .autotag {
     border:1px;
     margin-top:2px;
     margin-bottom:2px;

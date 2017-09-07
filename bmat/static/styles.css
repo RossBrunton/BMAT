@@ -191,7 +191,7 @@ nav a:hover {
     padding-top:3px;
 }
 
-.title, .url {
+.title, .url, .pattern {
     -ms-flex: 1 1 auto;
     -webkit-flex: 1 1 auto;
     flex:1 1 auto;
@@ -282,12 +282,12 @@ input[type=text], input[type=password] {
     margin-top:20px;
 }
 
-#add-bookmark input[type=submit] {
+#add-bookmark input[type=submit], #add-pattern input[type=submit], {
     width:80px;
     margin-left:10px;
 }
 
-#add-bookmark {
+#add-bookmark, #add-pattern {
     flex: 1;
 }
 
@@ -374,7 +374,7 @@ input[type=text], input[type=password] {
     background-image:url('/static/icons/editExpand.png');
 }
 
-.editTitle.button {
+.editTitle.button, .editPattern.button {
     background-image:url('/static/icons/rename.png');
 }
 
@@ -409,7 +409,7 @@ input[type=text], input[type=password] {
     width:0px;
 }
 
-.rename.button {
+.rename.button, .setPattern.button {
     margin-top:0px;
     background-image:url('/static/icons/save.png');
 }

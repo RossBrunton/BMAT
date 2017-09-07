@@ -2,8 +2,8 @@
 <div class='autotag box block {{ colour }}' data-id='{{ at.pk }}' data-taggable-type='autotag'>
     <div class='head'>
         <input type='checkbox' class='multiTagCheck{% if automulti %} multiTagCheckVisible{% endif %}'/>
-        <div class='title noedit'><span class='nolink'>{{ at.pattern }}</span></div>
-        <div class='title edit'>
+        <div class='pattern noedit'><span class='nolink'>{{ at.pattern }}</span></div>
+        <div class='pattern edit'>
             <form class='setPatternForm' method='POST' action='{% url "autotags:setPattern" autotag=at.id %}'>
                 {% csrf_token %}
                 <input class='setPatternEntry' name='pattern' type='text' value='{{ at.pattern }}'/>
