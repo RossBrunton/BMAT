@@ -47,6 +47,9 @@ def add(request):
     
     pattern = request.POST["pattern"]
     
+    if not pattern:
+        return HttpResponse('{"error":"Pattern must not be blank"}', content_type="application/json", status=422)
+    
     at = Autotag(owner=request.user, pattern=pattern)
     
     at.save()
