@@ -124,7 +124,7 @@ def html(request, autotag):
     
     This uses the templatetag autotagTag to render the provided bookmark.
     """
-    at = get_object_or_404(Autotag, pk=bookmark, owner=request.user)
+    at = get_object_or_404(Autotag, pk=autotag, owner=request.user)
     
     return TemplateResponse(
         request, "autotags/autotag.html", 
@@ -146,7 +146,7 @@ def setPattern(request, autotag):
     """
     atObj = get_object_or_404(Autotag, owner=request.user, pk=autotag)
     
-    form = AutotagSetPatternForm(request.user, request.POST, instance=atObj)
+    form = AutotagSetPatternForm(request.POST, instance=atObj)
     
     if not form.is_valid():
         e = list(form.errors.keys())[0]+": "+list(form.errors.values())[0][0]

@@ -6,7 +6,7 @@
         <div class='title edit'>
             <form class='setPatternForm' method='POST' action='{% url "autotags:setPattern" autotag=at.id %}'>
                 {% csrf_token %}
-                <input class='setPatternEntry' name='title' type='text' value='{{ at.pattern }}'/>
+                <input class='setPatternEntry' name='pattern' type='text' value='{{ at.pattern }}'/>
             </form>
         </div>
         
@@ -32,8 +32,8 @@
         </div>
         
         <div class='rightIfMobile buttons'>
-            <a class='editTitle button noedit' title='Edit'>&nbsp;&nbsp;&nbsp;</a>
-            <a class='rename button edit' style='display:none' title='Save'>&nbsp;</a>
+            <a class='editPattern button noedit' title='Edit'>&nbsp;&nbsp;&nbsp;</a>
+            <a class='setPattern button edit' style='display:none' title='Save'>&nbsp;</a>
             
             <form action='{% url "autotags:delete" %}' method='POST' class='deleteForm'
                 data-undo-url='{% url "autotags:create" %}'

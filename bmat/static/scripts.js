@@ -101,10 +101,10 @@ window.bmatFn = function() {
             e.preventDefault();
             var elem = this;
             
-            var bookmark = $(this).parents(".block").data("id");
+            var taggable = $(this).parents(".block").data("id");
             
             $.post(this.getAttribute("action"), $(this).serialize(), function(data) {
-                _replace(bookmark, $(elem).parents(".block").data("taggable-type"), false);
+                _replace(taggable, $(elem).parents(".block").data("taggable-type"), false);
             }, "json");
             
             _disableForm(this);
@@ -159,7 +159,7 @@ window.bmatFn = function() {
             $(e).removeClass("editing");
         };
         
-        $(".editTitle").on("click", function(e) {
+        $(".editTitle, .editPattern").on("click", function(e) {
             var block = $(this).parents(".block");
             
             if(!block.hasClass("editing")) {
@@ -175,7 +175,12 @@ window.bmatFn = function() {
             form.submit();
             _disableForm(form);
         });
-        $("form.tagForm, form.renameForm").on("submit", function(e) {
+        $(".setPattern.button").on("click", function() {
+            var form = $(this).parents(".block").find(".setPatternForm");
+            form.submit();
+            _disableForm(form);
+        });
+        $("form.tagForm, form.renameForm, form.setPatternForm").on("submit", function(e) {
             e.preventDefault();
             var elem = this;
             
@@ -216,6 +221,9 @@ window.bmatFn = function() {
         $(".rename.button").off();
         $("form.renameForm").off();
         
+        $(".setPattern.button").off();
+        $("form.setPatternForm").off();
+        
         $(".editTitle").off();
     };
     
@@ -227,6 +235,14 @@ window.bmatFn = function() {
         }, "text");
     };
     
+    // And ditto for autotags
+    var _prependAutotag = function(id) {
+        $.get("/autotags/"+id+"/html", function(e) {
+            $("#autotag-list").prepend(e);
+            _update();
+        }, "text");
+    };
+    
     
     // Given an id and a type, downloads a new version of the specific block and replaces them
     var _replace = function(id, type, callback, slide, newid) {
@@ -234,6 +250,7 @@ window.bmatFn = function() {
         var url = "";
         if(type == "tag") url = "/tags/htmlBlock/" + newid;
         if(type == "bookmark") url = "/bookmarks/" + newid + "/html";
+        if(type == "autotag") url = "/autotags/" + newid + "/html";
         
         var displayMultiCheck = $(".block[data-id="+id+"] .multiTagCheck").css("width") == "16px";
         var multiChecked = $(".block[data-id="+id+"] .multiTagCheck:checked").length > 0;
@@ -246,7 +263,8 @@ window.bmatFn = function() {
                 $(".block[data-id="+id+"][data-taggable-type="+type+"] .expand.button").addClass("open");
                 $(".block[data-id="+id+"][data-taggable-type="+type+"] .inlineUntag")
                     .css("width", "16px").css("display", "inline-block");
-                $(".block[data-id="+id+"][data-taggable-type="+type+"] input")[0].focus();
+                if($(".block[data-id="+id+"][data-taggable-type="+type+"] input")[0])
+                    $(".block[data-id="+id+"][data-taggable-type="+type+"] input")[0].focus();
             }
             if(slide) {
                 $(".block[data-id="+newid+"][data-taggable-type="+type+"]").css("display", "none");
@@ -274,6 +292,15 @@ window.bmatFn = function() {
             $.post("/bookmarks/add", $(this).serialize(), function(e) {
                 _prependBookmark(e.id);
                 $("#add-bookmark > input[name=url]")[0].value = "";
+            }, "json");
+        });
+        
+        // Autotag pattern adding
+        $("#add-pattern").on("submit", function(e) {
+            e.preventDefault();
+            $.post("/autotags/add", $(this).serialize(), function(e) {
+                _prependAutotag(e.id);
+                $("#add-pattern > input[name=pattern]")[0].value = "";
             }, "json");
         });
         
