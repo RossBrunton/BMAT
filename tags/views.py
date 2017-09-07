@@ -230,8 +230,9 @@ def htmlBlock(request, tag):
 def rename(request, tag):
     """ Renames a tag using a RenameTagForm
     
-    If successfull, outputs a JSON object with "obj" and "type" properties. "obj" is the JSON object of the tag that was
-    renamed, while "type" will always be "tag".
+    If successfull, outputs a JSON object with "obj", "type" and "pooled" properties. "obj" is the JSON object of the
+    tag that was renamed, while "type" will always be "tag". pooled is true when the tag has been renamed to that of an
+    existing tag, in which case "obj" will be that tag. 
     
     If it fails, a JSON object with an "error" value will be returned.
     """
@@ -242,16 +243,19 @@ def rename(request, tag):
     if not form.is_valid():
         return HttpResponse('{"error":"Form invalid"}', content_type="application/json", status=422)
     
-    try:
+    if Tag.objects.filter(owner=request.user, slug=makeslug(form.data["name"])).exclude(pk=form.instance.pk).exists():
+        # Tag exists, pool them
         existing = Tag.objects.get(owner=request.user, slug=makeslug(form.data["name"]))
-        if existing.pk != form.instance.pk:
-            return HttpResponse('{"error":"Tag already exists"}', content_type="application/json", status=422)
-    except Tag.DoesNotExist:
-        pass
+        form.instance.pool_into(existing)
+        form.instance.delete()
+        tagObj = existing
+        pooled = "true"
+    else:
+        form.save()
+        pooled = "false"
     
-    form.save()
-    
-    return HttpResponse('{"obj":'+tagObj.to_json()+', "type":"tag"}', content_type="application/json")
+    return HttpResponse('{"obj":'+tagObj.to_json()+', "type":"tag", "pooled":'+pooled+'}',
+        content_type="application/json")
 
 
 @login_required

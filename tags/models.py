@@ -11,6 +11,7 @@ from django.db import transaction, IntegrityError
 
 import tags
 from tags import makeslug
+from . import taggables
 
 import json
 import six
@@ -163,6 +164,15 @@ class Tag(Taggable):
         self.slug = makeslug(self.name)
         
         super(Taggable, self).save(*args, **kwargs)
+    
+    def pool_into(self, target):
+        """ Puts everything to do with this tag into a new tag
+        
+        Specifically, everything tagged with this tag gets tagged with the new tag
+        """
+        for taggable in taggables().values():
+            for t in taggable.by_user(self.owner).filter(tags=self):
+                t.tag(target)
     
     @staticmethod
     def from_undoable(jsonData, user):

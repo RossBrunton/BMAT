@@ -196,7 +196,7 @@ window.bmatFn = function() {
                     if(focus) {
                         $(node).find("input[name=name]").focus();
                     }
-                });
+                }, false, data.obj.id);
             }, "json");
         });
         
