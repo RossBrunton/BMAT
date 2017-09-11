@@ -1,0 +1,25 @@
+{
+    "manifest_version": 2,
+
+    "name": "BMAT",
+    "description": "Add bookmarks to BMAT at the click of a button.",
+    "version": "2.0",
+
+    "browser_action": {
+        "default_icon": "popup.png",
+        "default_popup": "popup.html"
+    },
+
+    "permissions": [
+        "cookies",
+        "webRequest",
+        "webRequestBlocking",
+        "activeTab",
+        "*://127.0.0.1/*"
+    ],
+
+    "background":{
+        "scripts":["background.js"],
+        "persistent":true
+    }
+}

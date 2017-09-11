@@ -20,6 +20,7 @@ import json
 import requests
 
 from datetime import datetime
+import six
 
 _DT_FORMAT = "%a, %d %b %Y %H:%M:%S +0000"
 
@@ -144,6 +145,8 @@ class Bookmark(Taggable):
         """ Given the JSON representation of the bookmark, creates one for it
         
         Note that this SAVES the object to the database.
+        
+        If the "added" property of the object is absent, one will be created with the current date.
         """
         obj = json.loads(jsonData)
         

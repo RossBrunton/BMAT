@@ -1,0 +1,36 @@
+body {
+    width:300px;
+    background:#f8f8f8;
+    color:#222222;
+}
+
+section {
+    display:none;
+}
+
+#submitForm {
+    padding:20px;
+}
+
+#submitForm * {
+    width:100%;
+    margin-bottom:10px;
+}
+
+#submitForm input {
+    width:100%;
+}
+
+#submitForm input[type=submit] {
+    height:50px;
+}
+
+#submitForm label {
+    display:block;
+    margin-bottom:5px;
+}
+
+hr {
+    border:none;
+    border-bottom:1px solid #dddddd;
+}

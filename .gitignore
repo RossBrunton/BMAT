@@ -12,3 +12,5 @@ __pycache__
 /db.cnf
 /bmat/settings_local.py
 lib
+/extension/chrome.crx
+/extension/chrome.pem
