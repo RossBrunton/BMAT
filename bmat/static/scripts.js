@@ -58,7 +58,7 @@ window.bmatFn = function() {
     // And the undo thing
     var _displayUndo = function(message, url, payload, callback) {
         $("#undo .undoText").html(message);
-        $("#undo").slideDown();
+        $("#undo").stop().slideDown();
         
         $("#undoForm [name=obj]").val(JSON.stringify(payload));
         $("#undoForm").attr("action", url);
@@ -85,7 +85,7 @@ window.bmatFn = function() {
             
             $.post(elem.attr("action"), elem.serialize(), function(data) {
                 if(data.deleted !== null) {
-                    elem.parents(".block").slideUp();
+                    elem.parents(".block").stop().slideUp();
                     
                     _displayUndo("Object deleted", elem.attr("data-undo-url"), data.obj, function(dat) {
                         _replace(id, dat.type, false, true, dat.id);
@@ -114,13 +114,13 @@ window.bmatFn = function() {
         // Open/close button
         var _expand = function() {
             if($(this).hasClass("open")) {
-                $(this).parents(".block").children(".body").slideUp("fast");
-                $(this).parents(".block").find(".inlineUntag").animate({"width":"0px"}, "fast");
+                $(this).parents(".block").children(".body").stop().slideUp("fast");
+                $(this).parents(".block").find(".inlineUntag").stop().animate({"width":"0px"}, "fast");
                 $(this).removeClass("open");
                 _hideEditing($(this).parents(".block"));
             }else{
-                $(this).parents(".block").children(".body").slideDown("fast");
-                $(this).parents(".block").find(".inlineUntag").animate({"width":"16px"}, "fast");
+                $(this).parents(".block").children(".body").stop().slideDown("fast");
+                $(this).parents(".block").find(".inlineUntag").stop().animate({"width":"16px"}, "fast");
                 $(this).addClass("open");
             }
         };
@@ -196,7 +196,7 @@ window.bmatFn = function() {
                     if(focus) {
                         $(node).find("input[name=name]").focus();
                     }
-                });
+                }, false, data.obj.id);
             }, "json");
         });
         
@@ -268,7 +268,7 @@ window.bmatFn = function() {
             }
             if(slide) {
                 $(".block[data-id="+newid+"][data-taggable-type="+type+"]").css("display", "none");
-                $(".block[data-id="+newid+"][data-taggable-type="+type+"]").slideDown();
+                $(".block[data-id="+newid+"][data-taggable-type="+type+"]").stop().slideDown();
             }
             
             if(displayMultiCheck) {
@@ -306,26 +306,26 @@ window.bmatFn = function() {
         
         // Error closing
         $("#error .close.button").on("click", function(e) {
-            $(this).parents("#error").slideUp();
+            $(this).parents("#error").stop().slideUp();
         });
         
         // Multitag expand
         $(".multiTag.button").on("click", function(e) {
             if($(this).hasClass("open")) {
                 $(this).removeClass("open");
-                $(".multiTagCheck").animate({
+                $(".multiTagCheck").stop().animate({
                     width:"0px", minWidth:"0px", marginRight:"0px", marginLeft:"0px"}, 350, "swing",
                     function() {
                         $(".multiTagCheck").hide();
                     }
                 );
-                $(".multiTagBox").slideUp();
+                $(".multiTagBox").stop().slideUp();
             }else{
                 $(this).addClass("open");
-                $(".multiTagCheck").show().animate({width:"16px", minWidth:"16px", marginRight:"5px", marginLeft:"5px"},
+                $(".multiTagCheck").stop().show().animate({width:"16px", minWidth:"16px", marginRight:"5px", marginLeft:"5px"},
                     350
                 );
-                $(".multiTagBox").slideDown();
+                $(".multiTagBox").stop().slideDown();
             }
         });
         
@@ -364,11 +364,11 @@ window.bmatFn = function() {
             
             _disableForm(elem);
             
-            $("#undo").slideUp();
+            $("#undo").stop().slideUp();
         });
         
         $("#undo .close.button").on("click", function(e) {
-            $(this).parents("#undo").slideUp();
+            $(this).parents("#undo").stop().slideUp();
         });
         
         // And handle the pinning form

@@ -12,7 +12,7 @@ from django.core.urlresolvers import reverse
 
 from django.conf import settings
 from bookmarks.models import Bookmark
-from users.forms import ImportForm, CustomUserCreationForm, SettingsForm
+from users.forms import ImportForm, CustomUserCreationForm, SettingsForm, EmailForm
 from users import clean_trial, make_trial_user
 
 import random
@@ -55,6 +55,7 @@ def home(request, note=""):
     ctx["area"] = "user"
     ctx["importForm"] = ImportForm()
     ctx["pass_form"] = PasswordChangeForm(request.user)
+    ctx["email_form"] = EmailForm(instance=request.user)
     ctx["settings_form"] = form
     ctx["note"] = note
     
@@ -82,10 +83,35 @@ def pass_change(request):
     ctx["area"] = "user"
     ctx["importForm"] = ImportForm()
     ctx["pass_form"] = form
+    ctx["email_form"] = EmailForm(instance=request.user)
     ctx["settings_form"] = SettingsForm(instance=request.user.settings)
     
     return TemplateResponse(request, "users/index.html", ctx)
 
+@login_required
+def email_change(request):
+    """ The email change page
+    
+    If you pass it an EmailForm, it will save it, and display a message. If it fails, it renders the users home page.
+    """
+    if request.method == "POST":
+        form = EmailForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return home(request, "Email Changed Successfully")
+    
+    else:
+        form = EmailForm(instance=request.user)
+    
+    ctx = {}
+    
+    ctx["area"] = "user"
+    ctx["importForm"] = ImportForm()
+    ctx["pass_form"] = PasswordChangeForm(request.user)
+    ctx["email_form"] = form
+    ctx["settings_form"] = SettingsForm(instance=request.user.settings)
+    
+    return TemplateResponse(request, "users/index.html", ctx)
 
 @require_POST
 @login_required

@@ -6,16 +6,18 @@
 {% block content %}
 
 {% if note %}
-<div class='box'>
+<div class='box center yellow'>
     {{ note }}
 </div>
 {% endif %}
 
+<div class='settings'>
+<section class='settings-section'>
 <div class='box title'>
     Account Settings
 </div>
 
-<div class='box'>
+<div class='box center'>
     You are logged in as {{ user.username }}.<br/>
     <form action='{% url "user:logout" %}' method='POST'>
         {% csrf_token %}
@@ -25,39 +27,61 @@
 
 {% if not user.settings.is_trial %}
     {% form_errors pass_form %}
-    <div class='box'>
+    <div class='box center'>
         <form method='POST' action='{% url "user:pass_change" %}'>
             {% csrf_token %}
-            Change Password:<br/>
-            <label>Old Password: {{ pass_form.old_password }}</label><br/>
-            <label>New Password: {{ pass_form.new_password1 }}</label><br/>
-            <label>Type it Again: {{ pass_form.new_password2 }}</label><br/>
+            Change Password<br/><br/>
+            <label>Old Password<br/>
+                {{ pass_form.old_password }}</label><br/>
+            <label>New Password<br/>
+                {{ pass_form.new_password1 }}</label><br/>
+            <label>Type it Again<br/>
+                {{ pass_form.new_password2 }}</label><br/>
+            <br/>
             <input type='submit' value='Change Password'/>
         </form>
     </div>
+    
+    {% form_errors email_form %}
+    <div class='box center'>
+        <form method='POST' action='{% url "user:email_change" %}'>
+            {% csrf_token %}
+            Here you can set or change an email for use when sending password reset emails<br/><br/>
+            <label>Email<br/>
+                {{ email_form.email }}</label><br/>
+            <br/>
+            <input type='submit' value='Change Email'/>
+        </form>
+    </div>
 {% endif %}
+</section>
 
+<section class='settings-section'>
 <div class='box title'>
     Site Settings
 </div>
 
 {% form_errors settings_form %}
-<div class='box'>
+<div class='box center'>
     <form method='POST' action='{% url "user:home" %}'>
         {% csrf_token %}
-        <label>Theme: {{ settings_form.theme }}</label><br/>
-        <label>Invalid URL Handling: {{ settings_form.url_settings }}</label><br/>
+        <label>Theme<br/>
+            {{ settings_form.theme }}</label><br/>
+        <label>Invalid URL Handling<br/>
+            {{ settings_form.url_settings }}</label><br/><br/>
         <label>{{ settings_form.no_analytics }} Opt out of anonymous usage tracking</label><br/>
-        <label>{{ settings_form.hide_settings }} Hide settings button on navbar; you can access it from the bottom of the page
-        </label><br/>
+        <label>{{ settings_form.hide_settings }} Hide settings button on navbar (you can access it from the bottom of the page)
+        </label><br/><br/>
         <input type='submit' value='Update Settings'/>
     </form>
 </div>
 
-<div class='box'>
+<div class='box center'>
     You can automatically set up rules that automatically tag newly added bookmarks.<br/><br/>
     
     <button><a href='{% url "autotags:home" %}' style='color:inherit'>Configure Autotag Settings</a></button>
+</div>
+</section>
 </div>
 
 <div class='box title'>
@@ -65,7 +89,7 @@
 </div>
 
 {% form_errors importForm %}
-<div class='box'>
+<div class='box center'>
     This allows you to import bookmarks from another application or browser. When exporting from them, you should be
     given a &quot;html&quot; file, simply select that file here and click import.<br/><br/>
     
@@ -75,13 +99,13 @@
     
     <form enctype='multipart/form-data' action='{% url "user:import" %}' method='POST'>
         {% csrf_token %}
-        <label>{{ importForm.use_tags }} Include Tags</label><br/>
         {{ importForm.file }}<br/>
+        <label>{{ importForm.use_tags }} Include Tags</label><br/><br/>
         <input type='submit' value='Import Bookmarks From HTML'/>
     </form>
 </div>
 
-<div class='box'>
+<div class='box center'>
     You can export your bookmarks here by clicking the button below and saving the page. The saved file can then be
     imported into other browsers or applications.<br/><br/>
     

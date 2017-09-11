@@ -209,7 +209,7 @@ nav a:hover {
     width:100%;
 }
 
-input[type=text], input[type=password] {
+input[type=text], input[type=password], input[type=email] {
     background-color:inherit;
     font-size:100%;
     font-style:inherit;
@@ -280,6 +280,11 @@ input[type=text], input[type=password] {
 .box.title {
     font-size:120%;
     margin-top:20px;
+    text-align:center;
+}
+
+.center {
+    text-align:center;
 }
 
 #add-bookmark input[type=submit], #add-pattern input[type=submit], {
@@ -318,6 +323,18 @@ input[type=text], input[type=password] {
     display:none;
 }
 
+/*
+ * Settings
+ */
+.settings {
+    display:flex;
+    flex-direction:row;
+    flex-wrap:nowrap;
+}
+
+.settings section {
+    flex: 1 1 0;
+}
 
 /*
  * Tags
@@ -466,6 +483,10 @@ input[type=text], input[type=password] {
         display:-webkit-flex;
         display:flex;
         margin-left:auto;
+    }
+    
+    .settings {
+        display:block;
     }
 }
 
