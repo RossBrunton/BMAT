@@ -34,7 +34,7 @@ chrome.runtime.onMessage.addListener(([type, data], sender) => {
                         "Content-type": "application/x-www-form-urlencoded; charset=UTF-8",
                         "X-CSRFToken": token
                     },
-                    body:"obj=" + toSub,
+                    body:"obj=" + encodeURIComponent(toSub),
                     credentials:"include"
                 }).then(function(res) {
                     intercept = false;
