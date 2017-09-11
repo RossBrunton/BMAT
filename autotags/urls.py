@@ -16,6 +16,7 @@ urlpatterns = patterns("",
     url(r'^add$', "autotags.views.add", name="add"),
     url(r'^delete$', "autotags.views.delete", name="delete"),
     url(r'^create$', "autotags.views.create", name="create"),
+    url(r'^check$', "autotags.views.check", name="check"),
     
     url(r'^(?P<autotag>[0-9]+)/html$', "autotags.views.html", name="html"),
     url(r'^(?P<autotag>[0-9]+)/setPattern$', "autotags.views.setPattern", name="setPattern"),

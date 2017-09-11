@@ -2,6 +2,7 @@
 
 const DOMAIN = "http://127.0.0.1:8000"
 const SUBMIT_URL = DOMAIN + "/bookmarks/create";
+const CHECK_URL = DOMAIN + "/autotags/check";
 const REFER_VALUE = DOMAIN + "/.chrome_extension";
 
 let intercept = false;
@@ -19,7 +20,7 @@ chrome.webRequest.onBeforeSendHeaders.addListener((r) => {
     if(!intercept) return;
     r.requestHeaders.push({"name":"Referer", "value":REFER_VALUE});
     return {requestHeaders: r.requestHeaders};
-}, {"urls":[SUBMIT_URL]}, ["blocking", "requestHeaders"]);
+}, {"urls":[SUBMIT_URL, CHECK_URL]}, ["blocking", "requestHeaders"]);
 
 chrome.runtime.onMessage.addListener(([type, data], sender) => {
     switch(type) {
@@ -41,5 +42,25 @@ chrome.runtime.onMessage.addListener(([type, data], sender) => {
                     chrome.runtime.sendMessage(["submitDone", res.ok]);
                 });
             });
+            break;
+        
+        case "check":
+            // Check to see what tags to autotag
+            getCsrf((token) => {
+                fetch(CHECK_URL, {
+                    "method":"POST", headers: {  
+                        "Content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+                        "X-CSRFToken": token
+                    },
+                    body:"url=" + encodeURIComponent(data),
+                    credentials:"include"
+                }).then(function(res) {
+                    intercept = false;
+                    res.json().then((json) => {
+                        chrome.runtime.sendMessage(["checkDone", json.results]);
+                    });
+                });
+            });
+            break;
     }
 });

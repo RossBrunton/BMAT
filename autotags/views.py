@@ -120,6 +120,26 @@ def delete(request):
         content_type="application/json"
     )
 
+@login_required
+@require_POST
+def check(request):
+    """ Returns a JSON array of all the tags that match the url going by autotag settings
+    
+    Accepts a singe POST parameter: `url`, which is the url to check against
+    
+    This returns a JSON object with the following properties:
+    results: An array of matching tags, as strings.
+    
+    If it encounters an error, an error property is set on the return object instead of results.
+    """
+    if "url" not in request.POST:
+        raise SuspiciousOperation
+    
+    results = Autotag.check_url(request.user, request.POST["url"])
+    
+    results = map(lambda t: t.name, results)
+    
+    return HttpResponse(json.dumps({"results":results}), content_type="application/json")
 
 @login_required
 def html(request, autotag):

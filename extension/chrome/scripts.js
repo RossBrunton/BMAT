@@ -29,6 +29,13 @@ chrome.runtime.onMessage.addListener(([type, data], sender) => {
                 switchSection("fail");
                 setTimeout(() => switchSection("submit"), WAIT_TIME);
             }
+            break;
+        
+        case "checkDone":
+            // We have checked and got the list of tags
+            document.getElementById("tags").value = data.join(", ");
+            document.getElementById("tags").disabled = false;
+            break;
     }
 });
 
@@ -62,9 +69,11 @@ chrome.cookies.get({"url":DOMAIN, "name":"sessionid"}, (c) => {
             url = t.url;
             form.title.value = t.title;
             
+            switchSection("submit");
+            
             form.title.focus();
             
-            switchSection("submit");
+            chrome.runtime.sendMessage(["check", url]);
         });
     }
 });
