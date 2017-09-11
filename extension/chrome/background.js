@@ -27,9 +27,9 @@ chrome.runtime.onMessage.addListener(([type, data], sender) => {
         case "submit":
             // A bookmark is to be submitted
             let toSub = JSON.stringify(data);
-            intercept = true;
             
             getCsrf((token) => {
+                intercept = true;
                 fetch(SUBMIT_URL, {
                     "method":"POST", headers: {  
                         "Content-type": "application/x-www-form-urlencoded; charset=UTF-8",
@@ -47,6 +47,7 @@ chrome.runtime.onMessage.addListener(([type, data], sender) => {
         case "check":
             // Check to see what tags to autotag
             getCsrf((token) => {
+                intercept = true;
                 fetch(CHECK_URL, {
                     "method":"POST", headers: {  
                         "Content-type": "application/x-www-form-urlencoded; charset=UTF-8",
