@@ -175,11 +175,8 @@ class Bookmark(Taggable):
         Basically, loops through them all and if their pattern matches, it applies all the tags.
         """
         #TODO: Should see if I should do this in the database
-        url = self.url.lower()
-        for at in Autotag.by_user(self.owner):
-            if at.pattern.lower() in url:
-                for t in at.tags.all():
-                    self.tag(t)
+        for t in Autotag.check_url(self.owner, self.url):
+            self.tag(t)
     
     @staticmethod
     def by_user(user):

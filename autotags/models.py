@@ -98,6 +98,22 @@ class Autotag(Taggable):
         return at
     
     @staticmethod
+    def check_url(user, url):
+        """ Loops through all the autotag instances owned by the user, and returns a list of tags that apply
+        """
+        #TODO: Should see if I should do this in the database
+        url = url.lower()
+        
+        out = []
+        
+        for at in Autotag.by_user(user):
+            if at.pattern.lower() in url:
+                for t in at.tags.all():
+                    out.append(t)
+        
+        return out
+    
+    @staticmethod
     def by_user(user):
         """ Get all the autotags owned by a given user """
         return Autotag.objects.all().filter(owner=user)
