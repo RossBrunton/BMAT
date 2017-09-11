@@ -20,6 +20,7 @@ import json
 import requests
 
 from datetime import datetime
+import six
 
 _DT_FORMAT = "%a, %d %b %Y %H:%M:%S +0000"
 
