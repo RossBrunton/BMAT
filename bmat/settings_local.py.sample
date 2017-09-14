@@ -8,7 +8,6 @@ See https://docs.djangoproject.com/en/1.8/ref/settings/ for details on settings.
 """
 
 DEBUG = True
-TEMPLATE_DEBUG = True
 
 # Should new users be allowed to register?
 BMAT_ALLOW_REGISTER = True

@@ -10,14 +10,15 @@ URLs are:
 """
 
 from django.conf.urls import patterns, url
+import autotags.views as views
 
-urlpatterns = patterns("",
-    url(r'^$', "autotags.views.home", name="home"),
-    url(r'^add$', "autotags.views.add", name="add"),
-    url(r'^delete$', "autotags.views.delete", name="delete"),
-    url(r'^create$', "autotags.views.create", name="create"),
-    url(r'^check$', "autotags.views.check", name="check"),
+urlpatterns = [
+    url(r'^$', views.home, name="home"),
+    url(r'^add$', views.add, name="add"),
+    url(r'^delete$', views.delete, name="delete"),
+    url(r'^create$', views.create, name="create"),
+    url(r'^check$', views.check, name="check"),
     
-    url(r'^(?P<autotag>[0-9]+)/html$', "autotags.views.html", name="html"),
-    url(r'^(?P<autotag>[0-9]+)/setPattern$', "autotags.views.setPattern", name="setPattern"),
-)
+    url(r'^(?P<autotag>[0-9]+)/html$', views.html, name="html"),
+    url(r'^(?P<autotag>[0-9]+)/setPattern$', views.setPattern, name="setPattern"),
+]

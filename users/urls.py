@@ -19,19 +19,20 @@ from django.contrib.auth.views import\
     password_reset, password_reset_done, password_reset_confirm, password_reset_complete
 from django.core.urlresolvers import reverse
 
+import users.views as views
 
-urlpatterns = patterns("",
-    url(r"^$", "users.views.home", name="home"),
-    url(r"^import$", "users.views.importFile", name="import"),
-    url(r"^pass_change$", "users.views.pass_change", name="pass_change"),
-    url(r"^email_change$", "users.views.email_change", name="email_change"),
+urlpatterns = [
+    url(r"^$", views.home, name="home"),
+    url(r"^import$", views.importFile, name="import"),
+    url(r"^pass_change$", views.pass_change, name="pass_change"),
+    url(r"^email_change$", views.email_change, name="email_change"),
     
-    url(r"^logout$", "users.views.logout", name="logout"),
-    url(r"^login$", "users.views.login", name="login"),
-    url(r"^register$", "users.views.register", name="register"),
+    url(r"^logout$", views.logout, name="logout"),
+    url(r"^login$", views.login, name="login"),
+    url(r"^register$", views.register, name="register"),
     
-    url(r"^make_trial$", "users.views.make_trial", name="make_trial"),
-    url(r"^upgrade$", "users.views.upgrade", name="upgrade"),
+    url(r"^make_trial$", views.make_trial, name="make_trial"),
+    url(r"^upgrade$", views.upgrade, name="upgrade"),
     
     url(r"^reset$", password_reset,\
         {'template_name': "users/reset.html", "post_reset_redirect":"/user/resetDone",\
@@ -47,4 +48,4 @@ urlpatterns = patterns("",
     url(r"^resetComplete$", password_reset_complete, {'template_name': "users/reset_complete.html"},
         name="resetComplete",
     )
-)
+]

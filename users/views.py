@@ -13,7 +13,7 @@ from django.core.urlresolvers import reverse
 from django.conf import settings
 from bookmarks.models import Bookmark
 from users.forms import ImportForm, CustomUserCreationForm, SettingsForm, EmailForm
-from users import clean_trial, make_trial_user
+from users.utils import clean_trial, make_trial_user
 
 import random
 import string

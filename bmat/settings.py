@@ -3,7 +3,6 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 DEBUG = False
-TEMPLATE_DEBUG = False
 
 # Application definition
 
@@ -14,12 +13,12 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'bmat',
-    'users',
-    'bookmarks',
-    'tags',
-    'search',
-    'autotags'
+    'bmat.apps.BmatConfig',
+    'users.apps.UsersConfig',
+    'bookmarks.apps.BookmarksConfig',
+    'tags.apps.TagsConfig',
+    'search.apps.SearchConfig',
+    'autotags.apps.AutotagsConfig'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -31,20 +30,28 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-# Template processors
-TEMPLATE_CONTEXT_PROCESSORS = (
-    "django.contrib.auth.context_processors.auth",
-    "django.core.context_processors.debug",
-    "django.core.context_processors.i18n",
-    "django.core.context_processors.media",
-    "django.core.context_processors.static",
-    "django.core.context_processors.tz",
-    "django.contrib.messages.context_processors.messages",
-    "users.context_processors.theme",
-    "bmat.context_processors.analytics_and_ads",
-    "tags.context_processors.pinned_tags",
-    "bmat.context_processors.add_webstore_url",
-)
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                "django.contrib.auth.context_processors.auth",
+                "django.core.context_processors.debug",
+                "django.core.context_processors.i18n",
+                "django.core.context_processors.media",
+                "django.core.context_processors.static",
+                "django.core.context_processors.tz",
+                "django.contrib.messages.context_processors.messages",
+                "users.context_processors.theme",
+                "bmat.context_processors.analytics_and_ads",
+                "tags.context_processors.pinned_tags",
+                "bmat.context_processors.add_webstore_url",
+            ]
+        }
+    },
+]
+
 
 ROOT_URLCONF = 'bmat.urls'
 WSGI_APPLICATION = 'bmat.wsgi.application'

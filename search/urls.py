@@ -7,8 +7,9 @@ URLs are:
 """
 
 from django.conf.urls import patterns, url
+import search.views as views
 
-urlpatterns = patterns("",
-    url(r'^$', "search.views.home", name="home"),
-    url(r'^results$', "search.views.results", name="results"),
-)
+urlpatterns = [
+    url(r'^$', views.home, name="home"),
+    url(r'^results$', views.results, name="results"),
+]
