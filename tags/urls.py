@@ -12,7 +12,7 @@ URLs are:
 
 """
 
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 import tags.views as views
 
 urlpatterns = [
