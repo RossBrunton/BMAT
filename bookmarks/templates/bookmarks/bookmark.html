@@ -40,7 +40,7 @@
             <a class='rename button edit' style='display:none' title='Save'>&nbsp;</a>
             
             <form action='{% url "bookmarks:delete" %}' method='POST' class='deleteForm'
-                data-undo-url='{% url "bookmarks:create" %}'
+                data-undo-url='{% url "bookmarks:create" %}' data-undo-name='Bookmark'
             >
                 {% csrf_token %}
                 <input type='hidden' name='bookmark' value='{{ bm.pk }}'/>

@@ -86,8 +86,9 @@ window.bmatFn = function() {
             $.post(elem.attr("action"), elem.serialize(), function(data) {
                 if(data.deleted !== null) {
                     elem.parents(".block").stop().slideUp();
+                    var name = elem.attr("data-undo-name");
                     
-                    _displayUndo("Object deleted", elem.attr("data-undo-url"), data.obj, function(dat) {
+                    _displayUndo(name + " deleted", elem.attr("data-undo-url"), data.obj, function(dat) {
                         _replace(id, dat.type, false, true, dat.id);
                     });
                 }

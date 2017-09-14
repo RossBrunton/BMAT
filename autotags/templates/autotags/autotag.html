@@ -36,7 +36,7 @@
             <a class='setPattern button edit' style='display:none' title='Save'>&nbsp;</a>
             
             <form action='{% url "autotags:delete" %}' method='POST' class='deleteForm'
-                data-undo-url='{% url "autotags:create" %}'
+                data-undo-url='{% url "autotags:create" %}' data-undo-name='Autotag rule'
             >
                 {% csrf_token %}
                 <input type='hidden' name='autotag' value='{{ at.pk }}'/>

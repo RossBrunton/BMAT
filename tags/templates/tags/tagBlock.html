@@ -37,7 +37,7 @@ data-taggable-type='tag'>
             <a class='editTitle button noedit' title='Edit'>&nbsp;</a>
             
             <form action='{% url "tags:delete" %}' method='POST' class='deleteForm'
-                data-undo-url='{% url "tags:restore" %}'
+                data-undo-url='{% url "tags:restore" %}' data-undo-name='Tag'
             >
                 {% csrf_token %}
                 <input type='hidden' name='tag' value='{{ tag.pk }}'/>
