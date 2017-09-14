@@ -5,7 +5,8 @@ from django.db import models
 from django.template import defaultfilters
 from django.core.validators import URLValidator
 from django.core.exceptions import ValidationError
-from django.utils.timezone import UTC, make_aware
+from django.utils.timezone import make_aware
+from pytz import utc
 
 from tags.models import Tag, Taggable
 from tags import taggable
@@ -124,7 +125,7 @@ class Bookmark(Taggable):
         out["title"] = self.title
         out["url"] = self.url
         out["id"] = self.pk
-        out["added"] = self.added.astimezone(UTC()).strftime(_DT_FORMAT)
+        out["added"] = self.added.astimezone(utc).strftime(_DT_FORMAT)
         out["tags"] = []
         out["valid_url"] = self.valid_url
         
@@ -157,7 +158,7 @@ class Bookmark(Taggable):
         bm.save()
         
         if "added" in obj:
-            bm.added = make_aware(datetime.strptime(obj["added"], _DT_FORMAT), UTC())
+            bm.added = make_aware(datetime.strptime(obj["added"], _DT_FORMAT), utc)
         
         for t in obj["tags"]:
             if isinstance(t, six.string_types):

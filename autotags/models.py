@@ -5,7 +5,8 @@ from django.db import models
 from django.template import defaultfilters
 from django.core.validators import URLValidator
 from django.core.exceptions import ValidationError
-from django.utils.timezone import UTC, make_aware
+from django.utils.timezone import make_aware
+from pytz import utc
 
 from tags.models import Tag, Taggable
 from tags import taggable
@@ -55,7 +56,7 @@ class Autotag(Taggable):
         out = {}
         out["pattern"] = self.pattern
         out["id"] = self.pk
-        out["added"] = self.added.astimezone(UTC()).strftime(_DT_FORMAT)
+        out["added"] = self.added.astimezone(utc).strftime(_DT_FORMAT)
         out["tags"] = []
         
         for t in self.tags.all():
@@ -85,7 +86,7 @@ class Autotag(Taggable):
         at.save()
         
         if "added" in obj:
-            at.added = make_aware(datetime.strptime(obj["added"], _DT_FORMAT), UTC())
+            at.added = make_aware(datetime.strptime(obj["added"], _DT_FORMAT), utc)
         
         for t in obj["tags"]:
             if isinstance(t, six.string_types):

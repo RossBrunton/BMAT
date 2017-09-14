@@ -1,7 +1,7 @@
 """ Provides a few utility functions for working with users """
 from django.contrib.auth.models import User
 from django.core.exceptions import SuspiciousOperation, ValidationError
-from django.utils.timezone import UTC
+from pytz import utc
 
 import random
 from datetime import datetime, timedelta
@@ -36,4 +36,4 @@ def make_trial_user():
 
 def clean_trial():
     """ Deletes trial accounts more than 2 days old """
-    User.objects.filter(date_joined__lt=datetime.now(UTC())-timedelta(days=2), settings__is_trial=True).delete()
+    User.objects.filter(date_joined__lt=datetime.now(utc)-timedelta(days=2), settings__is_trial=True).delete()
