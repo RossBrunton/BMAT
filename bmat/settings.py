@@ -43,6 +43,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "users.context_processors.theme",
     "bmat.context_processors.analytics_and_ads",
     "tags.context_processors.pinned_tags",
+    "bmat.context_processors.add_webstore_url",
 )
 
 ROOT_URLCONF = 'bmat.urls'

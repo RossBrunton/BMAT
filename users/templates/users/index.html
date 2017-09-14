@@ -81,6 +81,14 @@
     
     <button><a href='{% url "autotags:home" %}' style='color:inherit'>Configure Autotag Settings</a></button>
 </div>
+
+{% if webstore_url %}
+<div class='box center hidden chrome-extension'>
+    You can install a browser extension that allows you to add bookmarks directly from a page.<br/><br/>
+    
+    <button id='chrome-extension-install'>BMAT Extension</button>
+</div>
+{% endif %}
 </section>
 </div>
 

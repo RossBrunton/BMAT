@@ -18,3 +18,6 @@ def analytics_and_ads(request):
         out["ad_slot_bottom"] = settings.AD_SLOT_BOTTOM
     
     return out
+
+def add_webstore_url(request):
+    return {"webstore_url":settings.CHROME_EXTENSION_WEBSTORE}

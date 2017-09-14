@@ -5,6 +5,7 @@
         <title>{% block title %}No Title{% endblock %}</title>
         <link rel='stylesheet' href='{% static "styles.css" %}'/>
         <link rel='stylesheet' href='{% static "theme_"|add:theme|add:".css" %}'/>
+        <link rel='chrome-webstore-item' href='{{ webstore_url }}'>
         
         {% if analytics_code %}
             <script>

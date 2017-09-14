@@ -402,6 +402,18 @@ window.bmatFn = function() {
                 }
             }, "html");
         });
+        
+        // Browser detection and specific stuff
+        
+        // Chrome extension
+        if("chrome" in window && "webstore" in window.chrome) {
+            $(".chrome-extension").show();
+            $("#chrome-extension-install").on("click", function() {
+                chrome.webstore.install(undefined, function() {}, function(msg) {
+                    console.error("Extension install failed: %s", msg);
+                });
+            });
+        }
     };
     
     // These two are ran on page load

@@ -37,3 +37,7 @@ ANALYTICS_CODE = ""
 AD_CLIENT = ""
 AD_SLOT_TOP = ""
 AD_SLOT_BOTTOM = ""
+
+# URL of the webstore for the chrome extension (leave blank not to use it)
+# Must be in the form https://chrome.google.com/webstore/detail/appid
+CHROME_EXTENSION_WEBSTORE = "";
