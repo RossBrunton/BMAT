@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load form_errors %}
+{% load form_errors staticfiles %}
 
 {% block title %}{{ user.username }}{% endblock %}
 
@@ -79,7 +79,8 @@
 <div class='box center'>
     You can automatically set up rules that automatically tag newly added bookmarks.<br/><br/>
     
-    <button><a href='{% url "autotags:home" %}' style='color:inherit'>Configure Autotag Settings</a></button>
+    <button onclick='document.location="{% url "autotags:home" %}"' style='color:inherit'>
+        Configure Autotag Settings</button>
 </div>
 
 {% if webstore_url %}
@@ -89,6 +90,12 @@
     <button id='chrome-extension-install'>BMAT Extension</button>
 </div>
 {% endif %}
+
+<div class='box center hidden firefox-extension'>
+    You can install a browser extension that allows you to add bookmarks directly from a page.<br/><br/>
+    
+    <button id='firefox-extension-install' data-path='{% static "/bmat.xpi" %}'>BMAT Extension</button>
+</div>
 </section>
 </div>
 
@@ -117,7 +124,7 @@
     You can export your bookmarks here by clicking the button below and saving the page. The saved file can then be
     imported into other browsers or applications.<br/><br/>
     
-    <button><a href='{% url "bookmarks:export" %}' style='color:inherit'>Export Bookmarks To HTML</a></button>
+    <button onclick='document.location="{% url "bookmarks:export" %}"' style='color:inherit'>Export Bookmarks To HTML</button>
 </div>
 
 {% endblock %}

@@ -1,4 +1,11 @@
 {
+    "applications": {
+        "gecko": {
+            "id": "(Enter ID here)",
+            "strict_min_version": "45.0"
+        }
+    },
+    
     "manifest_version": 2,
 
     "name": "BMAT",

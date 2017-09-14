@@ -14,3 +14,5 @@ __pycache__
 lib
 /extension/chrome.crx
 /extension/chrome.pem
+/bmat/static/bmat.xpi
+/node_modules

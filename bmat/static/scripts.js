@@ -414,6 +414,17 @@ window.bmatFn = function() {
                 });
             });
         }
+        
+        // Firefox
+        if("InstallTrigger" in window) {
+            $(".firefox-extension").show();
+            $("#firefox-extension-install").on("click", function() {
+                var path = $("#firefox-extension-install").data("path");
+                if(!InstallTrigger.install([path])) {
+                    console.error("Extension install failed!");
+                }
+            });
+        }
     };
     
     // These two are ran on page load
