@@ -1,10 +1,9 @@
 {% extends "base.html" %}
-{% load form_errors bookmark pages url_add tag %}
+{% load bookmark pages url_add tag %}
 
 {% block title %}Bookmarks{% endblock %}
 
 {% block content %}
-{% form_errors form %}
 <div class='box flex'>
     {% multiTagButton %}{% url_add %}
 </div>
