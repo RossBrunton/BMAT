@@ -15,8 +15,8 @@ nav a:hover {
     color:#dd7755 !important;
 }
 
-a:visited:not(.tagBlock *) {
-    color:#aaaaaa;
+a:visited {
+    color:#bbbbbb;
 }
 
 a {

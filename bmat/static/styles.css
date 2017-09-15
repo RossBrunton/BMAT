@@ -117,6 +117,7 @@ nav a:hover {
     padding:5px;
     background-color:#dddd77;
     border-bottom:1px solid #bbbb55;
+    color:#888800;
     position:fixed;
     width:100%;
 }
