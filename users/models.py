@@ -39,7 +39,7 @@ class Settings(models.Model):
     user = models.OneToOneField(User, unique=True)
     theme = models.CharField(max_length=10, default=THEME_LIGHT, choices=THEME_OPTIONS)
     url_settings = models.CharField(max_length=1, default=URL_SETTINGS_VALIDATE, choices=URL_SETTINGS)
-    no_analytics = models.BooleanField(default=False)
+    no_analytics = models.BooleanField(default=True)
     no_ads = models.BooleanField(default=False)
     is_trial = models.BooleanField(default=False)
     hide_settings = models.BooleanField(default=False)
