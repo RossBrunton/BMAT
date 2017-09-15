@@ -18,10 +18,12 @@ class Settings(models.Model):
     """
     THEME_GREY_BOXES = "grey_boxes"
     THEME_LIGHT = "light"
+    THEME_DARK = "dark"
     
     THEME_OPTIONS = (
         (THEME_GREY_BOXES, "Grey Boxes"),
-        (THEME_LIGHT, "Light")
+        (THEME_LIGHT, "Light Glow"),
+        (THEME_DARK, "Dark Dusk"),
     )
     
     URL_SETTINGS_VALIDATE = "v"

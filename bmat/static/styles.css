@@ -78,7 +78,7 @@ nav a:hover {
     color:#E9C229 !important;
 }
 
-.tag a, .tagBlock a {
+.tag a, .tagBlock a, .tag a:visited {
     color:inherit;
 }
 
@@ -269,6 +269,10 @@ input[type=text], input[type=password], input[type=email] {
 /*
  * Misc
  */
+.rightSpace {
+    margin-right:20px;
+}
+
 .hidden {
     display:none;
 }
@@ -383,24 +387,20 @@ input[type=text], input[type=password], input[type=email] {
     height:16px;
 }
 
-.delete.button {
+.delete.button, .tagBlock .delete.button {
     background-image:url('/static/icons/delete.png');
 }
 
-.expand.button {
+.expand.button, .tagBlock .expand.button {
     background-image:url('/static/icons/editExpand.png');
 }
 
-.editTitle.button, .editPattern.button {
+.editTitle.button, .editPattern.button, .tagBlock .editTitle.button {
     background-image:url('/static/icons/rename.png');
 }
 
-.addTag.button {
+.addTag.button, .tagBlock .addTag.button {
     background-image:url('/static/icons/addTag.png');
-}
-
-.rightSpace {
-    margin-right:20px;
 }
 
 .multiTag.button {
@@ -413,11 +413,9 @@ input[type=text], input[type=password], input[type=email] {
     margin-right:10px;
 }
 
-.untag.button {
+.untag.button, .tagBlock .untag.button {
     background-image:url('/static/icons/removeTag.png');
 }
-
-
 
 .inlineUntag.button {
     background-image:url('/static/icons/removeTag.png');
@@ -426,7 +424,7 @@ input[type=text], input[type=password], input[type=email] {
     width:0px;
 }
 
-.rename.button, .setPattern.button {
+.rename.button, .tagBlock .rename.button, .setPattern.button {
     margin-top:0px;
     background-image:url('/static/icons/save.png');
 }

@@ -66,7 +66,7 @@
     <form method='POST' action='{% url "user:home" %}'>
         {% csrf_token %}
         <label>Theme<br/>
-            {{ settings_form.theme }}</label><br/>
+            {{ settings_form.theme }}</label><br/><br/>
         <label>Invalid URL Handling<br/>
             {{ settings_form.url_settings }}</label><br/><br/>
         <label>{{ settings_form.no_analytics }} Opt out of anonymous usage tracking</label><br/>
@@ -79,8 +79,7 @@
 <div class='box center'>
     You can automatically set up rules that automatically tag newly added bookmarks.<br/><br/>
     
-    <button onclick='document.location="{% url "autotags:home" %}"' style='color:inherit'>
-        Configure Autotag Settings</button>
+    <button onclick='document.location="{% url "autotags:home" %}"'>Configure Autotag Settings</button>
 </div>
 
 {% if webstore_url %}
@@ -124,7 +123,7 @@
     You can export your bookmarks here by clicking the button below and saving the page. The saved file can then be
     imported into other browsers or applications.<br/><br/>
     
-    <button onclick='document.location="{% url "bookmarks:export" %}"' style='color:inherit'>Export Bookmarks To HTML</button>
+    <button onclick='document.location="{% url "bookmarks:export" %}"'>Export Bookmarks To HTML</button>
 </div>
 
 {% endblock %}
