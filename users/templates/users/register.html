@@ -12,13 +12,17 @@
     {% if not upgrade %}Register New Account{% else %}Upgrade Trial Account{% endif %}
 </div>
 
-<div class='box'>
+<div class='box center'>
     <form method='POST'>
         {% csrf_token %}
-        <label>Username: {{ form.username }}</label><br/>
-        <label>Optional Email: {{ form.email }}</label><br/>
-        <label>Password: {{ form.password1 }}</label><br/>
-        <label>Repeat Password: {{ form.password2 }}</label><br/>
+        <label>Username<br/>
+            {{ form.username }}</label><br/>
+        <label>Optional Email<br/>
+            {{ form.email }}</label><br/>
+        <label>Password<br/>
+            {{ form.password1 }}</label><br/>
+        <label>Repeat Password<br/>
+            {{ form.password2 }}</label><br/>
         <input type='submit' value='Register'/>
     </form>
 </div>

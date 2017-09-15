@@ -192,7 +192,7 @@ nav a:hover {
     padding-top:3px;
 }
 
-.title, .url, .pattern {
+.block .title, .url, .pattern {
     -ms-flex: 1 1 auto;
     -webkit-flex: 1 1 auto;
     flex:1 1 auto;
@@ -342,6 +342,17 @@ input[type=text], input[type=password], input[type=email] {
 }
 
 /*
+ * Home Page
+ */
+.login-options {
+    display:flex;
+}
+
+.login-options div {
+    flex: 1 1 0;
+}
+
+/*
  * Tags
  */
 .tag {
@@ -485,6 +496,10 @@ input[type=text], input[type=password], input[type=email] {
     }
     
     .settings {
+        display:block;
+    }
+    
+    .login-options {
         display:block;
     }
 }

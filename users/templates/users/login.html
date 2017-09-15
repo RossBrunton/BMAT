@@ -19,31 +19,55 @@
 </div>
 
 {% form_errors form %}
+{% form_errors reg_form %}
 
-<div class='box underlink'>
+<section class='login-options'>
+<div class='box underlink center'>
     <form method='POST'>
         {% csrf_token %}
-        <strong>Log In</strong>
-        {% if can_register %}
-            <br/>If you don't have an account, register <a href='{% url "user:register" %}'>here</a>
-        {% endif %}<br/>
-        <label>Username: {{ form.username }}</label><br/>
-        <label>Password: {{ form.password }}</label><br/>
-        <input type='submit' value='Log In'/> - <a href='{% url "user:reset" %}'>Forgot Password?</a>
+        <div class='box title'>Log In</div>
+        <label>Username<br/>
+            {{ form.username }}</label><br/>
+        <label>Password<br/>
+            {{ form.password }}</label><br/>
+        <input type='submit' value='Log In'/>
     </form>
+    <br/>
+    <br/><button onclick='document.location="{% url "user:reset" %}"'>Password Reset</button>
 </div>
 
 {% if can_register %}
-    <div class='box'>
-        If you like, you can create a temporary account here to try the application. This account will be deleted two
-        days after it is created (although if you like you can create another one) and if you decide you like the
-        application, you can provide a username and email to convert it into a &quot;proper&quot; account.<br/>
+    <div class='box center'>
+        <div class='box title'>Register</div>
+        
+        <form method='POST' action='{% url "user:register" %}'>
+            {% csrf_token %}
+            <label>Username<br/>
+                {{ reg_form.username }}</label><br/>
+            <label>Optional Email<br/>
+                {{ reg_form.email }}</label><br/>
+            <label>Password<br/>
+                {{ reg_form.password1 }}</label><br/>
+            <label>Repeat Password<br/>
+                {{ reg_form.password2 }}</label><br/>
+            <input type='submit' value='Register'/>
+        </form>
+    </div>
+    
+    <div class='box center'>
+        <div class='box title'>Test Account</div>
+        You can create a test account to try out the application without creating a login.<br/>
+        <br/>
+        Be aware that it will be deleted after a few days, but if you like the site, you can convert it into a full
+        account by providing a username and password.<br/>
+        <br/>
         <form method='POST' action='{% url "user:make_trial" %}'>
             {% csrf_token %}
-            <input type='submit' value='Create Trial Account'/>
+            <input type='submit' value='Create Test Account'/>
         </form>
     </div>
 {% endif %}
+</section>
 
 <div class='box underlink'>
     Please note, by using this site you agree to the use of cookies on your device. You can read about this in more

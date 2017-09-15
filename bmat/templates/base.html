@@ -98,8 +98,8 @@
         
         <main>
             {% if user.is_authenticated and user.settings.is_trial %}
-                <div class='box underlink'>You are using a trial account. If you want to upgrade to a full account, go
-                <a href='{% url "user:upgrade" %}'>here</a>.</div>
+                <div class='box underlink'>You are using a test account. If you want to upgrade to a full account and
+                    keep your data, go <a href='{% url "user:upgrade" %}'>here</a>.</div>
             {% endif %}
             
             {% block content %}

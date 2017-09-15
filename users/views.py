@@ -185,8 +185,11 @@ def login(request):
     else:
         form = AuthenticationForm(request)
 
+    register_form = CustomUserCreationForm()
+
     context = {
         'form': form,
+        'reg_form': register_form,
         'can_register': settings.BMAT_ALLOW_REGISTER
     }
     
