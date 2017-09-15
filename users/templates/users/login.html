@@ -1,11 +1,35 @@
 {% extends "base.html" %}
-{% load form_errors %}
+{% load form_errors staticfiles %}
 
-{% block title %}Login{% endblock %}
+{% block title %}BMAT - A Lightweight Bookmarks Manager{% endblock %}
 
 {% block content %}
 
-<div class='box underlink'>
+<div class='box title' style='font-size:150%'>
+    BMAT - A Lightweight Bookmarks Manager
+</div>
+
+<div class='box pitch underlink'>
+    <div class='text'>
+        BMAT is a free open source lightweight website that allows you to manage your bookmarks with the following features:
+        <ul>
+            <li>Tag bookmarks in order to categorise them.</li>
+            <li>Colour-code these tags, and add them to the navigation bar for easy access.</li>
+            <li>Allow tagging a bookmark with one tag to apply related tags.</li>
+            <li>Automatically tag a bookmark based on its URL when you add it.</li>
+            <li>Search your bookmarks and tags.</li>
+            <li>Add bookmarks directly from a site using a browser extension.</li>
+            <li>No social media integration; there are no &quot;share&quot; buttons telling you how popular your private
+                bookmarks are.</li>
+        </ul>
+    </div>
+    
+    <div class='image'>
+        <img alt='Screenshot of Application' src='{% static "Pitch.png" %}'/>
+    </div>
+</div>
+
+{% comment %}<div class='box underlink'>
     This is a web application that allows you to manage your bookmarks across multiple devices. It has the following
     features:
     <ul>
@@ -16,7 +40,7 @@
         <li>No social media integration! No &quot;like&quot; buttons everywhere, no counters saying how popular websites
         are, nothing.</li>
     </ul>
-</div>
+</div>{% endcomment %}
 
 {% form_errors form %}
 {% form_errors reg_form %}
