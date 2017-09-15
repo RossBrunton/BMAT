@@ -19,7 +19,7 @@ Activate the virtualenv:
 > source ./bin/activate
 
 Install Django, six and requests:
-> pip install Django six requests
+> pip install -r requirements.txt
 
 After this, rename `settings_local.py.sample`, to `settings_locals.py`, and give it a random secret key.
 
