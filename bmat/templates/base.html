@@ -5,6 +5,11 @@
         <title>{% block title %}No Title{% endblock %}</title>
         <link rel='stylesheet' href='{% static "styles.css" %}'/>
         <link rel='stylesheet' href='{% static "theme_"|add:theme|add:".css" %}'/>
+        <style>
+        .button {
+            background-image:url('{% static "icons.png" %}');
+        }
+        </style>
         <link rel='chrome-webstore-item' href='{{ webstore_url }}'>
         
         {% if analytics_code %}
@@ -25,7 +30,7 @@
         
         <script async src='//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'></script>
         <script async src='{% static "scripts.js" %}'></script>
-        <link rel="shortcut icon" href="/static/icons/favicon.png" />
+        <link rel="shortcut icon" href="/static/favicon.png" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         {% block extra_head %}{% endblock %}
     </head>

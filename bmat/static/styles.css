@@ -78,7 +78,7 @@ nav a:hover {
     color:#E9C229 !important;
 }
 
-.tag a, .tagBlock a, .tag a:visited {
+.tag.tag a, .tagBlock.tagBlock a, .tag.tag a:visited {
     color:inherit;
 }
 
@@ -420,37 +420,37 @@ input[type=text], input[type=password], input[type=email] {
 }
 
 .delete.button, .tagBlock .delete.button {
-    background-image:url('/static/icons/delete.png');
+    background-position:-16px 0px;
 }
 
 .expand.button, .tagBlock .expand.button {
-    background-image:url('/static/icons/editExpand.png');
+    background-position:-32px 0px;
 }
 
 .editTitle.button, .editPattern.button, .tagBlock .editTitle.button {
-    background-image:url('/static/icons/rename.png');
+    background-position:-96px 0px;
 }
 
 .addTag.button, .tagBlock .addTag.button {
-    background-image:url('/static/icons/addTag.png');
+    background-position:0px 0px;
 }
 
 .multiTag.button {
-    background-image:url('/static/icons/multiTag.png');
+    background-position:-64px 0px;
     margin-right:15px;
 }
 
 .multiTagAll.button {
-    background-image:url('/static/icons/multiTagAll.png');
+    background-position:-48px 0px;
     margin-right:10px;
 }
 
 .untag.button, .tagBlock .untag.button {
-    background-image:url('/static/icons/removeTag.png');
+    background-position:-80px 0px;
 }
 
 .inlineUntag.button {
-    background-image:url('/static/icons/removeTag.png');
+    background-position:-80px 0px;
     margin-top:0px;
     display:none;
     width:0px;
@@ -458,7 +458,15 @@ input[type=text], input[type=password], input[type=email] {
 
 .rename.button, .tagBlock .rename.button, .setPattern.button {
     margin-top:0px;
-    background-image:url('/static/icons/save.png');
+    background-position:-112px 0px;
+}
+
+#error .close.button {
+    background-position:-128px 0px;
+}
+
+#undo .close.button {
+    background-position:-128px -16px;
 }
 
 
@@ -466,40 +474,32 @@ input[type=text], input[type=password], input[type=email] {
  * Buttons on dark backgrounds
  */
 .black .delete.button, .darkblue .delete.button, .darkgreen .delete.button, .darkred .delete.button {
-    background-image:url('/static/icons/deleteLight.png');
-}
-
-#error .close.button {
-    background-image:url('/static/icons/close.png');
-}
-
-#undo .close.button {
-    background-image:url('/static/icons/undoClose.png');
+    background-position:-16px -16px;
 }
 
 .black .expand.button, .darkblue .expand.button, .darkgreen .expand.button, .darkred .expand.button {
-    background-image:url('/static/icons/editExpandLight.png');
+    background-position:-32px -16px;
 }
 
 .black .editTitle.button, .darkblue .editTitle.button, .darkgreen .editTitle.button, .darkred .editTitle.button {
-    background-image:url('/static/icons/renameLight.png');
+    background-position:-96px -16px;
 }
 
 .black .addTag.button, .darkblue .addTag.button, .darkgreen .addTag.button, .darkred .addTag.button {
-    background-image:url('/static/icons/addTagLight.png');
+    background-position:0px -16px;
 }
 
 .black .untag.button, .darkblue .untag.button, .darkgreen .untag.button, .darkred .untag.button {
-    background-image:url('/static/icons/removeTagLight.png');
+    background-position:-80px -16px;
 }
 
 .black > form .inlineUntag.button, .darkblue > form .inlineUntag.button, .darkgreen > form .inlineUntag.button,
 .darkred > form .inlineUntag.button {
-    background-image:url('/static/icons/removeTagLight.png');
+    background-position:-80px -16px;
 }
 
 .black .rename.button, .darkblue .rename.button, .darkgreen .rename.button, .darkred .rename.button {
-    background-image:url('/static/icons/saveLight.png');
+    background-position:-112px -16px;
 }
 
 /* Mobile support */

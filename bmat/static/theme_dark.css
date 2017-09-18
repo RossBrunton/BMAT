@@ -103,35 +103,35 @@ input[type=submit], button, select {
  * Buttons
  */
 .delete.button {
-    background-image:url('/static/icons/deleteLight.png');
+    background-position:-16px -16px;
 }
 
 .expand.button {
-    background-image:url('/static/icons/editExpandLight.png');
+    background-position:-32px -16px;
 }
 
 .editTitle.button {
-    background-image:url('/static/icons/renameLight.png');
+    background-position:-96px -16px;
 }
 
 .addTag.button {
-    background-image:url('/static/icons/addTagLight.png');
+    background-position:0px -16px;
 }
 
 .multiTag.button {
-    background-image:url('/static/icons/multiTagLight.png');
+    background-position:-64px -16px;
 }
 
 .multiTagAll.button {
-    background-image:url('/static/icons/multiTagAllLight.png');
+    background-position:-48px -16px;
 }
 
 .untag.button {
-    background-image:url('/static/icons/removeTagLight.png');
+    background-position:-80px -16px;
 }
 
 .rename.button {
-    background-image:url('/static/icons/saveLight.png');
+    background-position:-112px -16px;
 }
 
 /*
