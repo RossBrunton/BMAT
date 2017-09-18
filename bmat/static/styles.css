@@ -485,6 +485,10 @@ input[type=text], input[type=password], input[type=email] {
     background-position:-96px -16px;
 }
 
+.black .editPattern.button, .darkblue .editPattern.button, .darkgreen .editPattern.button, .darkred .editPattern.button {
+    background-position:-96px -16px;
+}
+
 .black .addTag.button, .darkblue .addTag.button, .darkgreen .addTag.button, .darkred .addTag.button {
     background-position:0px -16px;
 }
@@ -499,6 +503,10 @@ input[type=text], input[type=password], input[type=email] {
 }
 
 .black .rename.button, .darkblue .rename.button, .darkgreen .rename.button, .darkred .rename.button {
+    background-position:-112px -16px;
+}
+
+.black .setPattern.button, .darkblue .setPattern.button, .darkgreen .setPattern.button, .darkred .setPattern.button {
     background-position:-112px -16px;
 }
 
