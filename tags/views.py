@@ -28,7 +28,7 @@ def home(request):
     ctx = {}
     
     ctx["area"] = "tags"
-    ctx["tags"] = Tag.by_user(request.user)
+    ctx["tags"] = make_page(Tag.by_user(request.user), request.GET.get("p"))
     ctx["untag_count"] = Bookmark.by_user(request.user).filter(tags=None).count()
     
     return TemplateResponse(request, "tags/index.html", ctx)

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load tag %}
+{% load tag pages %}
 
 {% block title %}Tags{% endblock %}
 
@@ -20,4 +20,6 @@
         </div>
     {% endfor %}
 </div>
+
+{% pages tags "tags:home" %}
 {% endblock %}
