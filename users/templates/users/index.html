@@ -123,7 +123,8 @@
     You can export your bookmarks here by clicking the button below and saving the page. The saved file can then be
     imported into other browsers or applications.<br/><br/>
     
-    <button onclick='document.location="{% url "bookmarks:export" %}"'>Export Bookmarks To HTML</button>
+    <a class='hidden' id='exportLink' href='{% url "bookmarks:export" %}' download='Bookmark.htm'>&nbsp;</a>
+    <button onclick='$("#exportLink")[0].click()'>Export Bookmarks To HTML</button>
 </div>
 
 {% endblock %}
