@@ -82,6 +82,17 @@ input[type=submit], button, select {
 }
 
 /*
+ * Colour picker
+ */
+.colour-select .colour-list {
+    border:2px solid #666666;
+}
+
+.colour-select .colour[data-selected] {
+    border-color:#dd7755;
+}
+
+/*
  * Tags
  */
 .tag {

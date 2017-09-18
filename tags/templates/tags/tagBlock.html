@@ -28,11 +28,8 @@ data-taggable-type='tag'>
         <div class='nomobile'>{% for t in tag.tags_to.all %}{% tag t tag %}{% endfor %}</div>
         
         <div class='rightIfNotMobile'>{% addTag "tag" tag.pk %}</div>
-        <div class='buttons'>
-            <a class='addTag button rightSpace' title='Add Tag'>&nbsp;</a>
-        </div>
         
-        <div class='buttons rightIfMobile'>
+        <div class='padLeft buttons rightIfMobile'>
             <a class='rename button edit' style='display:none' title='Save'>&nbsp;</a>
             <a class='editTitle button noedit' title='Edit'>&nbsp;</a>
             

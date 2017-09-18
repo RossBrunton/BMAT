@@ -171,6 +171,41 @@ nav a:hover {
 }
 
 /*
+ * Colour picker thing
+ */
+.colour-select {
+    display:flex;
+    align-items:center;
+    margin-left:4px;
+}
+
+.colour-select .colour {
+    width:16px;
+    height:16px;
+    cursor:pointer;
+}
+
+.colour-select .colour-list {
+    display:flex;
+    border-radius:4px;
+}
+
+.colour-select .colour:last-of-type {
+    border-top-right-radius:2px;
+    border-bottom-right-radius:2px;
+}
+
+.colour-select .colour:first-of-type {
+    border-top-left-radius:2px;
+    border-bottom-left-radius:2px;
+}
+
+.colour-select .colour[data-selected] {
+    border:2px solid #e9c229;
+    box-sizing:border-box;
+}
+
+/*
  * Top part of a block
  */
 .head {
@@ -265,6 +300,10 @@ input[type=text], input[type=password], input[type=email] {
 
 .added {
     margin-right:auto;
+}
+
+.padLeft {
+    margin-left:16px;
 }
 
 /*
@@ -405,7 +444,7 @@ input[type=text], input[type=password], input[type=email] {
 .button {
     width:16px;
     height:16px;
-    display:inline-block;
+    display:block;
     margin-top:4px;
     cursor:pointer;
     overflow:hidden;
@@ -414,9 +453,10 @@ input[type=text], input[type=password], input[type=email] {
 }
 
 .buttons.buttons.buttons {
-    padding:0px;
+    display:flex;
+    /*padding:0px;
     margin-top:3px;
-    height:16px;
+    height:16px;*/
 }
 
 .delete.button, .tagBlock .delete.button, .autotag .delete.button {
@@ -457,7 +497,6 @@ input[type=text], input[type=password], input[type=email] {
 }
 
 .rename.button, .tagBlock .rename.button, .autotag .rename.button, .setPattern.button {
-    margin-top:0px;
     background-position:-112px 0px;
 }
 

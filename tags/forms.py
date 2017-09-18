@@ -3,6 +3,13 @@ from django import forms
 
 from tags.models import Tag, colours_enum
 
+class ColourSelect(forms.widgets.ChoiceWidget):
+    input_type = "input"
+    template_name = "tags/forms/colourSelect.html"
+    option_template_name = "tags/forms/colourSelectOption.html"
+    checked_attribute = {"data-selected": True}
+    option_inherits_attrs = False
+
 class RenameTagForm(forms.ModelForm):
     """ A model form for renaming a tag
     
@@ -11,6 +18,8 @@ class RenameTagForm(forms.ModelForm):
     class Meta:
         model = Tag
         fields = ["colour", "name"]
+    
+    colour = forms.ChoiceField(choices=colours_enum, widget=ColourSelect)
 
 class PinTagForm(forms.ModelForm):
     """ A model form for pinning and unpinning a tag
@@ -39,6 +48,7 @@ class AddTagForm(forms.ModelForm):
     
     type = forms.CharField()
     pk = forms.IntegerField(min_value=1)
+    colour = forms.ChoiceField(choices=colours_enum, widget=ColourSelect)
 
 
 class RemoveTagForm(forms.Form):

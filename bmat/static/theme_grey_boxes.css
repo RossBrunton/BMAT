@@ -42,6 +42,13 @@ input[type=text], input[type=password], input[type=email] {
 }
 
 /*
+ * Colour picker
+ */
+.colour-select .colour-list {
+    border:1px solid #cccccc;
+}
+
+/*
  * Colours
  */
 .white {

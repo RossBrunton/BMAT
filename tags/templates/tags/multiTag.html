@@ -2,13 +2,13 @@
 <div class='{% if not automulti %}multiTagBox {% endif %}box'>
     <div class='flex'>
         <div><a class='multiTagAll button' title='Select All'>&nbsp;</a></div>
-        <form class='multiTagForm'>
+        <form class='multiTagForm flex'>
             <input class='tagEntry' type='text' placeholder='Add Tag' name='name' list='tslist-multi'/>
             <datalist id='tslist-multi'>
                 
             </datalist>
             {{ atf.colour }}
-            <input type='submit' value='Add tag to all selected'/> 
+            <input type='submit' class='padLeft' value='Add tag to all selected'/> 
         </form>
     </div>
 </div>

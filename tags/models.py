@@ -18,17 +18,17 @@ import six
 
 colours_enum = [
     ("white", "White"),
-    ("black", "Black"),
-    ("darkblue", "Dark Blue"),
-    ("darkgreen", "Dark Green"),
-    ("darkred", "Dark Red"),
-    ("blue", "Blue"),
-    ("green", "Green"),
     ("red", "Red"),
-    ("yellow", "Yellow"),
-    ("magenta", "Magenta"),
-    ("cyan", "Cyan"),
     ("orange", "Orange"),
+    ("yellow", "Yellow"),
+    ("green", "Green"),
+    ("cyan", "Cyan"),
+    ("blue", "Blue"),
+    ("magenta", "Magenta"),
+    ("darkred", "Dark Red"),
+    ("darkgreen", "Dark Green"),
+    ("darkblue", "Dark Blue"),
+    ("black", "Black"),
 ]
 
 class Taggable(models.Model):

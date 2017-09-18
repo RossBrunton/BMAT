@@ -205,6 +205,16 @@ window.bmatFn = function() {
         $(".addTag.button").on("click", function(e) {
             $(this).parents(".block").find(".tagForm").submit();
         });
+        
+        // Handle the colour picker element thing
+        $(".colour-select .colour").on("click", function(e) {
+            var form = $(this).parents("form");
+            var value = $(this).data("value");
+            
+            form.find("input[name=colour]").val(value);
+            form.find("[data-selected]")[0].removeAttribute("data-selected");
+            this.setAttribute("data-selected", "data-selected");
+        });
     };
     
     // Removes all listeners
@@ -226,6 +236,8 @@ window.bmatFn = function() {
         $("form.setPatternForm").off();
         
         $(".editTitle").off();
+        
+        $(".colour-select .colour").off();
     };
     
     // Downloads a bookmark by an id and adds it to the list; used when adding a new one

@@ -1,5 +1,5 @@
 {% load tag %}
-<form class='tagForm' method='POST' action='{% url "tags:tag" %}'>
+<form class='tagForm' style='display:flex' method='POST' action='{% url "tags:tag" %}'>
     {% csrf_token %}
     {{ atf.type.as_hidden }}
     <input type='hidden' name='pk' value='{{ pk }}' />
@@ -8,4 +8,5 @@
         
     </datalist>
     {{ atf.colour }}
+    <a class='addTag button rightSpace' title='Add Tag'>&nbsp;&nbsp;&nbsp;</a>
 </form>

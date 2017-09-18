@@ -50,9 +50,16 @@ body {
  * Forms
  */
 input[type=text], input[type=password], input[type=email] {
-    border:2px solid #cccccc;
+    border:1px solid #cccccc;
     border-radius:5px;
     background-color:#f8f8f8;
+}
+
+/*
+ * Colour picker
+ */
+.colour-select .colour-list {
+    border:1px solid #dddddd;
 }
 
 /*

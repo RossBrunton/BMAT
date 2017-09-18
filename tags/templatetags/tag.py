@@ -49,7 +49,7 @@ def addTag(type, pk, **kwargs):
     It requires the pk of the thing being tagged, and an AddTagForm.
     """
     kwargs["pk"] = pk
-    kwargs["atf"] = AddTagForm({"type":type})
+    kwargs["atf"] = AddTagForm({"type":type, "colour":["white"]})
     
     return kwargs
 
@@ -59,7 +59,7 @@ def multiTag(type, tag=None, **kwargs):
     """
     kwargs["tag"] = tag
     kwargs["type"] = type
-    kwargs["atf"] = AddTagForm({"type":type})
+    kwargs["atf"] = AddTagForm({"type":type, "colour":["white"]})
     
     return kwargs
 

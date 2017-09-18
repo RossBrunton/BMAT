@@ -1,0 +1,7 @@
+<div class='colour-select' title='Colour of Tag'>
+<input name='{{ widget.name }}' type='hidden' value='{{ widget.value.0 }}'{% include "django/forms/widgets/attrs.html" %}>
+<div class='colour-list'>{% for group_name, group_choices, group_index in widget.optgroups %}
+{% for option in group_choices %}
+    {% include option.template_name with widget=option %}{% endfor %}
+{% endfor %}</div>
+</div>
