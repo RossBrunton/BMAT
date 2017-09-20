@@ -4,7 +4,8 @@
     <head>
         <title>{% block title %}No Title{% endblock %}</title>
         <link rel='stylesheet' href='{% static "styles.css" %}'/>
-        <link rel='stylesheet' href='{% static "theme_"|add:theme|add:".css" %}'/>
+        <link rel='stylesheet' href='{% static "theme_"|add:theme|add:".css" %}' id='themeLink'
+            data-prefix='{% static "theme_" %}'/>
         <style>
         .button {
             background-image:url('{% static "icons.png" %}');

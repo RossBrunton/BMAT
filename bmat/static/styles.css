@@ -205,6 +205,10 @@ nav a:hover {
     box-sizing:border-box;
 }
 
+.theme-picker [data-selected] iframe {
+    border:2px solid #e9c229;
+}
+
 /*
  * Top part of a block
  */
@@ -379,6 +383,20 @@ input[type=text], input[type=password], input[type=email] {
 
 .settings section {
     flex: 1 1 0;
+}
+
+.theme-picker {
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+}
+
+.theme-picker iframe {
+    margin:4px;
+    border-radius:4px;
+    height:200px;
+    width:323px;
+    pointer-events:none;
 }
 
 /*

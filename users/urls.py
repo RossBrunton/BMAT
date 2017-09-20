@@ -6,6 +6,7 @@ URLs are:
 - logout
 - login
 - register
+- preview
 
 And the URLs used by Django's password reset thing:
 - reset
@@ -26,10 +27,13 @@ urlpatterns = [
     url(r"^import$", views.importFile, name="import"),
     url(r"^pass_change$", views.pass_change, name="pass_change"),
     url(r"^email_change$", views.email_change, name="email_change"),
+    url(r"^theme_change$", views.theme_change, name="theme_change"),
     
     url(r"^logout$", views.logout, name="logout"),
     url(r"^login$", views.login, name="login"),
     url(r"^register$", views.register, name="register"),
+    
+    url(r"^preview$", views.preview, name="preview"),
     
     url(r"^make_trial$", views.make_trial, name="make_trial"),
     url(r"^upgrade$", views.upgrade, name="upgrade"),

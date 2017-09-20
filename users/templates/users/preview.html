@@ -1,0 +1,69 @@
+{% load static bookmark %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Theme Preview</title>
+        <link rel='stylesheet' href='{% static "styles.css" %}'/>
+        <link rel='stylesheet' href='{% static "theme_"|add:preview_theme|add:".css" %}'/>
+        <style>
+        .button {
+            background-image:url('{% static "icons.png" %}');
+        }
+        
+        :root {
+            overflow:hidden;
+            zoom:0.5;
+        }
+        </style>
+        
+        <script async src='//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'></script>
+        <script async src='{% static "scripts.js" %}'></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+    </head>
+    
+    <body>
+        <nav>
+            {% if user.is_authenticated %}
+                <a href='{% url "bookmarks:home" %}' {% if area == "bookmarks" %}class='active'{% endif %}>
+                    Bookmarks
+                </a>
+                
+                <a href='{% url "tags:home" %}' {% if area == "tags" %}class='active'{% endif %}>
+                    Tags
+                </a>
+                
+                <a href='{% url "search:home" %}' {% if area == "search" %}class='active'{% endif %}>
+                    Search
+                </a>
+                
+                {% if not user.settings.hide_settings %}
+                    <a href='{% url "user:home" %}' {% if area == "user" %}class='active'{% endif %}>
+                        Settings
+                    </a>
+                {% endif %}
+                
+                {% for t in pinned_tags %}
+                <a href='{% url "tags:filter" tag=t.slug %}' {% if tag.pk == t.pk %}class='active'{% endif %}>
+                    {{ t.name }}
+                </a>
+                {% endfor %}
+            {% else %}
+                <a href='{% url "user:login"%}' class='active'>
+                    Log In
+                </a>
+            {% endif %}
+        </nav>
+        
+        <main>
+            <div id='bookmark-list'>
+                {% for bm in bookmarks %}
+                    {% bookmark bm %}
+                {% empty %}
+                    <div class='box'>
+                        You have no bookmarks; how do you expect to pick a theme!?
+                    </div>
+                {% endfor %}
+            </div>
+        </main>
+    </body>
+</html>

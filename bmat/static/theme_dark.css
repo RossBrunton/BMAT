@@ -81,6 +81,10 @@ input[type=submit], button, select {
     padding:4px;
 }
 
+.theme-picker iframe {
+    border:2px solid #666666;
+}
+
 /*
  * Colour picker
  */
@@ -88,7 +92,7 @@ input[type=submit], button, select {
     border:2px solid #666666;
 }
 
-.colour-select .colour[data-selected] {
+.colour-select .colour[data-selected], .theme-picker [data-selected] iframe {
     border-color:#dd7755;
 }
 

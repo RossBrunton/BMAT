@@ -41,6 +41,10 @@ input[type=text], input[type=password], input[type=email] {
     background-color:#f8f8f8;
 }
 
+.theme-picker iframe {
+    border:2px solid #cccccc;
+}
+
 /*
  * Colour picker
  */

@@ -215,6 +215,19 @@ window.bmatFn = function() {
             form.find("[data-selected]")[0].removeAttribute("data-selected");
             this.setAttribute("data-selected", "data-selected");
         });
+        
+        // And the theme picker
+        $(".theme-picker .iframe-box").on("click", function(e) {
+            var form = $(this).parents("form");
+            var value = $(this).data("value");
+            
+            form.find("input[name=theme]").val(value);
+            form.find("[data-selected]")[0].removeAttribute("data-selected");
+            this.setAttribute("data-selected", "data-selected");
+            
+            // Change the theme of the page
+            $("#themeLink").attr("href", $("#themeLink").data("prefix") + value + ".css");
+        });
     };
     
     // Removes all listeners
@@ -238,6 +251,7 @@ window.bmatFn = function() {
         $(".editTitle").off();
         
         $(".colour-select .colour").off();
+        $(".theme-picker .iframe-box").off();
     };
     
     // Downloads a bookmark by an id and adds it to the list; used when adding a new one

@@ -65,8 +65,6 @@
 <div class='box center'>
     <form method='POST' action='{% url "user:home" %}'>
         {% csrf_token %}
-        <label>Theme<br/>
-            {{ settings_form.theme }}</label><br/><br/>
         <label>Invalid URL Handling<br/>
             {{ settings_form.url_settings }}</label><br/><br/>
         <label>{{ settings_form.no_analytics }} Opt out of anonymous usage tracking</label><br/>
@@ -96,6 +94,18 @@
     <button id='firefox-extension-install' data-path='{% static "bmat.xpi" %}'>BMAT Extension</button>
 </div>
 </section>
+</div>
+
+<div class='box title'>
+    Site Theme
+</div>
+
+<div class='box center'>
+    <form action='{% url "user:theme_change" %}' method='POST'>
+        {% csrf_token %}
+        {{ theme_form.theme }}
+        <input type='submit' value='Set Theme'/>
+    </form>
 </div>
 
 <div class='box title'>

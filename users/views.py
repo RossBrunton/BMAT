@@ -12,7 +12,7 @@ from django.core.urlresolvers import reverse
 
 from django.conf import settings
 from bookmarks.models import Bookmark
-from users.forms import ImportForm, CustomUserCreationForm, SettingsForm, EmailForm
+from users.forms import ImportForm, CustomUserCreationForm, SettingsForm, EmailForm, ThemeForm
 from users.utils import clean_trial, make_trial_user
 
 import random
@@ -32,6 +32,21 @@ def _unescape(text):
     else:
         return HTMLParser.HTMLParser().unescape(text)
 
+def _make_context(request, form_name, form_value):
+    ctx = {}
+    
+    # TODO: Is creating forms expensive
+    ctx["area"] = "user"
+    ctx["importForm"] = ImportForm()
+    ctx["pass_form"] = PasswordChangeForm(request.user)
+    ctx["email_form"] = EmailForm(instance=request.user)
+    ctx["settings_form"] = SettingsForm(instance=request.user.settings)
+    ctx["theme_form"] = ThemeForm(instance=request.user.settings)
+    
+    ctx[form_name] = form_value
+    
+    return ctx
+
 @login_required
 def home(request, note=""):
     """ The settings page for users
@@ -46,17 +61,12 @@ def home(request, note=""):
         form = SettingsForm(request.POST, instance=request.user.settings)
         if form.is_valid():
             form.save()
+            note = "Settings Updated Successfully"
         
     else:
         form = SettingsForm(instance=request.user.settings)
     
-    ctx = {}
-    
-    ctx["area"] = "user"
-    ctx["importForm"] = ImportForm()
-    ctx["pass_form"] = PasswordChangeForm(request.user)
-    ctx["email_form"] = EmailForm(instance=request.user)
-    ctx["settings_form"] = form
+    ctx = _make_context(request, "settings_form", form)
     ctx["note"] = note
     
     return TemplateResponse(request, "users/index.html", ctx)
@@ -76,15 +86,9 @@ def pass_change(request):
             return home(request, "Password Changed Successfully")
     
     else:
-        form = PasswordChangeForm(instance=request.user.settings)
+        form = PasswordChangeForm(instance=request.user)
     
-    ctx = {}
-    
-    ctx["area"] = "user"
-    ctx["importForm"] = ImportForm()
-    ctx["pass_form"] = form
-    ctx["email_form"] = EmailForm(instance=request.user)
-    ctx["settings_form"] = SettingsForm(instance=request.user.settings)
+    ctx = _make_context(request, "pass_form", form)
     
     return TemplateResponse(request, "users/index.html", ctx)
 
@@ -103,13 +107,25 @@ def email_change(request):
     else:
         form = EmailForm(instance=request.user)
     
-    ctx = {}
+    ctx = _make_context(request, "email_form", form)
     
-    ctx["area"] = "user"
-    ctx["importForm"] = ImportForm()
-    ctx["pass_form"] = PasswordChangeForm(request.user)
-    ctx["email_form"] = form
-    ctx["settings_form"] = SettingsForm(instance=request.user.settings)
+    return TemplateResponse(request, "users/index.html", ctx)
+
+@login_required
+def theme_change(request):
+    """ The theme change page
+    
+    If you pass it a ThemeForm, it will save it, and display a message. If it fails, it renders the users home page.
+    """
+    if request.method == "POST":
+        form = ThemeForm(request.POST, instance=request.user.settings)
+        if form.is_valid():
+            form.save()
+            return home(request, "Theme Changed Successfully")
+    else:
+        form = ThemeForm(instance=request.user.settings)
+    
+    ctx = _make_context(request, "theme_form", form)
     
     return TemplateResponse(request, "users/index.html", ctx)
 
@@ -145,11 +161,7 @@ def importFile(request):
             error = True
     
     if error:
-        ctx = {}
-        ctx["area"] = "user"
-        ctx["importForm"] = form
-        ctx["pass_form"] = PasswordChangeForm(request.user)
-        ctx["settings_form"] = SettingsForm(instance=request.user.settings)
+        ctx = _make_context(request, "importForm", form)
         
         return TemplateResponse(request, "users/index.html", ctx, status=422)
     
@@ -163,6 +175,20 @@ def logout(request):
     alogout(request)
     
     return HttpResponseRedirect("/")
+
+@login_required
+def preview(request):
+    """ The preview page for themes
+    
+    Set the theme with the "t" GET attribute
+    """
+    ctx = {}
+    
+    ctx["area"] = "bookmarks"
+    ctx["preview_theme"] = request.GET.get("t", "light")
+    ctx["bookmarks"] = Bookmark.by_user(request.user)[:5]
+    
+    return TemplateResponse(request, "users/preview.html", ctx)
 
 
 def login(request):
