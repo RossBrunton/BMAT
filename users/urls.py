@@ -16,12 +16,12 @@ And the URLs used by Django's password reset thing:
 """
 
 from django.conf.urls import url
-from django.contrib.auth.views import\
-    password_reset, password_reset_done, password_reset_confirm, password_reset_complete
-from django.core.urlresolvers import reverse
+from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
+from django.urls import reverse
 
 import users.views as views
 
+app_name="user"
 urlpatterns = [
     url(r"^$", views.home, name="home"),
     url(r"^import$", views.importFile, name="import"),
@@ -32,24 +32,19 @@ urlpatterns = [
     url(r"^logout$", views.logout, name="logout"),
     url(r"^login$", views.login, name="login"),
     url(r"^register$", views.register, name="register"),
-    
+
     url(r"^preview$", views.preview, name="preview"),
-    
+
     url(r"^make_trial$", views.make_trial, name="make_trial"),
     url(r"^upgrade$", views.upgrade, name="upgrade"),
-    
-    url(r"^reset$", password_reset,\
-        {'template_name': "users/reset.html", "post_reset_redirect":"/user/resetDone",\
-        "email_template_name":"users/reset_email.txt"},
-    name="reset"),
-    
-    url(r"^resetDone$", password_reset_done, {'template_name': "users/reset_done.html"}, name="resetDone"),
-    
-    url(r"^resetConfirm/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)$", password_reset_confirm,\
-        {'template_name': "users/reset_confirm.html", "post_reset_redirect":"/user/resetComplete"},name="resetConfirm"\
-    ),
-    
-    url(r"^resetComplete$", password_reset_complete, {'template_name': "users/reset_complete.html"},
-        name="resetComplete",
-    )
+
+    url(r"^reset$", PasswordResetView.as_view(\
+        template_name="users/reset.html", success_url="/users/resetDone",\
+        email_template_name="users/reset_email.txt"
+    )),
+    url(r"^resetDone$", PasswordResetDoneView.as_view(template_name="users/reset_done.html")),
+    url(r"^resetConfirm/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)$", PasswordResetConfirmView.as_view(template_name="users/reset_confirm.html",\
+        success_url="/users/resetComplete"\
+    )),
+    url(r"^resetComplete$", PasswordResetCompleteView.as_view(template_name="users/reset_complete.html")),
 ]

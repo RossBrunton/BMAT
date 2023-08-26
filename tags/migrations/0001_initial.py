@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
                 ('colour', models.CharField(default=b'white', max_length=20, choices=[(b'white', b'White'), (b'black', b'Black'), (b'darkblue', b'Dark Blue'), (b'darkgreen', b'Dark Green'), (b'darkred', b'Dark Red'), (b'blue', b'Blue'), (b'green', b'Green'), (b'red', b'Red'), (b'yellow', b'Yellow'), (b'magenta', b'Magenta'), (b'cyan', b'Cyan'), (b'orange', b'Orange')])),
                 ('slug', models.SlugField()),
                 ('implies', models.ManyToManyField(related_name=b'implied_by', to='tags.Tag')),
-                ('owner', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('owner', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)),
             ],
             options={
                 'ordering': ['slug'],

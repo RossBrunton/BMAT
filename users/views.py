@@ -8,7 +8,7 @@ from django.shortcuts import render, redirect
 from django.template.response import TemplateResponse
 from django.views.decorators.http import require_POST
 from django.forms.utils import ErrorList
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 from django.conf import settings
 from bookmarks.models import Bookmark

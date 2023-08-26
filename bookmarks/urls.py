@@ -14,6 +14,7 @@ from django.conf.urls import url
 
 import bookmarks.views as views
 
+app_name="bookmarks"
 urlpatterns = [
     url(r'^$', views.home, name="home"),
     url(r'^export$', views.export, name="export"),

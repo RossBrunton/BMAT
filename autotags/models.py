@@ -35,7 +35,7 @@ class Autotag(Taggable):
     Simply put, if a bookmark is added, and the `pattern` of any Autotag owned by the same user matches it, then the
     tags of the autotag are added to the bookmark.
     """
-    owner = models.ForeignKey(User)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
     pattern = models.CharField(max_length=200)
     tags = models.ManyToManyField(Tag, related_name="autotags")
     added = models.DateTimeField(auto_now_add=True)

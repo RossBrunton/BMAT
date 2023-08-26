@@ -24,7 +24,7 @@ Install Django, six and requests:
 After this, rename `settings_local.py.sample`, to `settings_locals.py`, and give it a random secret key.
 
 If you want to use MySQL, install mysqlclient as follows:
-> pip install mysqlclient 
+> pip install mysqlclient
 
 And then rename `db.cnf.sample` to `db.cnf` and fill in your database details.
 

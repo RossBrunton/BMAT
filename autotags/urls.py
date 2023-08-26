@@ -12,6 +12,7 @@ URLs are:
 from django.conf.urls import url
 import autotags.views as views
 
+app_name="autotags"
 urlpatterns = [
     url(r'^$', views.home, name="home"),
     url(r'^add$', views.add, name="add"),

@@ -36,7 +36,7 @@ class Settings(models.Model):
         (URL_SETTINGS_LINK, "Allow incorrect URLs, and make them links")
     )
     
-    user = models.OneToOneField(User, unique=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, unique=True)
     theme = models.CharField(max_length=10, default=THEME_LIGHT, choices=THEME_OPTIONS)
     url_settings = models.CharField(max_length=1, default=URL_SETTINGS_VALIDATE, choices=URL_SETTINGS)
     no_analytics = models.BooleanField(default=True)

@@ -57,14 +57,14 @@
         <input type='submit' value='Log In'/>
     </form>
     <br/>
-    <br/><button onclick='document.location="{% url "user:reset" %}"'>Password Reset</button>
+    <br/><button onclick='document.location="/reset"'>Password Reset</button>
 </div>
 
 {% if can_register %}
     <div class='box center'>
         <div class='box title'>Register</div>
         
-        <form method='POST' action='{% url "user:register" %}'>
+        <form method='POST' action='/register'>
             {% csrf_token %}
             <label>Username<br/>
                 {{ reg_form.username }}</label><br/>

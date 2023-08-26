@@ -21,7 +21,7 @@ INSTALLED_APPS = (
     'autotags.apps.AutotagsConfig'
 )
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -56,15 +56,21 @@ TEMPLATES = [
 ROOT_URLCONF = 'bmat.urls'
 WSGI_APPLICATION = 'bmat.wsgi.application'
 
-
 DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'mydatabase',
+    }
+}
+
+"""DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'OPTIONS':{
             'read_default_file': './db.cnf',
         },
     }
-}
+}"""
 
 LANGUAGE_CODE = 'en-uk'
 TIME_ZONE = 'UTC'

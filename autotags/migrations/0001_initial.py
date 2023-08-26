@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('pattern', models.CharField(max_length=200)),
                 ('added', models.DateTimeField(auto_now_add=True)),
-                ('owner', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('owner', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)),
                 ('tags', models.ManyToManyField(related_name='autotags', to='tags.Tag')),
             ],
             options={

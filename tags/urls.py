@@ -15,6 +15,7 @@ URLs are:
 from django.conf.urls import url
 import tags.views as views
 
+app_name="tags"
 urlpatterns = [
     url(r'^$', views.home, name="home"),
     

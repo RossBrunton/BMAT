@@ -114,7 +114,7 @@ class Tag(Taggable):
         ordering = ["slug"]
         unique_together = (("owner", "slug"),)
     
-    owner = models.ForeignKey(User)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.TextField(max_length=100)
     colour = models.CharField(max_length=20, choices=colours_enum, default='white')
     slug = models.SlugField(db_index=True)

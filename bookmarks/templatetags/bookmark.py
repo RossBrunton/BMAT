@@ -4,7 +4,7 @@ Specifically, the bookmark tag itself, and the filters epoch and cstag.
 """
 
 from django import template
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.utils.safestring import mark_safe
 
 from tags.models import Tag

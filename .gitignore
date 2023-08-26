@@ -16,3 +16,4 @@ lib
 /extension/chrome.pem
 /bmat/static/bmat.xpi
 /node_modules
+/env
