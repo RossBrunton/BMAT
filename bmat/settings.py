@@ -42,6 +42,7 @@ TEMPLATES = [
                 "django.template.context_processors.media",
                 "django.template.context_processors.static",
                 "django.template.context_processors.tz",
+                "django.template.context_processors.request",
                 "django.contrib.messages.context_processors.messages",
                 "users.context_processors.theme",
                 "bmat.context_processors.analytics_and_ads",
@@ -62,6 +63,7 @@ DATABASES = {
         'NAME': 'mydatabase',
     }
 }
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 """DATABASES = {
     'default': {

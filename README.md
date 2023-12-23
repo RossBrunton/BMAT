@@ -10,15 +10,15 @@ Clone the repo:
 > git clone https://github.com/RossBrunton/BMAT.git bmat/
 
 Create a virtualenv:
-> virtualenv -p /usr/bin/python2.7 bmat
+> python3 -m venv .venv
 
 Enter this directory:
 > cd bmat
 
 Activate the virtualenv:
-> source ./bin/activate
+> source .venv/bin/activate
 
-Install Django, six and requests:
+Install Django and requests:
 > pip install -r requirements.txt
 
 After this, rename `settings_local.py.sample`, to `settings_locals.py`, and give it a random secret key.
@@ -40,8 +40,7 @@ Create an account:
 Run the server (development only):
 > manage.py runserver
 
-For production, set up as you normally would a Django project. See
-https://docs.djangoproject.com/en/1.8/howto/deployment/wsgi/modwsgi/ for details on how to do this on Apache.
+For production, set up as you normally would a Django project.
 
 ## Super Interesting Legal Stuff ##
 This is licensed under the MIT License, see COPYING.txt for details.

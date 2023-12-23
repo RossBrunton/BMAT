@@ -10,7 +10,6 @@ from django.template import defaultfilters
 from django.template.response import TemplateResponse
 from django.views.decorators.http import require_POST
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-import six
 
 from tags.models import Tag
 from tags.forms import AddTagForm, RemoveTagForm, RenameTagForm, PinTagForm

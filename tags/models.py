@@ -14,7 +14,6 @@ from tags import makeslug
 from . import taggables
 
 import json
-import six
 
 colours_enum = [
     ("white", "White"),
@@ -39,14 +38,14 @@ class Taggable(models.Model):
     def tag(self, tag):
         """ Tags this object with a tag specified by a tag name, primary key or Tag model instance """
         
-        if isinstance(tag, six.integer_types):
+        if isinstance(tag, int):
             try:
                 tag = Tag.objects.get(pk=tag, owner=self.owner)
             except Tag.DoesNotExist:
                 #Handle this better?
                 return
         
-        if isinstance(tag, six.string_types):
+        if isinstance(tag, str):
             tname = tag
             try:
                 tag = Tag(owner=self.owner, name=tag)
@@ -59,13 +58,13 @@ class Taggable(models.Model):
     
     def untag(self, tag):
         """ Untags this object from a tag specified by a tag name, primary key or Tag model instance """
-        if isinstance(tag, six.integer_types):
+        if isinstance(tag, int):
             try:
                 tag = Tag.objects.get(pk=tag, owner=self.owner)
             except Tag.DoesNotExist:
                 return
         
-        if isinstance(tag, six.string_types):
+        if isinstance(tag, str):
             try:
                 tag = Tag.objects.get(slug=makeslug(tag), owner=self.owner)
             except Tag.DoesNotExist:

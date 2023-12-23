@@ -18,7 +18,6 @@ from users.utils import clean_trial, make_trial_user
 import random
 import string
 import re, datetime
-import six
 
 try:
     import html

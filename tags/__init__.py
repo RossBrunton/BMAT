@@ -9,7 +9,6 @@ on the "Tags" page (similar to bookmarks). If it doesn't mention "blocks", then 
 that are in the head of other blocks (i.e. On a bookmark, each tag displayed next to the menu button).
 """
 from django.template import defaultfilters
-from six import text_type
 
 _taggable = {}
 

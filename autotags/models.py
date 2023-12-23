@@ -16,7 +16,6 @@ from users.models import Settings
 import json
 
 from datetime import datetime
-import six
 
 _DT_FORMAT = "%a, %d %b %Y %H:%M:%S +0000"
 
@@ -89,7 +88,7 @@ class Autotag(Taggable):
             at.added = make_aware(datetime.strptime(obj["added"], _DT_FORMAT), utc)
         
         for t in obj["tags"]:
-            if isinstance(t, six.string_types):
+            if isinstance(t, str):
                 at.tag(t)
             else:
                 at.tag(t["id"])

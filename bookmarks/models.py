@@ -14,14 +14,13 @@ from bookmarks.templatetags.bookmark import bookmark
 from users.models import Settings
 from autotags.models import Autotag
 
-from six.moves.html_parser import HTMLParser
-from six.moves.urllib.robotparser import RobotFileParser
-from six.moves.urllib.parse import urlparse
+from html.parser import HTMLParser
+from urllib.robotparser import RobotFileParser
+from urllib.parse import urlparse
 import json
 import requests
 
 from datetime import datetime
-import six
 
 _DT_FORMAT = "%a, %d %b %Y %H:%M:%S +0000"
 
@@ -161,7 +160,7 @@ class Bookmark(Taggable):
             bm.added = make_aware(datetime.strptime(obj["added"], _DT_FORMAT), utc)
         
         for t in obj["tags"]:
-            if isinstance(t, six.string_types):
+            if isinstance(t, str):
                 bm.tag(t)
             else:
                 bm.tag(t["id"])
