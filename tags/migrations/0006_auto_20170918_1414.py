@@ -15,6 +15,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='tag',
             name='colour',
-            field=models.CharField(choices=[(b'white', b'White'), (b'red', b'Red'), (b'orange', b'Orange'), (b'yellow', b'Yellow'), (b'green', b'Green'), (b'cyan', b'Cyan'), (b'blue', b'Blue'), (b'magenta', b'Magenta'), (b'darkred', b'Dark Red'), (b'darkgreen', b'Dark Green'), (b'darkblue', b'Dark Blue'), (b'black', b'Black')], default=b'white', max_length=20),
+            field=models.CharField(choices=[('white', 'White'), ('red', 'Red'), ('orange', 'Orange'), ('yellow', 'Yellow'), ('green', 'Green'), ('cyan', 'Cyan'), ('blue', 'Blue'), ('magenta', 'Magenta'), ('darkred', 'Dark Red'), ('darkgreen', 'Dark Green'), ('darkblue', 'Dark Blue'), ('black', 'Black')], default='white', max_length=20),
         ),
     ]

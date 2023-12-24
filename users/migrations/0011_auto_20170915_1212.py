@@ -15,6 +15,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='settings',
             name='theme',
-            field=models.CharField(choices=[(b'grey_boxes', b'Grey Boxes'), (b'light', b'Light Glow'), (b'dark', b'Dark Dusk')], default=b'light', max_length=10),
+            field=models.CharField(choices=[('grey_boxes', 'Grey Boxes'), ('light', 'Light Glow'), ('dark', 'Dark Dusk')], default='light', max_length=10),
         ),
     ]

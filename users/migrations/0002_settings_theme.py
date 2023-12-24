@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='settings',
             name='theme',
-            field=models.CharField(default=b'grey_boxes', max_length=10, choices=[(b'grey_boxes', b'Grey Boxes')]),
+            field=models.CharField(default='grey_boxes', max_length=10, choices=[('grey_boxes', 'Grey Boxes')]),
             preserve_default=True,
         ),
     ]
