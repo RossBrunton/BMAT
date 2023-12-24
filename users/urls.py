@@ -39,12 +39,12 @@ urlpatterns = [
     url(r"^upgrade$", views.upgrade, name="upgrade"),
 
     url(r"^reset$", PasswordResetView.as_view(\
-        template_name="users/reset.html", success_url="/users/resetDone",\
+        template_name="users/reset.html", success_url="/user/resetDone",\
         email_template_name="users/reset_email.txt"
     )),
     url(r"^resetDone$", PasswordResetDoneView.as_view(template_name="users/reset_done.html")),
     url(r"^resetConfirm/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)$", PasswordResetConfirmView.as_view(template_name="users/reset_confirm.html",\
-        success_url="/users/resetComplete"\
+        success_url="/user/resetComplete"\
     )),
     url(r"^resetComplete$", PasswordResetCompleteView.as_view(template_name="users/reset_complete.html")),
 ]
