@@ -6,11 +6,11 @@ URLs are:
 
 """
 
-from django.conf.urls import url
+from django.urls import re_path
 import search.views as views
 
 app_name="search"
 urlpatterns = [
-    url(r'^$', views.home, name="home"),
-    url(r'^results$', views.results, name="results"),
+    re_path(r'^$', views.home, name="home"),
+    re_path(r'^results$', views.results, name="results"),
 ]

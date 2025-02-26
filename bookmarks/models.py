@@ -110,7 +110,7 @@ class Bookmark(Taggable):
                 self.title = p.title
                 self.save()
         
-        except:
+        except e:
             return
     
     def to_dir(self):

@@ -10,18 +10,18 @@ URLs are:
 
 """
 
-from django.conf.urls import url
+from django.urls import re_path
 
 import bookmarks.views as views
 
 app_name="bookmarks"
 urlpatterns = [
-    url(r'^$', views.home, name="home"),
-    url(r'^export$', views.export, name="export"),
-    url(r'^add$', views.add, name="add"),
-    url(r'^delete$', views.delete, name="delete"),
-    url(r'^create$', views.create, name="create"),
+    re_path(r'^$', views.home, name="home"),
+    re_path(r'^export$', views.export, name="export"),
+    re_path(r'^add$', views.add, name="add"),
+    re_path(r'^delete$', views.delete, name="delete"),
+    re_path(r'^create$', views.create, name="create"),
     
-    url(r'^(?P<bookmark>[0-9]+)/html$', views.html, name="html"),
-    url(r'^(?P<bookmark>[0-9]+)/rename$', views.rename, name="rename"),
+    re_path(r'^(?P<bookmark>[0-9]+)/html$', views.html, name="html"),
+    re_path(r'^(?P<bookmark>[0-9]+)/rename$', views.rename, name="rename"),
 ]

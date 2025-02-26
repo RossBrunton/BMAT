@@ -12,21 +12,21 @@ URLs are:
 
 """
 
-from django.conf.urls import url
+from django.urls import re_path
 import tags.views as views
 
 app_name="tags"
 urlpatterns = [
-    url(r'^$', views.home, name="home"),
+    re_path(r'^$', views.home, name="home"),
     
-    url(r'^suggest/(?P<value>.*)$', views.suggest, name="suggest"),
-    url(r'^delete$', views.delete, name="delete"),
-    url(r'^restore$', views.restore, name="restore"),
-    url(r'^rename/(?P<tag>.*)$', views.rename, name="rename"),
-    url(r'^pin/(?P<tag>.*)$', views.pin, name="pin"),
-    url(r'^htmlBlock/(?P<tag>\d+)$', views.htmlBlock, name="htmlBlock"),
-    url(r'^tag$', views.tag, name="tag"),
-    url(r'^untag$', views.untag, name="untag"),
-    url(r'^~(?P<tag>.*)$', views.filter, name="filter"),
-    url(r'^untagged$', views.untagged, name="untagged"),
+    re_path(r'^suggest/(?P<value>.*)$', views.suggest, name="suggest"),
+    re_path(r'^delete$', views.delete, name="delete"),
+    re_path(r'^restore$', views.restore, name="restore"),
+    re_path(r'^rename/(?P<tag>.*)$', views.rename, name="rename"),
+    re_path(r'^pin/(?P<tag>.*)$', views.pin, name="pin"),
+    re_path(r'^htmlBlock/(?P<tag>\d+)$', views.htmlBlock, name="htmlBlock"),
+    re_path(r'^tag$', views.tag, name="tag"),
+    re_path(r'^untag$', views.untag, name="untag"),
+    re_path(r'^~(?P<tag>.*)$', views.filter, name="filter"),
+    re_path(r'^untagged$', views.untagged, name="untagged"),
 ]
